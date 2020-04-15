@@ -10,11 +10,14 @@ import Foundation
 import Combine
 
 protocol  NetworkManager {
+    
     var session: URLSession { get }
+    
 }
 
 extension NetworkManager {
     
+    // MARK: - Decode
     private func decode<T: Decodable>(_ data: Data) -> AnyPublisher<T, Error> {
         
         let decoder = JSONDecoder()
@@ -27,11 +30,18 @@ extension NetworkManager {
         
     }
     
-    func get<T>(url: URL) -> AnyPublisher<T, Error> where T: Decodable  {
+    // MARK: - Get
+    func get<T>(urlString: String?) -> AnyPublisher<T, Error> where T: Decodable  {
+        guard let urlString = urlString else {
+            return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
+        }
+        
+        guard let url = URL(string: urlString) else {
+            return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
+        }
         
         guard let request = try? URLRequest(url: url, method: .get) else {
-            let error = NetworkError.invalidURL
-            return Fail(error: error).eraseToAnyPublisher()
+            return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
         }
         
         return session.dataTaskPublisher(for: request)
