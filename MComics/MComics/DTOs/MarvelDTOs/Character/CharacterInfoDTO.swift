@@ -13,12 +13,14 @@ struct CharacterInfoDTO: Decodable {
     let id: Int
     let name: String
     let description: String
+    let thumbnail: ThumbnailDTO
     
     enum CodingKeys: String, CodingKey {
         case
         id,
         name,
-        description
+        description,
+        thumbnail
     }
     
 }

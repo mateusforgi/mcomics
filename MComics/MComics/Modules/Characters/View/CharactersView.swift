@@ -21,26 +21,15 @@ struct CharactersView: View {
     
     //MARK: - Body
     var body: some View {
-        TabView {
-            List {
-                ForEach(viewModel.dataSource.indices, id: \.self) { index in
-                    Text(self.viewModel.dataSource[index].name)
-                }
-            }.onAppear {
-                self.viewModel.fetch()
-            }.listStyle(PlainListStyle())
-                .tabItem {
-                    Image(systemName: "list.dash")
-            }.tag(0)
-            Text("Second View")
-                .tabItem {
-                    Image(systemName: "heart.circle.fill")
-            }.tag(1)
-            Text("Third View")
-                .tabItem {
-                    Image(systemName: "doc.text.magnifyingglass")
-            }.tag(2)
+        List(viewModel.dataSource, id: \.id) { header in
+            self.getHeader(header)
+        }.onAppear {
+            self.viewModel.fetch()
         }
+    }
+    
+    private func getHeader(_ header: CharacterHeader) -> some View {
+        return CharacterHeaderView(id: header.id, name: header.name, description: header.description, photoURL: header.getPhotoURL())
     }
     
 }

@@ -14,9 +14,13 @@ struct CharacterHeader {
     var id: Int { item.id }
     var name: String { item.name }
     var description: String { item.description }
-
+    
     init(item: CharacterInfoDTO) {
       self.item = item
+    }
+    
+    public func getPhotoURL() -> String {
+        return  "\(item.thumbnail.path)/portrait_small.\(item.thumbnail.imageExtension)".replacingOccurrences(of: "http", with: "https")
     }
     
 }
