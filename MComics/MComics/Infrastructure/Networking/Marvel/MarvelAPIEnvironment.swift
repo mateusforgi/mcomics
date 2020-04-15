@@ -55,4 +55,8 @@ struct MarvelAPIEnvironment {
         return getCredentialsQueryString(url: url)
     }
     
+    public static func getPhotoURL(path: String, imageExtension: String, size: MarvelImageSize) -> String {
+        return  "\(path)/\(size.rawValue).\(imageExtension)".replacingOccurrences(of: "http", with: "https")
+    }
+    
 }

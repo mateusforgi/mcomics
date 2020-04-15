@@ -45,5 +45,6 @@ struct CharacterHeaderView: View {
         .indicator(.activity)
         .transition(.fade)
     }
+    
 }
 

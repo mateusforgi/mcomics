@@ -20,7 +20,7 @@ struct CharacterHeader {
     }
     
     public func getPhotoURL() -> String {
-        return  "\(item.thumbnail.path)/portrait_small.\(item.thumbnail.imageExtension)".replacingOccurrences(of: "http", with: "https")
+        return  MarvelAPIEnvironment.getPhotoURL(path: item.thumbnail.path, imageExtension: item.thumbnail.imageExtension, size: .portraitMedium)
     }
     
 }
