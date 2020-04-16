@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B839A0552447CF7D00EDFD90 /* MarvelImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A0542447CF7D00EDFD90 /* MarvelImageSize.swift */; };
+		B839A0582447F44300EDFD90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B839A0572447F44300EDFD90 /* Localizable.strings */; };
+		B839A05A2447F46E00EDFD90 /* LocalizableStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A0592447F46E00EDFD90 /* LocalizableStrings.swift */; };
 		B8E03BB7244677E300C3180D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E03BB6244677E300C3180D /* AppDelegate.swift */; };
 		B8E03BB9244677E300C3180D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E03BB8244677E300C3180D /* SceneDelegate.swift */; };
 		B8E03BBB244677E300C3180D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E03BBA244677E300C3180D /* ContentView.swift */; };
@@ -43,6 +45,8 @@
 		40F85976FDC4B020F92F4551 /* Pods-MComics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MComics.debug.xcconfig"; path = "Target Support Files/Pods-MComics/Pods-MComics.debug.xcconfig"; sourceTree = "<group>"; };
 		7D59E8590239413D5BD9FC82 /* Pods_MComics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MComics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B839A0542447CF7D00EDFD90 /* MarvelImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelImageSize.swift; sourceTree = "<group>"; };
+		B839A0572447F44300EDFD90 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		B839A0592447F46E00EDFD90 /* LocalizableStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableStrings.swift; sourceTree = "<group>"; };
 		B8E03BB3244677E300C3180D /* MComics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MComics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8E03BB6244677E300C3180D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8E03BB8244677E300C3180D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +107,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B839A0562447F42D00EDFD90 /* Localizable */ = {
+			isa = PBXGroup;
+			children = (
+				B839A0572447F44300EDFD90 /* Localizable.strings */,
+				B839A0592447F46E00EDFD90 /* LocalizableStrings.swift */,
+			);
+			path = Localizable;
+			sourceTree = "<group>";
+		};
 		B8E03BAA244677E300C3180D = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +137,7 @@
 		B8E03BB5244677E300C3180D /* MComics */ = {
 			isa = PBXGroup;
 			children = (
+				B839A0562447F42D00EDFD90 /* Localizable */,
 				B8E03BE724468D7200C3180D /* Modules */,
 				B8E03BD62446855400C3180D /* Extensions */,
 				B8E03BCE24467EE100C3180D /* Infrastructure */,
@@ -409,6 +423,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B839A0582447F44300EDFD90 /* Localizable.strings in Resources */,
 				B8E03BC3244677E500C3180D /* LaunchScreen.storyboard in Resources */,
 				B8E03BE624468B5800C3180D /* MarvelEndpoints.plist in Resources */,
 				B8E03BC0244677E500C3180D /* Preview Assets.xcassets in Resources */,
@@ -482,6 +497,7 @@
 				B8E03C132446B14200C3180D /* ThumbnailDTO.swift in Sources */,
 				B8E03BF724468FD100C3180D /* CharacterServiceProtocol.swift in Sources */,
 				B8E03BEF24468E2A00C3180D /* CharacterDTO.swift in Sources */,
+				B839A05A2447F46E00EDFD90 /* LocalizableStrings.swift in Sources */,
 				B8E03C03244695FA00C3180D /* CharactersView.swift in Sources */,
 				B8E03C102446A9CF00C3180D /* CharacterHeaderView.swift in Sources */,
 				B8E03C052446A01500C3180D /* DataDTO.swift in Sources */,

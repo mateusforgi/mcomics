@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-
+    
     // MARK: - Constants
     private let charactersViewModel: CharactersViewModel
     
@@ -32,6 +32,8 @@ struct HomeView: View {
                 .tabItem {
                     Image(systemName: "doc.text.magnifyingglass")
             }.tag(2)
-        }
+        }.edgesIgnoringSafeArea(.top)
+        .accentColor(Color.init(UIColor.systemTeal))
     }
+    
 }

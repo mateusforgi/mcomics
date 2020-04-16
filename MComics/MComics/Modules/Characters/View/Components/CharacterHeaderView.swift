@@ -28,12 +28,19 @@ struct CharacterHeaderView: View {
     
     // MARK: - Body
     var body: some View {
-        HStack {
-            getPhoto().frame(width: 100, height: 100, alignment: .center).clipShape(Circle())
-            VStack(alignment: .leading, spacing: 10) {
-                Text(name).font(Font.system(size: 17, weight: .bold, design: .default))
+        VStack(alignment: .center) {
+            getPhoto()
+                .frame(height: 200)
+                .cornerRadius(10)
+                .shadow(radius: 2)
+            HStack {
+                Image(systemName: "suit.heart")
+                    .foregroundColor(Color.init(UIColor.systemTeal))
+                Text(name)
+                    .lineLimit(1)
+                    .font(Font.system(size: 14, weight: .bold, design: .default))
             }
-        }.frame(height: 120, alignment: .leading)
+        }
     }
     
     private func getPhoto() -> some View {
