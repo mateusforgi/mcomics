@@ -44,7 +44,7 @@ struct MarvelAPIEnvironment {
     }
     
     // MARK: - Public Methods
-    public func getUrlFrom(endPoint: EndpointPlistKey, parameters: [EndpointParameters: String]?) -> String? {
+    public func getUrlFrom(endPoint: EndpointPlistKey, parameters: [EndpointParameters: String]?, queryStrings: [MarvelQueryStringParameter: String]?) -> String? {
         guard let baseURL = infoPlistEnvironment.getInfoPlistVariable(plistKey: .apiURL), let endPoint = endPointDict?[endPoint.rawValue] as? String else {
             return nil
         }
@@ -52,7 +52,19 @@ struct MarvelAPIEnvironment {
         if let parameters = parameters {
             replaceParameters(url: &url, parameters: parameters)
         }
-        return getCredentialsQueryString(url: url)
+        let urlWithKeys = getCredentialsQueryString(url: url)
+        guard let queryStrings = queryStrings else {
+            return urlWithKeys
+        }
+        return addQueryStrings(url: urlWithKeys ?? "", queryStrings: queryStrings)
+    }
+    
+    private func addQueryStrings(url: String, queryStrings: [MarvelQueryStringParameter: String]) -> String {
+        var urlCopy = url
+        for queryString in queryStrings {
+            urlCopy += "&\(queryString.key.rawValue)=\(queryString.value)"
+        }
+        return urlCopy
     }
     
     public static func getPhotoURL(path: String, imageExtension: String, size: MarvelImageSize) -> String {

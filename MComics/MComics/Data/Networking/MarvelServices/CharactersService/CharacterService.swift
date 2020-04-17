@@ -21,8 +21,8 @@ class CharacterService {
 
 extension CharacterService: NetworkManager, CharacterServiceProtocol {
     
-    func getCharacters() -> AnyPublisher<CharacterDTO, Error> {
-        let url = MarvelAPIEnvironment().getUrlFrom(endPoint: .characters, parameters: nil)
+    func getCharacters(_ offset: Int) -> AnyPublisher<CharacterDTO, Error> {
+        let url = MarvelAPIEnvironment().getUrlFrom(endPoint: .characters, parameters: nil, queryStrings: [.offset : "\(offset)"])
         return get(urlString: url)
     }
     

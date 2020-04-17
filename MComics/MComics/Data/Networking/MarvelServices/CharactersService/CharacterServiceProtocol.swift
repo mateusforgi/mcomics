@@ -11,6 +11,6 @@ import Combine
 
 protocol CharacterServiceProtocol {
     
-    func getCharacters() -> AnyPublisher<CharacterDTO, Error>
+    func getCharacters(_ offset: Int) -> AnyPublisher<CharacterDTO, Error>
     
 }

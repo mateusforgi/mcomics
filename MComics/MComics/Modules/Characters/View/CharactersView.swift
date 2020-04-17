@@ -34,6 +34,10 @@ struct CharactersView: View {
             } else {
                 EmptyView()
             }
+        }.onAppear {
+            if index + 1 == self.getNumberOfSections() {
+                self.viewModel.fetch()
+            }
         }
     }
     
@@ -45,7 +49,10 @@ struct CharactersView: View {
     var body: some View {
         NavigationView {
             List(0..<getNumberOfSections(), id: \.self) { index in
-                self.getHeaders(index: index)
+                VStack {
+                    self.getHeaders(index: index)
+                    ActivityIndicator(isAnimating: self.viewModel.loading, style: .medium)
+                }
             }.onAppear {
                 self.viewModel.fetch()
                 UITableView.appearance().tableFooterView = UIView()

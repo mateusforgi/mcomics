@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  MarvelQueryStringParameter.swift
 //  MComics
 //
 //  Created by Mateus Forgiarini on 4/14/20.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-public enum QueryStringParameter: String {
-    case apiKey, ts, hash
+public enum MarvelQueryStringParameter: String {
+    case offset
 }
