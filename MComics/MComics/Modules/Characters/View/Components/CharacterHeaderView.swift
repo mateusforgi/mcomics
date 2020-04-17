@@ -28,18 +28,18 @@ struct CharacterHeaderView: View {
     
     // MARK: - Body
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .leading) {
             getPhoto()
                 .frame(height: 200)
                 .cornerRadius(10)
                 .shadow(radius: 2)
-            HStack {
+            HStack(alignment: .center) {
                 Image(systemName: "suit.heart")
                     .foregroundColor(Color.init(UIColor.systemTeal))
                 Text(name)
-                    .lineLimit(1)
-                    .font(Font.system(size: 14, weight: .bold, design: .default))
-            }
+                    .lineLimit(2)
+                    .font(Font.system(size: 17, weight: .semibold, design: .default))
+            }.frame(height: 45)
         }
     }
     

@@ -9,10 +9,13 @@
 
 import SwiftUI
 
+
 struct CharactersView: View {
     
     //MARK: - Variables
     @ObservedObject var viewModel: CharactersViewModel
+    @State var characterDetailSelected: Int?
+    @State private var showCancelButton: Bool = false
     
     //MARK: - Constructor
     init(viewModel: CharactersViewModel) {
@@ -27,40 +30,55 @@ struct CharactersView: View {
     private func getHeaders(index: Int) -> some View  {
         let firstIndex: Int = index * 2
         let secondIndex: Int = index * 2 + 1
-        return HStack {
-            self.getHeader(self.viewModel.dataSource[firstIndex])
-            if secondIndex < self.viewModel.dataSource.count {
-                self.getHeader(self.viewModel.dataSource[secondIndex])
-            } else {
-                EmptyView()
-            }
-        }.onAppear {
-            if index + 1 == self.getNumberOfSections() {
-                self.viewModel.fetch()
-            }
+        return
+            VStack {
+                HStack {
+                    self.getHeader(self.viewModel.dataSource[firstIndex])
+                    if secondIndex < self.viewModel.dataSource.count {
+                        self.getHeader(self.viewModel.dataSource[secondIndex])
+                    } else {
+                        EmptyView()
+                    }
+                }
+                if index + 1 == self.getNumberOfSections() {
+                    ActivityIndicator(isAnimating: self.viewModel.loading && !self.viewModel.filtering, style: .medium)
+                        .onAppear {
+                            self.viewModel.fetch()
+                    }
+                }
         }
     }
     
     private func getHeader(_ header: CharacterHeader) -> some View {
-        return CharacterHeaderView(id: header.id, name: header.name, description: header.description, photoURL: header.getPhotoURL())
+        return ZStack {
+            NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(characterService: CharacterService(), characterId: header.id)), tag: header.id, selection: $characterDetailSelected) {
+                EmptyView()
+            }.buttonStyle(PlainButtonStyle())
+            CharacterHeaderView(id: header.id, name: header.name, description: header.description, photoURL: header.getPhotoURL()).onTapGesture {
+                self.characterDetailSelected = header.id
+            }
+        }
     }
     
     //MARK: - Body
     var body: some View {
         NavigationView {
-            List(0..<getNumberOfSections(), id: \.self) { index in
-                VStack {
-                    self.getHeaders(index: index)
-                    ActivityIndicator(isAnimating: self.viewModel.loading, style: .medium)
-                }
-            }.onAppear {
-                self.viewModel.fetch()
-                UITableView.appearance().tableFooterView = UIView()
-                UITableView.appearance().separatorStyle = .none
-                UITableViewCell.appearance().selectionStyle = .none
-            }.navigationBarTitle(LocalizableStrings.charactersHeader)
+            VStack
+                {
+                    SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
+                    List {
+                        ForEach(0..<getNumberOfSections(), id: \.self) { index in
+                            self.getHeaders(index: index)
+                        }}.onAppear {
+                            self.viewModel.fetch()
+                            UITableView.appearance().tableFooterView = UIView()
+                            UITableView.appearance().separatorStyle = .none
+                            UITableViewCell.appearance().selectionStyle = .none
+                    }.resignKeyboardOnDragGesture()
+                        .navigationBarTitle(LocalizableStrings.charactersHeader)
+            }
         }
+        
     }
-    
 }
 

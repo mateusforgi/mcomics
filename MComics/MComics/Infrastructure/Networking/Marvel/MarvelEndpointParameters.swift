@@ -1,5 +1,5 @@
 //
-//  EndpointParameters.swift
+//  MarvelEndpointParameters.swift
 //  MComics
 //
 //  Created by Mateus Forgiarini on 4/14/20.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-public enum EndpointParameters: String {
+public enum MarvelEndpointParameters: String {
     case characterId = "{characterId}"
 }

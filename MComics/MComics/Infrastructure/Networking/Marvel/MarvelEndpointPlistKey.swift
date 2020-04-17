@@ -1,5 +1,5 @@
 //
-//  EndpointPlistKey.swift
+//  MarvelEndpointPlistKey.swift
 //  MComics
 //
 //  Created by Mateus Forgiarini on 4/14/20.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum EndpointPlistKey: String {
-    case characters
+enum MarvelEndpointPlistKey: String {
+    case characters, characterById
 }

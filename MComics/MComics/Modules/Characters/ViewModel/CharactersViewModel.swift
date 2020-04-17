@@ -14,22 +14,34 @@ class CharactersViewModel: ObservableObject, Identifiable {
     // MARK: - Published
     @Published var dataSource = [CharacterHeader]()
     @Published var loading = false
-
+    @Published var text: String = ""
+    @Published var filtering: Bool = false
+    
     // MARK: - Variables
     private let characterService: CharacterServiceProtocol
     private var disposables = Set<AnyCancellable>()
     private var page = 0
     private var count = 0
+    private var items = [CharacterHeader]()
     
     typealias CharactersResponse = (headers: [CharacterHeader], count: Int)
+    
     // MARK: - Constructor
     init(characterService: CharacterServiceProtocol) {
         self.characterService = characterService
+        $text.dropFirst(1)
+            .sink(receiveValue: self.search(_:))
+            .store(in: &disposables)
+    }
+    
+    private func search(_ text: String) {
+        filtering = text != ""
+        dataSource = filtering ? items.filter({$0.name.localizedCaseInsensitiveContains(text)}) : items
     }
     
     //MARK: - Public Methods
     public func fetch() {
-        if loading {
+        if loading || filtering {
             return
         }
         let offset = page * count
@@ -51,9 +63,10 @@ class CharactersViewModel: ObservableObject, Identifiable {
             receiveValue: { [weak self] (item: CharactersResponse) in
                 guard let self = self else { return }
                 self.loading = false
-                self.dataSource.append(contentsOf: item.headers)
+                self.items.append(contentsOf: item.headers)
                 self.page += 1
                 self.count = item.count
+                self.dataSource = self.items
         }).store(in: &disposables)
     }
     

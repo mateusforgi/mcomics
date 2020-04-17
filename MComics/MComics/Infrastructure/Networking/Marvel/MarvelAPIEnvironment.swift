@@ -37,14 +37,14 @@ struct MarvelAPIEnvironment {
         return "\(url)?ts=\(tsValue)&apikey=\(apiKey)&hash=\(hashValue)"
     }
     
-    private func replaceParameters(url: inout String, parameters: [EndpointParameters: String]) {
+    private func replaceParameters(url: inout String, parameters: [MarvelEndpointParameters: String]) {
         for parameter in parameters {
             url = url.replacingOccurrences(of: parameter.key.rawValue, with: parameter.value)
         }
     }
     
     // MARK: - Public Methods
-    public func getUrlFrom(endPoint: EndpointPlistKey, parameters: [EndpointParameters: String]?, queryStrings: [MarvelQueryStringParameter: String]?) -> String? {
+    public func getUrlFrom(endPoint: MarvelEndpointPlistKey, parameters: [MarvelEndpointParameters: String]?, queryStrings: [MarvelQueryStringParameter: String]?) -> String? {
         guard let baseURL = infoPlistEnvironment.getInfoPlistVariable(plistKey: .apiURL), let endPoint = endPointDict?[endPoint.rawValue] as? String else {
             return nil
         }

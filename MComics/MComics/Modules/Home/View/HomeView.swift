@@ -28,11 +28,7 @@ struct HomeView: View {
                 .tabItem {
                     Image(systemName: "heart.circle.fill")
             }.tag(1)
-            Text("Third View")
-                .tabItem {
-                    Image(systemName: "doc.text.magnifyingglass")
-            }.tag(2)
-        }.edgesIgnoringSafeArea(.top)
+        }
         .accentColor(Color.init(UIColor.systemTeal))
     }
     
