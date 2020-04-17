@@ -11,5 +11,6 @@ import UIKit
 struct LocalizableStrings {
     
     static let charactersHeader = NSLocalizedString("CharactersHeader", comment: "The header for the list of characters")
-    
+    static let cancelSearchButton = NSLocalizedString("CancelSearchButton", comment: "The cancel search bar button")
+
 }

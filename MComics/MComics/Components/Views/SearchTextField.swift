@@ -44,7 +44,7 @@ struct SearchTextField: View {
             .cornerRadius(10.0)
             
             if showCancelButton  {
-                Button("Cancel") {
+                Button(LocalizableStrings.cancelSearchButton) {
                     UIApplication.shared.endEditing(true)
                     self.searchText = ""
                     self.showCancelButton = false
