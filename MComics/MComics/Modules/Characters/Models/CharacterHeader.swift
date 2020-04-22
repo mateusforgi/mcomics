@@ -14,13 +14,11 @@ struct CharacterHeader {
     var id: Int { item.id }
     var name: String { item.name }
     var description: String { item.description }
-    
+    var imagePath: String { item.thumbnail.path }
+    var imageExtension: String { item.thumbnail.imageExtension }
+
     init(item: CharacterInfoDTO) {
       self.item = item
-    }
-    
-    public func getPhotoURL() -> String {
-        return  MarvelAPIEnvironment.getPhotoURL(path: item.thumbnail.path, imageExtension: item.thumbnail.imageExtension, size: .portraitMedium)
     }
     
 }

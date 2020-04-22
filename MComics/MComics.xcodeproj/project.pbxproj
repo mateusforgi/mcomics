@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		62963EE62451079C000EEE2A /* CharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62963EE52451079C000EEE2A /* CharacterViewModel.swift */; };
 		B839A0552447CF7D00EDFD90 /* MarvelImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A0542447CF7D00EDFD90 /* MarvelImageSize.swift */; };
 		B839A0582447F44300EDFD90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B839A0572447F44300EDFD90 /* Localizable.strings */; };
 		B839A05A2447F46E00EDFD90 /* LocalizableStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A0592447F46E00EDFD90 /* LocalizableStrings.swift */; };
@@ -49,6 +50,7 @@
 /* Begin PBXFileReference section */
 		219781A3439A8E90D3690B71 /* Pods-MComics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MComics.release.xcconfig"; path = "Target Support Files/Pods-MComics/Pods-MComics.release.xcconfig"; sourceTree = "<group>"; };
 		40F85976FDC4B020F92F4551 /* Pods-MComics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MComics.debug.xcconfig"; path = "Target Support Files/Pods-MComics/Pods-MComics.debug.xcconfig"; sourceTree = "<group>"; };
+		62963EE52451079C000EEE2A /* CharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewModel.swift; sourceTree = "<group>"; };
 		7D59E8590239413D5BD9FC82 /* Pods_MComics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MComics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B839A0542447CF7D00EDFD90 /* MarvelImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelImageSize.swift; sourceTree = "<group>"; };
 		B839A0572447F44300EDFD90 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -131,34 +133,34 @@
 		B839A05D24492C0000EDFD90 /* CharacterDetail */ = {
 			isa = PBXGroup;
 			children = (
-				B839A06224492EF800EDFD90 /* Model */,
-				B839A06124492EF200EDFD90 /* ViewModel */,
-				B839A05E24492C0900EDFD90 /* View */,
+				B839A06224492EF800EDFD90 /* Models */,
+				B839A06124492EF200EDFD90 /* ViewModels */,
+				B839A05E24492C0900EDFD90 /* Views */,
 			);
 			path = CharacterDetail;
 			sourceTree = "<group>";
 		};
-		B839A05E24492C0900EDFD90 /* View */ = {
+		B839A05E24492C0900EDFD90 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				B839A05F24492C1E00EDFD90 /* CharacterDetailView.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		B839A06124492EF200EDFD90 /* ViewModel */ = {
+		B839A06124492EF200EDFD90 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				B839A06324492F1100EDFD90 /* CharacterDetailViewModel.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		B839A06224492EF800EDFD90 /* Model */ = {
+		B839A06224492EF800EDFD90 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		B839A0672449526200EDFD90 /* UIKit */ = {
@@ -332,36 +334,37 @@
 		B8E03BE824468DA100C3180D /* Characters */ = {
 			isa = PBXGroup;
 			children = (
-				B8E03BEB24468DCC00C3180D /* ViewModel */,
-				B8E03BEA24468DC600C3180D /* Model */,
-				B8E03BE924468DC200C3180D /* View */,
+				B8E03BEB24468DCC00C3180D /* ViewModels */,
+				B8E03BEA24468DC600C3180D /* Models */,
+				B8E03BE924468DC200C3180D /* Views */,
 			);
 			path = Characters;
 			sourceTree = "<group>";
 		};
-		B8E03BE924468DC200C3180D /* View */ = {
+		B8E03BE924468DC200C3180D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B8E03C0E2446A9AC00C3180D /* Components */,
+				B8E03C0F2446A9CF00C3180D /* CharacterHeaderView.swift */,
 				B8E03C02244695FA00C3180D /* CharactersView.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		B8E03BEA24468DC600C3180D /* Model */ = {
+		B8E03BEA24468DC600C3180D /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				B8E03BF124468EA500C3180D /* CharacterHeader.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		B8E03BEB24468DCC00C3180D /* ViewModel */ = {
+		B8E03BEB24468DCC00C3180D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				B8E03BEC24468DF000C3180D /* CharactersViewModel.swift */,
+				62963EE52451079C000EEE2A /* CharacterViewModel.swift */,
 			);
-			path = ViewModel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		B8E03BF324468F9400C3180D /* Networking */ = {
@@ -414,25 +417,17 @@
 		B8E03C082446A84900C3180D /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				B8E03C0B2446A87A00C3180D /* View */,
+				B8E03C0B2446A87A00C3180D /* Views */,
 			);
 			path = Home;
 			sourceTree = "<group>";
 		};
-		B8E03C0B2446A87A00C3180D /* View */ = {
+		B8E03C0B2446A87A00C3180D /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				B8E03C092446A86500C3180D /* HomeView.swift */,
 			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		B8E03C0E2446A9AC00C3180D /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				B8E03C0F2446A9CF00C3180D /* CharacterHeaderView.swift */,
-			);
-			path = Components;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		B8E03C112446B12700C3180D /* Character */ = {
@@ -574,6 +569,7 @@
 				B8E03C012446930D00C3180D /* InfoPlistEnvironment.swift in Sources */,
 				B839A072244953B400EDFD90 /* SearchTextField.swift in Sources */,
 				B8E03BFF244692E100C3180D /* MarvelAPIEnvironment.swift in Sources */,
+				62963EE62451079C000EEE2A /* CharacterViewModel.swift in Sources */,
 				B8E03BD52446849200C3180D /* NetworkError.swift in Sources */,
 				B8E03BE4244686C200C3180D /* MarvelEndpointParameters.swift in Sources */,
 				B8E03C072446A04D00C3180D /* CharacterInfoDTO.swift in Sources */,

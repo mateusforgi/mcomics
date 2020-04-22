@@ -49,13 +49,13 @@ struct CharactersView: View {
         }
     }
     
-    private func getHeader(_ header: CharacterHeader) -> some View {
+    private func getHeader(_ headerViewModel: CharacterViewModel) -> some View {
         return ZStack {
-            NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(characterService: CharacterService(), characterId: header.id)), tag: header.id, selection: $characterDetailSelected) {
+            NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(characterService: CharacterService(), characterId: headerViewModel.id)), tag: headerViewModel.id, selection: $characterDetailSelected) {
                 EmptyView()
             }.buttonStyle(PlainButtonStyle())
-            CharacterHeaderView(id: header.id, name: header.name, description: header.description, photoURL: header.getPhotoURL()).onTapGesture {
-                self.characterDetailSelected = header.id
+            CharacterHeaderView(viewModel: headerViewModel).onTapGesture {
+                self.characterDetailSelected = headerViewModel.id
             }
         }
     }

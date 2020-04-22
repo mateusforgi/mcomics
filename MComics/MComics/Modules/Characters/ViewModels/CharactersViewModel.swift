@@ -12,7 +12,7 @@ import Combine
 class CharactersViewModel: ObservableObject, Identifiable {
     
     // MARK: - Published
-    @Published var dataSource = [CharacterHeader]()
+    @Published var dataSource = [CharacterViewModel]()
     @Published var loading = false
     @Published var text: String = ""
     @Published var filtering: Bool = false
@@ -22,9 +22,9 @@ class CharactersViewModel: ObservableObject, Identifiable {
     private var disposables = Set<AnyCancellable>()
     private var page = 0
     private var count = 0
-    private var items = [CharacterHeader]()
+    private var items = [CharacterViewModel]()
     
-    typealias CharactersResponse = (headers: [CharacterHeader], count: Int)
+    typealias CharactersResponse = (headers: [CharacterViewModel], count: Int)
     
     // MARK: - Constructor
     init(characterService: CharacterServiceProtocol) {
@@ -49,7 +49,8 @@ class CharactersViewModel: ObservableObject, Identifiable {
         characterService.getCharacters(offset)
             .receive(on: DispatchQueue.main)
             .map { response in
-                (response.data.results.map(CharacterHeader.init), response.data.count)
+                let headers = response.data.results.map(CharacterHeader.init)
+                return (headers.map(CharacterViewModel.init), response.data.count)
         }.sink(
             receiveCompletion: { value in
                 self.loading = false
