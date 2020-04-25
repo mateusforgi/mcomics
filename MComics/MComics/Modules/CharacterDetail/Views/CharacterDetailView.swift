@@ -22,38 +22,50 @@ struct CharacterDetailView: View {
     // MARK: - Body
     var body: some View {
         List {
-            getHeader()
+            getPosterHeader()
                 .listRowInsets(EdgeInsets())
-                .frame(minHeight: 400)
+                .frame(height: 400)
+            VStack {
+                Text(viewModel.header?.name ?? "")
+                    .font(.system(size: 24, weight: .medium))
+                Text(viewModel.header?.description ?? "")
+                    .font(.system(size: 14))
+            }
             getSeries()
-        }.edgesIgnoringSafeArea(.all)
+            getComics()
+        }.edgesIgnoringSafeArea(.top)
             .onAppear {
                 self.viewModel.fetchHeader()
                 self.viewModel.fetchSeries()
+                self.viewModel.fetchComics()
         }
     }
+
+}
+
+// MARK: - Private Functions
+extension CharacterDetailView {
     
     private func getSeries() -> some View {
         return
             VStack(alignment: .leading) {
                 Text(LocalizableStrings.seriesHeader)
                     .font(Font.system(size: 34, weight: .bold))
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(alignment: .top, spacing: 20) {
-                        ForEach(self.viewModel.series) { serie in
-                            VStack {
-                                self.getPhoto(photoURL: serie.photoURL)
-                                    .frame(width: 130, height: 130)
-                                Text(serie.title)
-                                    .font(.system(size: 12, weight: .medium))
-                            }
-                        }
-                    }.frame(height: 150)
-                }
-            }
+                CarousellView(items: $viewModel.series)
+        }
     }
     
-    private func getHeader() -> some View {
+    
+    private func getComics() -> some View {
+        return
+            VStack(alignment: .leading) {
+                Text(LocalizableStrings.comicsHeader)
+                    .font(Font.system(size: 34, weight: .bold))
+                CarousellView(items: $viewModel.comics)
+        }
+    }
+    
+    private func getPosterHeader() -> some View {
         if let header = viewModel.header {
             return AnyView(CharacterPosterHeaderView(viewModel: header))
         } else {
@@ -70,4 +82,6 @@ struct CharacterDetailView: View {
         .indicator(.activity)
         .transition(.fade)
     }
+    
 }
+

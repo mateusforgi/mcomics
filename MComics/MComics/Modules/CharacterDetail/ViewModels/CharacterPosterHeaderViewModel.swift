@@ -1,5 +1,5 @@
 //
-//  CharacterPosterHeaderViewModel.swift
+//  CharacterHeaderViewModel.swift
 //  MComics
 //
 //  Created by Mateus Forgiarini da Silva  on 23/04/20.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class CharacterPosterHeaderViewModel: ObservableObject, Identifiable {
+class CharacterDetailHeaderViewModel: ObservableObject, Identifiable {
     
     // MARK: - Published
     @Published var name: String

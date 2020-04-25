@@ -12,8 +12,9 @@ import Combine
 class CharacterDetailViewModel: ObservableObject, Identifiable {
     
     // MARK: - Published
-    @Published var header: CharacterPosterHeaderViewModel?
-    @Published var series = [CharacterSeriesViewModel]()
+    @Published var header: CharacterDetailHeaderViewModel?
+    @Published var series = [CarousellProtocol]()
+    @Published var comics = [CarousellProtocol]()
     
     // MARK: - Variables
     private let characterService: CharacterServiceProtocol
@@ -32,7 +33,7 @@ class CharacterDetailViewModel: ObservableObject, Identifiable {
             .receive(on: DispatchQueue.main)
             .map { response in
                 let header = response.data.results.map(CharacterHeader.init)
-                return header.map(CharacterPosterHeaderViewModel.init)
+                return header.map(CharacterDetailHeaderViewModel.init)
         }.sink(
             receiveCompletion: { value in
                 switch value {
@@ -42,18 +43,18 @@ class CharacterDetailViewModel: ObservableObject, Identifiable {
                     break
                 }
         },
-            receiveValue: { [weak self] (items: [CharacterPosterHeaderViewModel]) in
+            receiveValue: { [weak self] (items: [CharacterDetailHeaderViewModel]) in
                 guard let self = self else { return }
                 self.header = items.first
         }).store(in: &disposables)
     }
     
     public func fetchSeries() {
-        characterService.getCharacterComics(characterId)
+        characterService.getCharacterSeries(characterId)
             .receive(on: DispatchQueue.main)
             .map { response in
-                let series = response.data.results.map(CharacterComic.init)
-                return series.map(CharacterSeriesViewModel.init)
+                let series = response.data.results.map(CharacterSerie.init)
+                return series.map(CharacterSerieViewModel.init)
         }.sink(
             receiveCompletion: { value in
                 switch value {
@@ -63,9 +64,30 @@ class CharacterDetailViewModel: ObservableObject, Identifiable {
                     break
                 }
         },
-            receiveValue: { [weak self] (items: [CharacterSeriesViewModel]) in
+            receiveValue: { [weak self] (items: [CharacterSerieViewModel]) in
                 guard let self = self else { return }
                 self.series = items
+        }).store(in: &disposables)
+    }
+    
+    public func fetchComics() {
+        characterService.getCharacterComics(characterId)
+            .receive(on: DispatchQueue.main)
+            .map { response in
+                let series = response.data.results.map(CharacterComic.init)
+                return series.map(CharacterComicViewModel.init)
+        }.sink(
+            receiveCompletion: { value in
+                switch value {
+                case .failure:
+                    break
+                case .finished:
+                    break
+                }
+        },
+            receiveValue: { [weak self] (items: [CharacterComicViewModel]) in
+                guard let self = self else { return }
+                self.comics = items
         }).store(in: &disposables)
     }
     

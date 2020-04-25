@@ -12,25 +12,22 @@ import SDWebImageSwiftUI
 struct CharacterPosterHeaderView: View {
     
     // MARK: - Observed
-    @ObservedObject var viewModel: CharacterPosterHeaderViewModel
+    @ObservedObject var viewModel: CharacterDetailHeaderViewModel
     
     // MARK: - Constructor
-    init(viewModel: CharacterPosterHeaderViewModel) {
+    init(viewModel: CharacterDetailHeaderViewModel) {
         self.viewModel = viewModel
     }
     
+    // MARK: - Body
     var body: some View {
-        VStack {
-            getPhoto()
-                .frame(height: 400)
-            VStack {
-                Text(viewModel.name)
-                    .font(.system(size: 24, weight: .medium))
-                Text(viewModel.description)
-                    .font(.system(size: 14))
-            }.padding(10)
-        }
+        getPhoto()
     }
+    
+}
+
+// MARK: - Private functions
+extension CharacterPosterHeaderView {
     
     private func getPhoto() -> some View {
         return WebImage(url: URL(string: viewModel.photoURL))
@@ -41,4 +38,5 @@ struct CharacterPosterHeaderView: View {
         .indicator(.activity)
         .transition(.fade)
     }
+    
 }
