@@ -49,7 +49,7 @@ struct CharactersView: View {
         }
     }
     
-    private func getHeader(_ headerViewModel: CharacterViewModel) -> some View {
+    private func getHeader(_ headerViewModel: CharacterHeaderViewModel) -> some View {
         return ZStack {
             NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(characterService: CharacterService(), characterId: headerViewModel.id)), tag: headerViewModel.id, selection: $characterDetailSelected) {
                 EmptyView()

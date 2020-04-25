@@ -12,10 +12,10 @@ import SDWebImageSwiftUI
 
 struct CharacterHeaderView: View {
     
-    @ObservedObject var viewModel: CharacterViewModel
+    @ObservedObject var viewModel: CharacterHeaderViewModel
    
     // MARK: - Constructor
-    init(viewModel: CharacterViewModel) {
+    init(viewModel: CharacterHeaderViewModel) {
         self.viewModel = viewModel
     }
     

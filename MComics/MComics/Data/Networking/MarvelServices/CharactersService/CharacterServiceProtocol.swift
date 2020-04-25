@@ -13,5 +13,6 @@ protocol CharacterServiceProtocol {
     
     func getCharacters(_ offset: Int) -> AnyPublisher<CharacterDTO, Error>
     func getCharacterDetail(_ id: Int) -> AnyPublisher<CharacterDTO, Error>
+    func getCharacterComics(_ id: Int) -> AnyPublisher<CharacterComicDTO, Error>
 
 }

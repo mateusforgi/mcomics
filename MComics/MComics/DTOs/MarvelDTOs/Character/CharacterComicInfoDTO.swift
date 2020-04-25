@@ -1,18 +1,17 @@
 //
-//  CharacterInfoDTO.swift
+//  CharacterComicInfoDTO.swift
 //  MComics
 //
-//  Created by Mateus Forgiarini on 4/14/20.
+//  Created by Mateus Forgiarini da Silva  on 23/04/20.
 //  Copyright © 2020 Mateus Forgiarini da Silva. All rights reserved.
 //
 
 import Foundation
 
-struct CharacterInfoDTO: Decodable {
+struct CharacterComicInfoDTO: Decodable {
     
     let id: Int
-    let name: String
-    let description: String
+    let title: String
     let thumbnail: ThumbnailDTO
-    
+
 }

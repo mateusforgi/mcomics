@@ -1,25 +1,23 @@
 //
-//  CharacterHeader.swift
+//  CharacterComic.swift
 //  MComics
 //
-//  Created by Mateus Forgiarini on 4/14/20.
+//  Created by Mateus Forgiarini da Silva  on 23/04/20.
 //  Copyright © 2020 Mateus Forgiarini da Silva. All rights reserved.
 //
 
 import Foundation
 
-struct CharacterHeader {
-    #warning("review this file")
-    private let item: CharacterInfoDTO
+struct CharacterComic {
+    
+    private let item: CharacterComicInfoDTO
     var id: Int { item.id }
-    var name: String { item.name }
-    var description: String { item.description }
+    var title: String { item.title }
     var imagePath: String { item.thumbnail.path }
     var imageExtension: String { item.thumbnail.imageExtension }
 
-    init(item: CharacterInfoDTO) {
+    init(item: CharacterComicInfoDTO) {
       self.item = item
     }
     
 }
-

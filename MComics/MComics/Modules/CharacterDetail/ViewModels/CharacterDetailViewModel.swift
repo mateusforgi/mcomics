@@ -12,13 +12,14 @@ import Combine
 class CharacterDetailViewModel: ObservableObject, Identifiable {
     
     // MARK: - Published
-    @Published var header: CharacterHeader?
-
+    @Published var header: CharacterPosterHeaderViewModel?
+    @Published var series = [CharacterSeriesViewModel]()
+    
     // MARK: - Variables
     private let characterService: CharacterServiceProtocol
     private var disposables = Set<AnyCancellable>()
     private let characterId: Int
-        
+    
     // MARK: - Constructor
     init(characterService: CharacterServiceProtocol, characterId: Int) {
         self.characterService = characterService
@@ -26,11 +27,12 @@ class CharacterDetailViewModel: ObservableObject, Identifiable {
     }
     
     //MARK: - Public Methods
-    public func fetch() {
+    public func fetchHeader() {
         characterService.getCharacterDetail(characterId)
             .receive(on: DispatchQueue.main)
             .map { response in
-                response.data.results.map(CharacterHeader.init)
+                let header = response.data.results.map(CharacterHeader.init)
+                return header.map(CharacterPosterHeaderViewModel.init)
         }.sink(
             receiveCompletion: { value in
                 switch value {
@@ -39,10 +41,31 @@ class CharacterDetailViewModel: ObservableObject, Identifiable {
                 case .finished:
                     break
                 }
-            },
-            receiveValue: { [weak self] items in
+        },
+            receiveValue: { [weak self] (items: [CharacterPosterHeaderViewModel]) in
                 guard let self = self else { return }
                 self.header = items.first
+        }).store(in: &disposables)
+    }
+    
+    public func fetchSeries() {
+        characterService.getCharacterComics(characterId)
+            .receive(on: DispatchQueue.main)
+            .map { response in
+                let series = response.data.results.map(CharacterComic.init)
+                return series.map(CharacterSeriesViewModel.init)
+        }.sink(
+            receiveCompletion: { value in
+                switch value {
+                case .failure:
+                    break
+                case .finished:
+                    break
+                }
+        },
+            receiveValue: { [weak self] (items: [CharacterSeriesViewModel]) in
+                guard let self = self else { return }
+                self.series = items
         }).store(in: &disposables)
     }
     

@@ -9,5 +9,5 @@
 import Foundation
 
 enum MarvelEndpointPlistKey: String {
-    case characters, characterById
+    case characters, characterById, characterComics
 }
