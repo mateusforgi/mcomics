@@ -20,6 +20,9 @@
 		62BE3F33245467E500285F39 /* CharacterComicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BE3F32245467E500285F39 /* CharacterComicViewModel.swift */; };
 		62BE3F3824546B6900285F39 /* CarousellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BE3F3724546B6900285F39 /* CarousellView.swift */; };
 		62BE3F3B245472FC00285F39 /* CarousellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BE3F3A245472FC00285F39 /* CarousellProtocol.swift */; };
+		62BE3F402455AE7200285F39 /* MComicsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 62BE3F3E2455AE7200285F39 /* MComicsModel.xcdatamodeld */; };
+		62BE3F452455AFEA00285F39 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BE3F442455AFEA00285F39 /* Character.swift */; };
+		62BE3F472455B03E00285F39 /* CharacterRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62BE3F462455B03E00285F39 /* CharacterRepository.swift */; };
 		B839A0552447CF7D00EDFD90 /* MarvelImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A0542447CF7D00EDFD90 /* MarvelImageSize.swift */; };
 		B839A0582447F44300EDFD90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B839A0572447F44300EDFD90 /* Localizable.strings */; };
 		B839A05A2447F46E00EDFD90 /* LocalizableStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A0592447F46E00EDFD90 /* LocalizableStrings.swift */; };
@@ -75,6 +78,9 @@
 		62BE3F32245467E500285F39 /* CharacterComicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterComicViewModel.swift; sourceTree = "<group>"; };
 		62BE3F3724546B6900285F39 /* CarousellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarousellView.swift; sourceTree = "<group>"; };
 		62BE3F3A245472FC00285F39 /* CarousellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarousellProtocol.swift; sourceTree = "<group>"; };
+		62BE3F3F2455AE7200285F39 /* MComicsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MComicsModel.xcdatamodel; sourceTree = "<group>"; };
+		62BE3F442455AFEA00285F39 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		62BE3F462455B03E00285F39 /* CharacterRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterRepository.swift; sourceTree = "<group>"; };
 		7D59E8590239413D5BD9FC82 /* Pods_MComics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MComics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B839A0542447CF7D00EDFD90 /* MarvelImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelImageSize.swift; sourceTree = "<group>"; };
 		B839A0572447F44300EDFD90 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -162,6 +168,31 @@
 			path = CarousellView;
 			sourceTree = "<group>";
 		};
+		62BE3F412455AF1300285F39 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				62BE3F432455AF3300285F39 /* Models */,
+				62BE3F422455AF2200285F39 /* Repositories */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		62BE3F422455AF2200285F39 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				62BE3F462455B03E00285F39 /* CharacterRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		62BE3F432455AF3300285F39 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				62BE3F442455AFEA00285F39 /* Character.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		B839A0562447F42D00EDFD90 /* Localizable */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +277,7 @@
 		B8E03BAA244677E300C3180D = {
 			isa = PBXGroup;
 			children = (
+				62BE3F3E2455AE7200285F39 /* MComicsModel.xcdatamodeld */,
 				B8E03BB5244677E300C3180D /* MComics */,
 				B8E03BB4244677E300C3180D /* Products */,
 				1E53C6F8DF7C38BC209B1F3B /* Pods */,
@@ -264,6 +296,7 @@
 		B8E03BB5244677E300C3180D /* MComics */ = {
 			isa = PBXGroup;
 			children = (
+				62BE3F412455AF1300285F39 /* CoreData */,
 				B839A0562447F42D00EDFD90 /* Localizable */,
 				B8E03BE724468D7200C3180D /* Modules */,
 				B8E03BD62446855400C3180D /* Extensions */,
@@ -620,6 +653,7 @@
 				B839A05C244928CA00EDFD90 /* ActivityIndicator.swift in Sources */,
 				B8E03BB7244677E300C3180D /* AppDelegate.swift in Sources */,
 				62BE3F2D2454660800285F39 /* CharacterSerieInfoDTO.swift in Sources */,
+				62BE3F452455AFEA00285F39 /* Character.swift in Sources */,
 				B8E03C0A2446A86500C3180D /* HomeView.swift in Sources */,
 				B8E03C012446930D00C3180D /* InfoPlistEnvironment.swift in Sources */,
 				62963EED2452737C000EEE2A /* CharacterPosterHeaderView.swift in Sources */,
@@ -628,10 +662,12 @@
 				62963EF72452833A000EEE2A /* CharacterComicInfoDTO.swift in Sources */,
 				62963EE62451079C000EEE2A /* CharacterHeaderViewModel.swift in Sources */,
 				B8E03BD52446849200C3180D /* NetworkError.swift in Sources */,
+				62BE3F402455AE7200285F39 /* MComicsModel.xcdatamodeld in Sources */,
 				B8E03BE4244686C200C3180D /* MarvelEndpointParameters.swift in Sources */,
 				62963EF5245282EF000EEE2A /* CharacterComicDTO.swift in Sources */,
 				62BE3F312454670700285F39 /* CharacterSerie.swift in Sources */,
 				B8E03C072446A04D00C3180D /* CharacterInfoDTO.swift in Sources */,
+				62BE3F472455B03E00285F39 /* CharacterRepository.swift in Sources */,
 				B8E03BE1244686A700C3180D /* MarvelQueryStringParameter.swift in Sources */,
 				B8E03BB9244677E300C3180D /* SceneDelegate.swift in Sources */,
 				B839A0692449527600EDFD90 /* UIApplicationExtension.swift in Sources */,
@@ -852,6 +888,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		62BE3F3E2455AE7200285F39 /* MComicsModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				62BE3F3F2455AE7200285F39 /* MComicsModel.xcdatamodel */,
+			);
+			currentVersion = 62BE3F3F2455AE7200285F39 /* MComicsModel.xcdatamodel */;
+			path = MComicsModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B8E03BAB244677E300C3180D /* Project object */;
 }

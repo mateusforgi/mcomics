@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -32,6 +33,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+    static var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "MComicsModel")
+        container.loadPersistentStores { description, error in
+            if let error = error {
+                #warning("handle error")
+            }
+        }
+        return container
+    }()
 
 }
 

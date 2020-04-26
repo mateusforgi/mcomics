@@ -13,7 +13,7 @@ import SDWebImageSwiftUI
 struct CharacterHeaderView: View {
     
     @ObservedObject var viewModel: CharacterHeaderViewModel
-   
+    
     // MARK: - Constructor
     init(viewModel: CharacterHeaderViewModel) {
         self.viewModel = viewModel
@@ -26,15 +26,13 @@ struct CharacterHeaderView: View {
                 .frame(height: 200)
                 .cornerRadius(10)
                 .shadow(radius: 2)
-            HStack(alignment: .center) {
-                Image(systemName: "suit.heart")
-                    .foregroundColor(Color.init(UIColor.systemTeal))
-                Text(viewModel.name)
-                    .lineLimit(2)
-                    .font(Font.system(size: 17, weight: .semibold, design: .default))
-            }.frame(height: 45)
         }
     }
+    
+}
+
+// MARK: Private Functions
+extension CharacterHeaderView {
     
     private func getPhoto() -> some View {
         return WebImage(url: URL(string: viewModel.photoURL))

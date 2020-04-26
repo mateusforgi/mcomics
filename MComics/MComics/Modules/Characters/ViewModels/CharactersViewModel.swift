@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import CoreData
 
 class CharactersViewModel: ObservableObject, Identifiable {
     
@@ -16,6 +17,7 @@ class CharactersViewModel: ObservableObject, Identifiable {
     @Published var loading = false
     @Published var text: String = ""
     @Published var filtering: Bool = false
+    @Published var favoritedCharacters = Set<Int>()
     
     // MARK: - Variables
     private let characterService: CharacterServiceProtocol
@@ -23,6 +25,13 @@ class CharactersViewModel: ObservableObject, Identifiable {
     private var page = 0
     private var count = 0
     private var items = [CharacterHeaderViewModel]()
+    private let characterRepository = CharacterRepository()
+    lazy var context: NSManagedObjectContext = {
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.persistentStoreCoordinator = AppDelegate.persistentContainer.viewContext.persistentStoreCoordinator
+        context.undoManager = nil
+        return context
+    }()
     
     typealias CharactersResponse = (headers: [CharacterHeaderViewModel], count: Int)
     
@@ -32,6 +41,7 @@ class CharactersViewModel: ObservableObject, Identifiable {
         $text.dropFirst(1)
             .sink(receiveValue: self.search(_:))
             .store(in: &disposables)
+        getMyFavorites()
     }
     
     private func search(_ text: String) {
@@ -60,7 +70,7 @@ class CharactersViewModel: ObservableObject, Identifiable {
                 case .finished:
                     break
                 }
-            },
+        },
             receiveValue: { [weak self] (item: CharactersResponse) in
                 guard let self = self else { return }
                 self.loading = false
@@ -71,4 +81,32 @@ class CharactersViewModel: ObservableObject, Identifiable {
         }).store(in: &disposables)
     }
     
+    public func favorite(id: Int, name: String) {
+        
+        characterRepository.favoriteOrUnfavoriteCharacter(id: Int64(id), name: name, context: context) { wasFavorited, error in
+            guard let wasFavorited = wasFavorited else {
+                #warning("handle error")
+                return
+            }
+            DispatchQueue.main.async {
+                if wasFavorited {
+                    self.favoritedCharacters.update(with: id)
+                } else {
+                    self.favoritedCharacters.remove(id)
+                }
+            }
+        }
+    }
+    
+    private func getMyFavorites() {
+        characterRepository.getMyFavorites(context: context) { favorites, error in
+            guard let favorites = favorites else {
+                #warning("handle error")
+                return
+            }
+            DispatchQueue.main.async {
+                self.favoritedCharacters = Set(favorites.map({$0.id}))
+            }
+        }
+    }
 }
