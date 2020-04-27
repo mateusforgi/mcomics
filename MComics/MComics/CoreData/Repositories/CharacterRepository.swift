@@ -9,7 +9,7 @@
 import CoreData
 
 struct CharacterRepository {
-   
+    
     // MARK: - Context
     let context: NSManagedObjectContext
     
@@ -28,10 +28,51 @@ struct CharacterRepository {
         return NSFetchRequest<Character>(entityName: entityName)
     }
     
-    private func createCharacter(id: Int64, name: String) {
-        let character = Character(context: self.context)
-        character.id = id
-        character.name = name
+    private func createCharacter(id: Int64, name: String, description: String, completion: @escaping (Error?) -> Void) {
+        context.perform {
+            let character = Character(context: self.context)
+            character.id = id
+            character.name = name
+            character.characterDescription = description
+            do {
+                try self.context.save()
+                self.context.reset()
+                completion(nil)
+            } catch {
+                self.context.reset()
+                completion(error)
+            }
+        }
+    }
+    
+    private func getCharacterNSManagedObjectID(id: Int64, completion: @escaping (NSManagedObjectID?, Error?) -> Void) {
+        context.perform {
+            let request = self.getRequest()
+            do {
+                request.predicate = self.getCharacterIdPredicate(id: id)
+                let result = try self.context.fetch(request)
+                completion(result.first?.objectID, nil)
+                self.context.reset()
+            } catch {
+                self.context.reset()
+                completion(nil, error)
+            }
+        }
+    }
+    
+    private func deleteCharacter(objectId: NSManagedObjectID, completion: @escaping (Error?) -> Void) {
+        context.perform {
+            let object = self.context.object(with: objectId)
+            self.context.delete(object)
+            do {
+                try self.context.save()
+                self.context.reset()
+                completion(nil)
+            } catch {
+                self.context.reset()
+                completion(error)
+            }
+        }
     }
 }
 
@@ -52,32 +93,34 @@ extension CharacterRepository: CharacterRepositoryProtocol {
         }
     }
     
-    func favoriteOrUnfavoriteCharacter(id: Int64, name: String, completion: @escaping (WasFavorited?, Error?) -> Void) {
+    func unFavorite(id: Int64, completion: @escaping (Error?) -> Void) {
+        self.getCharacterNSManagedObjectID(id: id) { objectId, error in
+            guard let objectId = objectId else {
+                completion(error ?? CharacterRepositoryError.notFound)
+                return
+            }
+            self.deleteCharacter(objectId: objectId, completion: completion)
+        }
+    }
+    
+    func favoriteOrUnfavoriteCharacter(id: Int64, name: String, description: String, completion: @escaping (WasFavorited?, Error?) -> Void) {
         context.perform {
-            let request = self.getRequest()
-            do {
-                request.predicate = self.getCharacterIdPredicate(id: id)
-                let result = try self.context.fetch(request)
-                var wasFavorited: Bool?
-                if result.isEmpty {
-                    self.createCharacter(id: id, name: name)
-                    wasFavorited = true
-                } else {
-                    wasFavorited = false
-                    for object in result {
-                        self.context.delete(object)
+            self.getCharacterNSManagedObjectID(id: id) { objectId, error in
+                guard let error = error else {
+                    var wasFavorited: Bool?
+                    if let objectId = objectId {
+                        wasFavorited = false
+                        self.deleteCharacter(objectId: objectId, completion: { deleteError in
+                            completion(wasFavorited, deleteError)
+                        })
+                    } else {
+                        wasFavorited = true
+                        self.createCharacter(id: id, name: name, description: description, completion: { createError in
+                            completion(wasFavorited, createError)
+                        })
                     }
+                    return
                 }
-                do {
-                    try self.context.save()
-                    self.context.reset()
-                    completion(wasFavorited, nil)
-                } catch {
-                    self.context.reset()
-                    completion(nil, error)
-                }
-            } catch {
-                self.context.reset()
                 completion(nil, error)
             }
         }

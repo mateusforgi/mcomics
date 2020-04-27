@@ -92,8 +92,12 @@ class CharactersViewModel: ObservableObject, Identifiable {
         }).store(in: &disposables)
     }
     
-    public func favorite(id: Int, name: String, photoURL: String) {
-        characterRepository.favoriteOrUnfavoriteCharacter(id: Int64(id), name: name) { wasFavorited, error in
+    public func favorite(id: Int) {
+        guard let character = self.dataSource.first(where: {$0.character.id == id})?.character as? CharacterHeader else {
+            #warning("handle error")
+            return
+        }
+        characterRepository.favoriteOrUnfavoriteCharacter(id: Int64(id), name: character.name, description: character.description) { wasFavorited, error in
             guard let wasFavorited = wasFavorited else {
                 #warning("handle error")
                 return
@@ -101,7 +105,7 @@ class CharactersViewModel: ObservableObject, Identifiable {
             DispatchQueue.main.async {
                 if wasFavorited {
                     self.favoritedCharacters.update(with: id)
-                    self.saveImage(photoURL: photoURL, id: id)
+                    self.saveImage(photoURL: character.photoURL, id: id)
                 } else {
                     self.favoritedCharacters.remove(id)
                 }

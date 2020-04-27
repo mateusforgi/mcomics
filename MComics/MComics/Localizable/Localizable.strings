@@ -8,3 +8,4 @@
 "CharactersHeader" = "Characters";
 "CancelSearchButton" = "Cancel";
 "FavoritesHeader" = "Favorites";
+"CharacterNotFound" = "Character was not found";

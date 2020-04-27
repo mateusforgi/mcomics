@@ -14,7 +14,7 @@ struct CharacterHeaderView: View {
     
     @ObservedObject private var viewModel: CharacterHeaderViewModel
     private var favorited: Bool
-    typealias FavoriteButtonWasClicked = (_ id: Int, _ name: String, _ photoURL: String) -> Void
+    typealias FavoriteButtonWasClicked = (_ id: Int) -> Void
     var favoriteButtonWasClicked: FavoriteButtonWasClicked
     
     // MARK: - Constructor
@@ -33,7 +33,7 @@ struct CharacterHeaderView: View {
                 .shadow(radius: 2)
             HStack(alignment: .center) {
                 Button(action: {
-                    self.favoriteButtonWasClicked(self.viewModel.id, self.viewModel.name, self.viewModel.photoURL)
+                    self.favoriteButtonWasClicked(self.viewModel.id)
                 }) {
                     self.getFavoriteIcon(for: viewModel.id)
                 }.buttonStyle(BorderlessButtonStyle())

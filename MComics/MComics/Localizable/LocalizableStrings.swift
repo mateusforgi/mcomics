@@ -13,5 +13,5 @@ struct LocalizableStrings {
     static let charactersHeader = NSLocalizedString("CharactersHeader", comment: "The header for the list of characters")
     static let cancelSearchButton = NSLocalizedString("CancelSearchButton", comment: "The cancel search bar button")
     static let favoritesHeader = NSLocalizedString("FavoritesHeader", comment: "The header for the list of favorite characters")
-
+    static let characterNotFound = NSLocalizedString("CharacterNotFound", comment: "The error message for a character not found")
 }

@@ -70,13 +70,13 @@ extension CharactersView {
                     NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(characterService: CharacterService(), characterId: headerViewModel.id))) {
                         EmptyView()
                     }.buttonStyle(BorderlessButtonStyle())
-                    CharacterHeaderView(viewModel: headerViewModel, favorited: isFavorited(for: headerViewModel.id), favoriteButtonWasClicked: favoriteButtonWasClicked(id:name:photoURL:)).buttonStyle(BorderlessButtonStyle())
+                    CharacterHeaderView(viewModel: headerViewModel, favorited: isFavorited(for: headerViewModel.id), favoriteButtonWasClicked: favoriteButtonWasClicked(id:)).buttonStyle(BorderlessButtonStyle())
                 }
         }
     }
     
-    private func favoriteButtonWasClicked(id: Int, name: String, photoURL: String) {
-        viewModel.favorite(id: id, name: name, photoURL: photoURL)
+    private func favoriteButtonWasClicked(id: Int) {
+        viewModel.favorite(id: id)
     }
     
     private func isFavorited(for characterId: Int) -> Bool {

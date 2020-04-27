@@ -34,8 +34,8 @@ class FavoriteCharactersViewModel: ObservableObject, Identifiable {
         }
     }
     
-    public func favorite(id: Int, name: String, photoURL: String) {
-        characterRepository.favoriteOrUnfavoriteCharacter(id: Int64(id), name: name) { _, error in
+    public func favorite(id: Int) {
+        characterRepository.unFavorite(id: Int64(id)) { error in
             guard let error = error else {
                 self.favoritedCharacters.removeAll(where: {$0.id == id})
                 return

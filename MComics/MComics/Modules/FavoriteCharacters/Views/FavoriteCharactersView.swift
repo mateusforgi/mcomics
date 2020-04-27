@@ -29,8 +29,8 @@ struct FavoriteCharactersView: View {
         }
     }
     
-    private func favoriteButtonWasClicked(id: Int, name: String, photoURL: String) {
-        viewModel.favorite(id: id, name: name, photoURL: photoURL)
+    private func favoriteButtonWasClicked(id: Int) {
+        viewModel.favorite(id: id)
     }
     
     private func isFavorited(for characterId: Int) -> Bool {

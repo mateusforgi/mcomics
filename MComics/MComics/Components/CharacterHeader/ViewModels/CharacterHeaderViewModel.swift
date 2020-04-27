@@ -15,6 +15,7 @@ class CharacterHeaderViewModel: ObservableObject, Identifiable {
     @Published var name: String
     @Published var photoURL: String = ""
     @Published var image: Data?
+    private (set) var character: CharacterHeaderProtocol
     
     // MARK: - Constructor
     init(character: CharacterHeaderProtocol) {
@@ -22,6 +23,7 @@ class CharacterHeaderViewModel: ObservableObject, Identifiable {
         name = character.name
         photoURL = character.photoURL
         image = character.photo
+        self.character = character
     }
     
     // MARK: - Private Methods
