@@ -31,13 +31,9 @@ struct CharacterDetailView: View {
                 Text(viewModel.header?.description ?? "")
                     .font(.system(size: 14))
             }
-            getSeries()
-            getComics()
         }.edgesIgnoringSafeArea(.top)
             .onAppear {
                 self.viewModel.fetchHeader()
-                self.viewModel.fetchSeries()
-                self.viewModel.fetchComics()
         }
     }
 
@@ -45,26 +41,7 @@ struct CharacterDetailView: View {
 
 // MARK: - Private Functions
 extension CharacterDetailView {
-    
-    private func getSeries() -> some View {
-        return
-            VStack(alignment: .leading) {
-                Text(LocalizableStrings.seriesHeader)
-                    .font(Font.system(size: 34, weight: .bold))
-                CarousellView(items: $viewModel.series)
-        }
-    }
-    
-    
-    private func getComics() -> some View {
-        return
-            VStack(alignment: .leading) {
-                Text(LocalizableStrings.comicsHeader)
-                    .font(Font.system(size: 34, weight: .bold))
-                CarousellView(items: $viewModel.comics)
-        }
-    }
-    
+
     private func getPosterHeader() -> some View {
         if let header = viewModel.header {
             return AnyView(CharacterPosterHeaderView(viewModel: header))
