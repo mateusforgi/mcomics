@@ -14,12 +14,14 @@ class CharacterHeaderViewModel: ObservableObject, Identifiable {
     @Published var id: Int
     @Published var name: String
     @Published var photoURL: String = ""
+    @Published var image: Data?
     
     // MARK: - Constructor
-    init(character: CharacterHeader) {
+    init(character: CharacterHeaderProtocol) {
         id = character.id
         name = character.name
-        photoURL = getPhotoURL(path: character.imagePath, imageExtension: character.imageExtension)
+        photoURL = character.photoURL
+        image = character.photo
     }
     
     // MARK: - Private Methods
@@ -27,3 +29,4 @@ class CharacterHeaderViewModel: ObservableObject, Identifiable {
         return  MarvelAPIEnvironment.getPhotoURL(path: path, imageExtension: imageExtension, size: .portraitMedium)
     }
 }
+

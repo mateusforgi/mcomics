@@ -27,12 +27,16 @@ class CharacterDetailViewModel: ObservableObject, Identifiable {
         self.characterId = characterId
     }
     
+    private func getPhotoURL(path: String, imageExtension: String) -> String {
+        return  MarvelAPIEnvironment.getPhotoURL(path: path, imageExtension: imageExtension, size: .portraitMedium)
+    }
+    
     //MARK: - Public Methods
     public func fetchHeader() {
         characterService.getCharacterDetail(characterId)
             .receive(on: DispatchQueue.main)
             .map { response in
-                let header = response.data.results.map(CharacterHeader.init)
+                let header = response.data.results.map({CharacterHeader(item: $0, photoURL: self.getPhotoURL(path: $0.thumbnail.path, imageExtension: $0.thumbnail.imageExtension))})
                 return header.map(CharacterDetailHeaderViewModel.init)
         }.sink(
             receiveCompletion: { value in

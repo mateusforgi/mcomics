@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftUI
+import CoreData
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,8 +21,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let charactersViewModel = CharactersViewModel(characterService: CharacterService())
-        let contentView = HomeView(charactersViewModel: charactersViewModel)
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.persistentStoreCoordinator = AppDelegate.persistentContainer.viewContext.persistentStoreCoordinator
+        context.undoManager = nil
+        let characterRepository = CharacterRepository(context: context)
+        
+        let charactersViewModel = CharactersViewModel(characterService: CharacterService(), characterRepository: characterRepository)
+        let favoriteCharactersViewModel = FavoriteCharactersViewModel(characterRepository: characterRepository)
+        let contentView = HomeView(charactersViewModel: charactersViewModel, favoriteCharactersViewModel: favoriteCharactersViewModel)
 
 
         // Use a UIHostingController as window root view controller.

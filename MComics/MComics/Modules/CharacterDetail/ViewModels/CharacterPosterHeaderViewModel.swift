@@ -20,7 +20,7 @@ class CharacterDetailHeaderViewModel: ObservableObject, Identifiable {
     init(character: CharacterHeader) {
         description = character.description
         name = character.name
-        photoURL = getPhotoURL(path: character.imagePath, imageExtension: character.imageExtension)
+        photoURL = character.photoURL
     }
     
     // MARK: - Private Methods

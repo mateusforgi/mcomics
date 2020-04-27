@@ -13,7 +13,7 @@ import SwiftUI
 struct CharactersView: View {
     
     //MARK: - Observed
-    @ObservedObject var viewModel: CharactersViewModel
+    @ObservedObject private var viewModel: CharactersViewModel
     
     //MARK: - State
     @State private var showCancelButton: Bool = false
@@ -70,33 +70,17 @@ extension CharactersView {
                     NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(characterService: CharacterService(), characterId: headerViewModel.id))) {
                         EmptyView()
                     }.buttonStyle(BorderlessButtonStyle())
-                    CharacterHeaderView(viewModel: headerViewModel).buttonStyle(BorderlessButtonStyle())
+                    CharacterHeaderView(viewModel: headerViewModel, favorited: isFavorited(for: headerViewModel.id), favoriteButtonWasClicked: favoriteButtonWasClicked(id:name:photoURL:)).buttonStyle(BorderlessButtonStyle())
                 }
-                HStack(alignment: .center) {
-                    Button(action: {
-                        self.favoriteButtonWasClicked(id: headerViewModel.id, name: headerViewModel.name)
-                    }) {
-                        self.getFavoriteIcon(for: headerViewModel.id)
-                    }.buttonStyle(BorderlessButtonStyle())
-                    Text(headerViewModel.name)
-                        .lineLimit(2)
-                        .font(Font.system(size: 17, weight: .semibold, design: .default))
-                }.frame(height: 45)
         }
     }
     
-    private func favoriteButtonWasClicked(id: Int, name: String) {
-        viewModel.favorite(id: id, name: name)
+    private func favoriteButtonWasClicked(id: Int, name: String, photoURL: String) {
+        viewModel.favorite(id: id, name: name, photoURL: photoURL)
     }
     
-    private func getFavoriteIcon(for characterId: Int) -> some View {
-        if viewModel.favoritedCharacters.first(where: {$0 == characterId}) == nil {
-            return Image(systemName: "suit.heart")
-                .foregroundColor(Color.init(UIColor.systemTeal))
-        } else {
-            return Image(systemName: "suit.heart.fill")
-                .foregroundColor(Color.init(UIColor.systemTeal))
-        }
+    private func isFavorited(for characterId: Int) -> Bool {
+        return viewModel.favoritedCharacters.first(where: {$0 == characterId}) != nil
     }
     
 }

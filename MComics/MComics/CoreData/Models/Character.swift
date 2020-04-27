@@ -13,5 +13,5 @@ class Character: NSManagedObject {
     
     @NSManaged var id: Int64
     @NSManaged var name: String
-    
+    @NSManaged var image: Data?
 }

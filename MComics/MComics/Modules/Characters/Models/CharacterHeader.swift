@@ -8,17 +8,18 @@
 
 import Foundation
 
-struct CharacterHeader {
-    #warning("review this file")
+struct CharacterHeader: CharacterHeaderProtocol {
+    
     private let item: CharacterInfoDTO
     var id: Int { item.id }
     var name: String { item.name }
     var description: String { item.description }
-    var imagePath: String { item.thumbnail.path }
-    var imageExtension: String { item.thumbnail.imageExtension }
-
-    init(item: CharacterInfoDTO) {
-      self.item = item
+    var photoURL: String
+    var photo: Data?
+    
+    init(item: CharacterInfoDTO, photoURL: String) {
+        self.item = item
+        self.photoURL = photoURL
     }
     
 }

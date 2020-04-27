@@ -10,6 +10,14 @@ import CoreData
 
 struct CharacterRepository {
    
+    // MARK: - Context
+    let context: NSManagedObjectContext
+    
+    // MARK: - Constructor
+    init(context: NSManagedObjectContext) {
+        self.context = context
+    }
+    
     // MARK: Private Functions
     private func getCharacterIdPredicate(id: Int64) -> NSPredicate {
         return NSPredicate(format: "%K == %i", #keyPath(Character.id), id)
@@ -20,59 +28,81 @@ struct CharacterRepository {
         return NSFetchRequest<Character>(entityName: entityName)
     }
     
-    // MARK: Public Functions
-    func getMyFavorites(context: NSManagedObjectContext, completion: @escaping ([FavoriteCharacterDTO]?, Error?) -> Void) {
+    private func createCharacter(id: Int64, name: String) {
+        let character = Character(context: self.context)
+        character.id = id
+        character.name = name
+    }
+}
+
+extension CharacterRepository: CharacterRepositoryProtocol {
+    
+    func getMyFavorites(completion: @escaping ([FavoriteCharacterDTO]?, Error?) -> Void) {
         context.perform {
             let request = self.getRequest()
             do {
-                let result = try context.fetch(request)
-                let myFavorites = result.map({FavoriteCharacterDTO(id: Int($0.id), name: $0.name)})
-                context.reset()
+                let result = try self.context.fetch(request)
+                let myFavorites = result.map({FavoriteCharacterDTO(id: Int($0.id), name: $0.name, image: $0.image)})
+                self.context.reset()
                 completion(myFavorites, nil)
             } catch {
-                context.reset()
+                self.context.reset()
                 completion(nil, error)
             }
         }
     }
     
-    func favoriteOrUnfavoriteCharacter(id: Int64, name: String, context: NSManagedObjectContext, completion: @escaping (Bool?, Error?) -> Void) {
+    func favoriteOrUnfavoriteCharacter(id: Int64, name: String, completion: @escaping (WasFavorited?, Error?) -> Void) {
         context.perform {
             let request = self.getRequest()
             do {
                 request.predicate = self.getCharacterIdPredicate(id: id)
-                let result = try context.fetch(request)
+                let result = try self.context.fetch(request)
                 var wasFavorited: Bool?
                 if result.isEmpty {
-                    let character = Character(context: context)
-                    character.id = id
-                    character.name = name
+                    self.createCharacter(id: id, name: name)
                     wasFavorited = true
                 } else {
                     wasFavorited = false
                     for object in result {
-                        context.delete(object)
+                        self.context.delete(object)
                     }
                 }
                 do {
-                    try context.save()
-                    context.reset()
+                    try self.context.save()
+                    self.context.reset()
                     completion(wasFavorited, nil)
                 } catch {
-                    context.reset()
+                    self.context.reset()
                     completion(nil, error)
                 }
             } catch {
-                context.reset()
+                self.context.reset()
                 completion(nil, error)
             }
         }
     }
     
-    struct FavoriteCharacterDTO {
-        
-        let id: Int
-        let name: String
-        
+    func saveImage(image: Data, id: Int64, completion: @escaping (Error?) -> Void) {
+        context.perform {
+            let request = self.getRequest()
+            do {
+                request.predicate = self.getCharacterIdPredicate(id: id)
+                let result = try self.context.fetch(request)
+                result.first?.image = image
+                do {
+                    try self.context.save()
+                    self.context.reset()
+                    completion(nil)
+                } catch {
+                    self.context.reset()
+                    completion(error)
+                }
+            } catch {
+                self.context.reset()
+                completion(error)
+            }
+        }
     }
+    
 }

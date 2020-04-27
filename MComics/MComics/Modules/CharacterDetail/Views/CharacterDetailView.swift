@@ -12,7 +12,7 @@ import SDWebImageSwiftUI
 struct CharacterDetailView: View {
     
     // MARK: - Observed
-    @ObservedObject var viewModel: CharacterDetailViewModel
+    @ObservedObject private var viewModel: CharacterDetailViewModel
     
     // MARK: - Constructor
     init(viewModel: CharacterDetailViewModel) {

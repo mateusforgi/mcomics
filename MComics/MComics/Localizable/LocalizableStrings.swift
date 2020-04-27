@@ -14,5 +14,6 @@ struct LocalizableStrings {
     static let cancelSearchButton = NSLocalizedString("CancelSearchButton", comment: "The cancel search bar button")
     static let seriesHeader = NSLocalizedString("SeriesHeader", comment: "The series header title")
     static let comicsHeader = NSLocalizedString("ComicsHeader", comment: "The comics header title")
+    static let favoritesHeader = NSLocalizedString("FavoritesHeader", comment: "The header for the list of favorite characters")
 
 }

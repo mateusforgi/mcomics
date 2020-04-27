@@ -12,7 +12,7 @@ import SDWebImageSwiftUI
 struct CharacterPosterHeaderView: View {
     
     // MARK: - Observed
-    @ObservedObject var viewModel: CharacterDetailHeaderViewModel
+    @ObservedObject private var viewModel: CharacterDetailHeaderViewModel
     
     // MARK: - Constructor
     init(viewModel: CharacterDetailHeaderViewModel) {
