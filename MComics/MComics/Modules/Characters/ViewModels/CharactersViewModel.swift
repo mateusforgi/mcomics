@@ -13,11 +13,12 @@ import CoreData
 class CharactersViewModel: ObservableObject, Identifiable {
     
     // MARK: - Published
-    @Published var dataSource = [CharacterHeaderViewModel]()
+    @Published var dataSource: [CharacterHeaderViewModel]?
     @Published var loading = false
     @Published var text: String = ""
     @Published var filtering: Bool = false
     @Published var favoritedCharacters = Set<Int>()
+    @Published var error: Error?
 
     // MARK: - Variables
     private let characterService: CharacterServiceProtocol
@@ -47,13 +48,13 @@ class CharactersViewModel: ObservableObject, Identifiable {
     }
     
     private func getMyFavorites() {
-        characterRepository.getMyFavorites() { favorites, error in
-            guard let favorites = favorites else {
-                #warning("handle error")
-                return
-            }
+        characterRepository.getMyFavorites() { [weak self] favorites, error in
             DispatchQueue.main.async {
-                self.favoritedCharacters = Set(favorites.map({$0.id}))
+                guard let favorites = favorites else {
+                    self?.error = error
+                    return
+                }
+                self?.favoritedCharacters = Set(favorites.map({$0.id}))
             }
         }
     }
@@ -64,6 +65,7 @@ class CharactersViewModel: ObservableObject, Identifiable {
     
     //MARK: - Public Methods
     public func fetch() {
+        self.error = nil
         if loading || filtering || noMoreData {
             return
         }
@@ -86,7 +88,8 @@ class CharactersViewModel: ObservableObject, Identifiable {
             receiveCompletion: { value in
                 self.loading = false
                 switch value {
-                case .failure:
+                case .failure(let error):
+                    self.error = error
                     break
                 case .finished:
                     break
@@ -102,21 +105,25 @@ class CharactersViewModel: ObservableObject, Identifiable {
     }
     
     public func favorite(id: Int) {
-        guard let character = self.dataSource.first(where: {$0.character.id == id})?.character as? CharacterHeader else {
-            #warning("handle error")
+        guard let character = self.dataSource?.first(where: {$0.character.id == id})?.character as? CharacterHeader else {
+            DispatchQueue.main.async {
+                self.error = CharacterError.notFound
+            }
             return
         }
-        characterRepository.favoriteOrUnfavoriteCharacter(id: Int64(id), name: character.name, description: character.description) { wasFavorited, error in
+        characterRepository.favoriteOrUnfavoriteCharacter(id: Int64(id), name: character.name, description: character.description) { [weak self] wasFavorited, error in
             guard let wasFavorited = wasFavorited else {
-                #warning("handle error")
+                DispatchQueue.main.async {
+                    self?.error = error
+                }
                 return
             }
             DispatchQueue.main.async {
                 if wasFavorited {
-                    self.favoritedCharacters.update(with: id)
-                    self.saveImage(photoURL: character.photoURL, id: id)
+                    self?.favoritedCharacters.update(with: id)
+                    self?.saveImage(photoURL: character.photoURL, id: id)
                 } else {
-                    self.favoritedCharacters.remove(id)
+                    self?.favoritedCharacters.remove(id)
                 }
             }
         }
@@ -128,9 +135,15 @@ class CharactersViewModel: ObservableObject, Identifiable {
                 do {
                     let image = try Data(contentsOf: url)
                     self?.characterRepository.saveImage(image: image, id: Int64(id)) { error in
-                        #warning("handle error")
+                        DispatchQueue.main.async {
+                            self?.error = error
+                        }
                     }
-                } catch {}
+                } catch {
+                    DispatchQueue.main.async {
+                        self?.error = error
+                    }
+                }
             }
         }
     }

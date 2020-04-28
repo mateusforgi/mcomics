@@ -26,35 +26,47 @@ struct CharactersView: View {
     //MARK: - Body
     var body: some View {
         NavigationView {
-            VStack
+            VStack<AnyView>
                 {
-                    SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
-                    List {
-                        ForEach(viewModel.dataSource.indices, id: \.self) { index in
-                            self.getHeaders(index: index)
-                        }}.onAppear {
-                            self.viewModel.fetch()
-                            UITableView.appearance().tableFooterView = UIView()
-                            UITableView.appearance().separatorStyle = .none
-                            UITableViewCell.appearance().selectionStyle = .none
-                    }.resignKeyboardOnDragGesture()
-                        .navigationBarTitle(LocalizableStrings.charactersHeader)
+                    guard let headers = viewModel.dataSource else {
+                        guard let error = viewModel.error else {
+                            return AnyView(ActivityIndicator(isAnimating: viewModel.loading, style: .medium))
+                        }
+                        return AnyView(ErrorView(message: error.localizedDescription, tapAction: self.viewModel.fetch, tapMessage: LocalizableStrings.retryLabel))
+                    }
+                    if headers.isEmpty {
+                        return AnyView(ErrorView(message: LocalizableStrings.noCharacters))
+                    }
+                    return AnyView(VStack {
+                        SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
+                        List {
+                            ForEach(headers.indices, id: \.self) { index in
+                                self.getHeaders(index: index, headers: headers)
+                            }}.onAppear {
+                                UITableView.appearance().tableFooterView = UIView()
+                                UITableView.appearance().separatorStyle = .none
+                                UITableViewCell.appearance().selectionStyle = .none
+                        }.resignKeyboardOnDragGesture()
+                    })
+                    
+            }.navigationBarTitle(LocalizableStrings.charactersHeader).onAppear {
+                self.viewModel.fetch()
             }
         }
-        
     }
+    
 }
 
 // MARK: - Private Functions
 extension CharactersView {
     
-    private func getHeaders(index: Int) -> some View  {
+    private func getHeaders(index: Int, headers: [CharacterHeaderViewModel]) -> some View  {
         return
             VStack {
                 HStack {
-                    self.getHeader(self.viewModel.dataSource[index])
+                    self.getHeader(headers[index])
                 }
-                if index + 1 == self.viewModel.dataSource.count {
+                if index + 1 == headers.count {
                     ActivityIndicator(isAnimating: self.viewModel.loading && !self.viewModel.filtering, style: .medium)
                         .onAppear {
                             self.viewModel.fetch()

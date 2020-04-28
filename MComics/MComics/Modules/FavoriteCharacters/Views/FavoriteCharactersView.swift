@@ -21,11 +21,22 @@ struct FavoriteCharactersView: View {
     // MARK: - Body
     var body: some View {
         NavigationView {
-            List(viewModel.favoritedCharacters) { character in
-                CharacterHeaderView(viewModel: character, favorited: self.isFavorited(for: character.id), favoriteButtonWasClicked: self.favoriteButtonWasClicked)
-            }.onAppear {
+            VStack<AnyView> {
+                guard let favorites = viewModel.favoritedCharacters else {
+                    guard let error = viewModel.error else {
+                        return AnyView(ActivityIndicator(isAnimating: viewModel.loading, style: .medium))
+                    }
+                    return AnyView(ErrorView(message: error.localizedDescription, tapAction: self.viewModel.getMyFavorites, tapMessage: LocalizableStrings.retryLabel))
+                }
+                if favorites.isEmpty {
+                    return AnyView(ErrorView(message: LocalizableStrings.noFavoriteCharacters))
+                }
+                return AnyView(List(favorites) { character in
+                    CharacterHeaderView(viewModel: character, favorited: self.isFavorited(for: character.id), favoriteButtonWasClicked: self.favoriteButtonWasClicked)
+                })
+            }.navigationBarTitle(LocalizableStrings.favoritesHeader).onAppear {
                 self.viewModel.getMyFavorites()
-            }.navigationBarTitle(LocalizableStrings.favoritesHeader)
+            }
         }
     }
     
@@ -34,6 +45,6 @@ struct FavoriteCharactersView: View {
     }
     
     private func isFavorited(for characterId: Int) -> Bool {
-        return viewModel.favoritedCharacters.first(where: {$0.id == characterId}) != nil
+        return viewModel.favoritedCharacters?.first(where: {$0.id == characterId}) != nil
     }
 }
