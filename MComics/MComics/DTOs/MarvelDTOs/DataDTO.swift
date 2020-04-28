@@ -11,10 +11,15 @@ import Foundation
 struct DataDTO<T>: Decodable where T: Decodable {
     
     var results: [T]
+    var total: Int
     var count: Int
+    var limit: Int
+    
     enum CodingKeys: String, CodingKey {
         case results,
-        count
+        total,
+        count,
+        limit
     }
     
 }

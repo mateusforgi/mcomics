@@ -18,16 +18,18 @@ class CharactersViewModel: ObservableObject, Identifiable {
     @Published var text: String = ""
     @Published var filtering: Bool = false
     @Published var favoritedCharacters = Set<Int>()
-    
+
     // MARK: - Variables
     private let characterService: CharacterServiceProtocol
     private var disposables = Set<AnyCancellable>()
     private var page = 0
-    private var count = 0
+    private var limit = 0
+    private var total = 0
+    private var noMoreData: Bool = false
+
     private var items = [CharacterHeaderViewModel]()
     private let characterRepository: CharacterRepositoryProtocol
     
-    typealias CharactersResponse = (headers: [CharacterHeaderViewModel], count: Int)
     
     // MARK: - Constructor
     init(characterService: CharacterServiceProtocol, characterRepository: CharacterRepositoryProtocol) {
@@ -62,16 +64,24 @@ class CharactersViewModel: ObservableObject, Identifiable {
     
     //MARK: - Public Methods
     public func fetch() {
-        if loading || filtering {
+        if loading || filtering || noMoreData {
             return
         }
-        let offset = page * count
+        var offset = page * limit
+        if offset >= total {
+            offset = total == 0 ? 0 : total - 1
+        }
         self.loading = true
         characterService.getCharacters(offset)
             .receive(on: DispatchQueue.main)
-            .map { response in
-                let headers = response.data.results.map({CharacterHeader(item: $0, photoURL: self.getPhotoURL(path: $0.thumbnail.path, imageExtension: $0.thumbnail.imageExtension))})
-                return (headers.map(CharacterHeaderViewModel.init), response.data.count)
+            .map { [weak self] response in
+                self?.total = response.data.total
+                self?.limit = response.data.limit
+                if response.data.count < response.data.limit {
+                    self?.noMoreData = true
+                }
+                let headers = response.data.results.map({CharacterHeader(item: $0, photoURL: self?.getPhotoURL(path: $0.thumbnail.path, imageExtension: $0.thumbnail.imageExtension) ?? "")})
+                return (headers.map(CharacterHeaderViewModel.init))
         }.sink(
             receiveCompletion: { value in
                 self.loading = false
@@ -82,12 +92,11 @@ class CharactersViewModel: ObservableObject, Identifiable {
                     break
                 }
         },
-            receiveValue: { [weak self] (item: CharactersResponse) in
+            receiveValue: { [weak self] (items: [CharacterHeaderViewModel]) in
                 guard let self = self else { return }
                 self.loading = false
-                self.items.append(contentsOf: item.headers)
+                self.items.append(contentsOf: items)
                 self.page += 1
-                self.count = item.count
                 self.dataSource = self.items
         }).store(in: &disposables)
     }
