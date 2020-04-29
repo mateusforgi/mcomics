@@ -12,3 +12,4 @@
 "NoFavoriteCharacters" = "No favorite characters";
 "NoCharacters" = "No characters";
 "RetryLabel" = "Retry";
+"CharacterHasNoDescriptionLabel" = "Character has no description.";

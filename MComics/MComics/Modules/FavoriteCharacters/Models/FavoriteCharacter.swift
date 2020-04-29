@@ -13,8 +13,9 @@ struct FavoriteCharacter: CharacterHeaderProtocol {
     private let character: FavoriteCharacterDTO
     var id: Int { character.id }
     var name: String { character.name }
-    var photoURL: String = ""
-    var photo: Data? { character.image }
+    var photoURL: String { character.photoURL }
+    var image: Data? { character.image }
+    var description: String { character.description }
     
     init(character: FavoriteCharacterDTO) {
         self.character = character

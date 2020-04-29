@@ -12,43 +12,59 @@ import Combine
 class CharacterDetailViewModel: ObservableObject, Identifiable {
     
     // MARK: - Published
-    @Published var header: CharacterDetailHeaderViewModel?
+    @Published var description: String
+    @Published var isFavorited: Bool
+    @Published var error: Error?
     
     // MARK: - Variables
-    private let characterService: CharacterServiceProtocol
-    private var disposables = Set<AnyCancellable>()
-    private let characterId: Int
+    private (set) var header: CharacterHeaderProtocol
+    private var characterRepository: CharacterRepositoryProtocol
     
     // MARK: - Constructor
-    init(characterService: CharacterServiceProtocol, characterId: Int) {
-        self.characterService = characterService
-        self.characterId = characterId
+    init(header: CharacterHeaderProtocol, characterRepository: CharacterRepositoryProtocol, isFavorited: Bool) {
+        self.description = header.description
+        self.header = header
+        self.isFavorited = isFavorited
+        self.characterRepository = characterRepository
     }
     
-    private func getPhotoURL(path: String, imageExtension: String) -> String {
-        return  MarvelAPIEnvironment.getPhotoURL(path: path, imageExtension: imageExtension, size: .portraitMedium)
-    }
-    
-    //MARK: - Public Methods
-    public func fetchHeader() {
-        characterService.getCharacterDetail(characterId)
-            .receive(on: DispatchQueue.main)
-            .map { response in
-                let header = response.data.results.map({CharacterHeader(item: $0, photoURL: self.getPhotoURL(path: $0.thumbnail.path, imageExtension: $0.thumbnail.imageExtension))})
-                return header.map(CharacterDetailHeaderViewModel.init)
-        }.sink(
-            receiveCompletion: { value in
-                switch value {
-                case .failure:
-                    break
-                case .finished:
-                    break
+    public func favorite() {
+        characterRepository.favoriteOrUnfavoriteCharacter(character: header) { [weak self] wasFavorited, error in
+            guard let self = self else {
+                return
+            }
+            guard let wasFavorited = wasFavorited else {
+                DispatchQueue.main.async {
+                    self.error = error
                 }
-        },
-            receiveValue: { [weak self] (items: [CharacterDetailHeaderViewModel]) in
-                guard let self = self else { return }
-                self.header = items.first
-        }).store(in: &disposables)
+                return
+            }
+            DispatchQueue.main.async {
+                self.isFavorited = wasFavorited
+                if wasFavorited {
+                    self.saveImage(photoURL: self.header.photoURL, id: self.header.id)
+                }
+            }
+        }
+    }
+    
+    private func saveImage(photoURL: String, id: Int) {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            if let url = URL(string: photoURL) {
+                do {
+                    let image = try Data(contentsOf: url)
+                    self?.characterRepository.saveImage(image: image, id: Int64(id)) { error in
+                        DispatchQueue.main.async {
+                            self?.error = error
+                        }
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        self?.error = error
+                    }
+                }
+            }
+        }
     }
     
 }

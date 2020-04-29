@@ -22,7 +22,7 @@ class CharacterHeaderViewModel: ObservableObject, Identifiable {
         id = character.id
         name = character.name
         photoURL = character.photoURL
-        image = character.photo
+        image = character.image
         self.character = character
     }
     

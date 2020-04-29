@@ -19,7 +19,7 @@ class CharactersViewModel: ObservableObject, Identifiable {
     @Published var filtering: Bool = false
     @Published var favoritedCharacters = Set<Int>()
     @Published var error: Error?
-
+    
     // MARK: - Variables
     private let characterService: CharacterServiceProtocol
     private var disposables = Set<AnyCancellable>()
@@ -27,9 +27,9 @@ class CharactersViewModel: ObservableObject, Identifiable {
     private var limit = 0
     private var total = 0
     private var noMoreData: Bool = false
-
+    
     private var items = [CharacterHeaderViewModel]()
-    private let characterRepository: CharacterRepositoryProtocol
+    let characterRepository: CharacterRepositoryProtocol
     
     
     // MARK: - Constructor
@@ -39,7 +39,6 @@ class CharactersViewModel: ObservableObject, Identifiable {
         $text.dropFirst(1)
             .sink(receiveValue: self.search(_:))
             .store(in: &disposables)
-        getMyFavorites()
     }
     
     private func search(_ text: String) {
@@ -47,20 +46,27 @@ class CharactersViewModel: ObservableObject, Identifiable {
         dataSource = filtering ? items.filter({$0.name.localizedCaseInsensitiveContains(text)}) : items
     }
     
-    private func getMyFavorites() {
-        characterRepository.getMyFavorites() { [weak self] favorites, error in
-            DispatchQueue.main.async {
-                guard let favorites = favorites else {
-                    self?.error = error
-                    return
-                }
-                self?.favoritedCharacters = Set(favorites.map({$0.id}))
-            }
-        }
-    }
-    
     private func getPhotoURL(path: String, imageExtension: String) -> String {
         return  MarvelAPIEnvironment.getPhotoURL(path: path, imageExtension: imageExtension, size: .portraitMedium)
+    }
+    
+    private func saveImage(photoURL: String, id: Int) {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            if let url = URL(string: photoURL) {
+                do {
+                    let image = try Data(contentsOf: url)
+                    self?.characterRepository.saveImage(image: image, id: Int64(id)) { error in
+                        DispatchQueue.main.async {
+                            self?.error = error
+                        }
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        self?.error = error
+                    }
+                }
+            }
+        }
     }
     
     //MARK: - Public Methods
@@ -111,7 +117,7 @@ class CharactersViewModel: ObservableObject, Identifiable {
             }
             return
         }
-        characterRepository.favoriteOrUnfavoriteCharacter(id: Int64(id), name: character.name, description: character.description) { [weak self] wasFavorited, error in
+        characterRepository.favoriteOrUnfavoriteCharacter(character: character) { [weak self] wasFavorited, error in
             guard let wasFavorited = wasFavorited else {
                 DispatchQueue.main.async {
                     self?.error = error
@@ -129,21 +135,14 @@ class CharactersViewModel: ObservableObject, Identifiable {
         }
     }
     
-    private func saveImage(photoURL: String, id: Int) {
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            if let url = URL(string: photoURL) {
-                do {
-                    let image = try Data(contentsOf: url)
-                    self?.characterRepository.saveImage(image: image, id: Int64(id)) { error in
-                        DispatchQueue.main.async {
-                            self?.error = error
-                        }
-                    }
-                } catch {
-                    DispatchQueue.main.async {
-                        self?.error = error
-                    }
+    public func getMyFavorites() {
+        characterRepository.getMyFavorites() { [weak self] favorites, error in
+            DispatchQueue.main.async {
+                guard let favorites = favorites else {
+                    self?.error = error
+                    return
                 }
+                self?.favoritedCharacters = Set(favorites.map({$0.id}))
             }
         }
     }

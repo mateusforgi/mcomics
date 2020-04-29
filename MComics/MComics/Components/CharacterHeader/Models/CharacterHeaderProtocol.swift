@@ -13,6 +13,7 @@ protocol CharacterHeaderProtocol {
     var id: Int { get }
     var name: String { get }
     var photoURL: String { get }
-    var photo: Data? { get }
+    var image: Data? { get }
+    var description: String { get }
 
 }

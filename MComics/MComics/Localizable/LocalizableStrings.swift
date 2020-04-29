@@ -17,5 +17,6 @@ struct LocalizableStrings {
     static let noFavoriteCharacters = NSLocalizedString("NoFavoriteCharacters", comment: "Message when there is no favorite characters")
     static let noCharacters = NSLocalizedString("NoCharacters", comment: "Message when there is no characters")
     static let retryLabel = NSLocalizedString("RetryLabel", comment: "The retry button label")
-
+    static let characterHasNoDescriptionLabel = NSLocalizedString("CharacterHasNoDescriptionLabel", comment: "The label when there is no description for the character")
+    
 }

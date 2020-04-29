@@ -9,17 +9,18 @@
 import Foundation
 
 struct CharacterHeader: CharacterHeaderProtocol {
-    
+   
     private let item: CharacterInfoDTO
     var id: Int { item.id }
     var name: String { item.name }
     var description: String { item.description }
     var photoURL: String
-    var photo: Data?
-    
-    init(item: CharacterInfoDTO, photoURL: String) {
+    var image: Data?
+
+    init(item: CharacterInfoDTO, photoURL: String, image: Data? = nil) {
         self.item = item
         self.photoURL = photoURL
+        self.image = image
     }
     
 }

@@ -22,43 +22,28 @@ struct CharacterDetailView: View {
     // MARK: - Body
     var body: some View {
         List {
-            getPosterHeader()
-                .listRowInsets(EdgeInsets())
-                .frame(height: 400)
+            CharacterHeaderView(viewModel: CharacterHeaderViewModel(character: viewModel.header), favorited: viewModel.isFavorited, favoriteButtonWasClicked: favoriteButtonWasClicked(id:), photoHeight: 400)
             VStack {
-                Text(viewModel.header?.name ?? "")
-                    .font(.system(size: 24, weight: .medium))
-                Text(viewModel.header?.description ?? "")
-                    .font(.system(size: 14))
+                Text(getDescription())
             }
-        }.edgesIgnoringSafeArea(.top)
-            .onAppear {
-                self.viewModel.fetchHeader()
-        }
+        }.navigationBarTitle(getNavigationHeaderTitle())
     }
-
+    
 }
 
-// MARK: - Private Functions
 extension CharacterDetailView {
-
-    private func getPosterHeader() -> some View {
-        if let header = viewModel.header {
-            return AnyView(CharacterPosterHeaderView(viewModel: header))
-        } else {
-            return AnyView(Rectangle().foregroundColor(.clear))
-        }
+    
+    private func favoriteButtonWasClicked(id: Int) {
+        viewModel.favorite()
     }
     
-    private func getPhoto(photoURL: String) -> some View {
-        return WebImage(url: URL(string: photoURL))
-            .resizable()
-            .placeholder {
-                Rectangle().foregroundColor(.clear)
-        }
-        .indicator(.activity)
-        .transition(.fade)
+    private func getDescription() -> String {
+        return viewModel.description.isEmpty ? LocalizableStrings.characterHasNoDescriptionLabel : viewModel.description
     }
     
+    private func getNavigationHeaderTitle() -> String {
+        return String(viewModel.header.name.split(separator: " ").first ?? "")
+    }
 }
+
 

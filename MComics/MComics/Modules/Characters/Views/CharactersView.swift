@@ -53,6 +53,7 @@ struct CharactersView: View {
                     
             }.navigationBarTitle(LocalizableStrings.charactersHeader).onAppear {
                 self.viewModel.fetch()
+                self.viewModel.getMyFavorites()
             }
         }
     }
@@ -108,7 +109,7 @@ extension CharactersView {
         return
             VStack {
                 ZStack {
-                    NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(characterService: CharacterService(), characterId: headerViewModel.id))) {
+                    NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(header: headerViewModel.character, characterRepository: viewModel.characterRepository, isFavorited: isFavorited(for: headerViewModel.character.id)))) {
                         EmptyView()
                     }.buttonStyle(BorderlessButtonStyle())
                     CharacterHeaderView(viewModel: headerViewModel, favorited: isFavorited(for: headerViewModel.id), favoriteButtonWasClicked: favoriteButtonWasClicked(id:)).buttonStyle(BorderlessButtonStyle())

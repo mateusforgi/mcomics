@@ -28,12 +28,14 @@ struct CharacterRepository {
         return NSFetchRequest<Character>(entityName: entityName)
     }
     
-    private func createCharacter(id: Int64, name: String, description: String, completion: @escaping (Error?) -> Void) {
+    private func createCharacter(id: Int64, name: String, description: String, photoURL: String, completion: @escaping (Error?) -> Void) {
         context.perform {
             let character = Character(context: self.context)
             character.id = id
             character.name = name
             character.characterDescription = description
+            character.photoURL = photoURL
+            
             do {
                 try self.context.save()
                 self.context.reset()
@@ -84,7 +86,7 @@ extension CharacterRepository: CharacterRepositoryProtocol {
             let request = self.getRequest()
             do {
                 let result = try self.context.fetch(request)
-                let myFavorites = result.map({FavoriteCharacterDTO(id: Int($0.id), name: $0.name, image: $0.image)})
+                let myFavorites = result.map({FavoriteCharacterDTO(id: Int($0.id), name: $0.name, image: $0.image, photoURL: $0.photoURL, description: $0.characterDescription)})
                 self.context.reset()
                 completion(myFavorites, nil)
             } catch {
@@ -104,7 +106,8 @@ extension CharacterRepository: CharacterRepositoryProtocol {
         }
     }
     
-    func favoriteOrUnfavoriteCharacter(id: Int64, name: String, description: String, completion: @escaping (WasFavorited?, Error?) -> Void) {
+    func favoriteOrUnfavoriteCharacter(character: CharacterHeaderProtocol, completion: @escaping (WasFavorited?, Error?) -> Void) {
+        let id = Int64(character.id)
         context.perform {
             self.getCharacterNSManagedObjectID(id: id) { objectId, error in
                 guard let error = error else {
@@ -116,7 +119,7 @@ extension CharacterRepository: CharacterRepositoryProtocol {
                         })
                     } else {
                         wasFavorited = true
-                        self.createCharacter(id: id, name: name, description: description, completion: { createError in
+                        self.createCharacter(id: id, name: character.name, description: character.description, photoURL: character.photoURL, completion: { createError in
                             completion(wasFavorited, createError)
                         })
                     }

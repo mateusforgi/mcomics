@@ -16,19 +16,22 @@ struct CharacterHeaderView: View {
     private var favorited: Bool
     typealias FavoriteButtonWasClicked = (_ id: Int) -> Void
     var favoriteButtonWasClicked: FavoriteButtonWasClicked
+    private var photoHeight: CGFloat
+    @State private var errorOnLoadingPhoto = false
     
     // MARK: - Constructor
-    init(viewModel: CharacterHeaderViewModel, favorited: Bool, favoriteButtonWasClicked: @escaping FavoriteButtonWasClicked) {
+    init(viewModel: CharacterHeaderViewModel, favorited: Bool, favoriteButtonWasClicked: @escaping FavoriteButtonWasClicked, photoHeight: CGFloat = 300) {
         self.viewModel = viewModel
         self.favorited = favorited
         self.favoriteButtonWasClicked = favoriteButtonWasClicked
+        self.photoHeight = photoHeight
     }
     
     // MARK: - Body
     var body: some View {
         VStack(alignment: .leading) {
             getPhoto()
-                .frame(height: 300)
+                .frame(height: photoHeight)
                 .cornerRadius(10)
                 .shadow(radius: 2)
             HStack(alignment: .center) {
@@ -50,16 +53,19 @@ struct CharacterHeaderView: View {
 extension CharacterHeaderView {
     
     private func getPhoto() -> some View {
-        if viewModel.photoURL.isEmpty {
+        if errorOnLoadingPhoto {
             return AnyView(getPhotoLocally())
         }
         return AnyView(WebImage(url: URL(string: viewModel.photoURL))
+            .onFailure { _ in
+                self.errorOnLoadingPhoto.toggle()
+            }
             .resizable()
             .placeholder {
                 Rectangle().foregroundColor(.clear)
-        }
-        .indicator(.activity)
-        .transition(.fade))
+            }
+            .indicator(.activity)
+            .transition(.fade))
     }
     
     private func getPhotoLocally() -> some View {
