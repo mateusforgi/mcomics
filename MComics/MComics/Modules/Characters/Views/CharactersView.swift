@@ -37,8 +37,10 @@ struct CharactersView: View {
                     if headers.isEmpty {
                         return AnyView(ErrorView(message: LocalizableStrings.noCharacters))
                     }
+                    
                     return AnyView(VStack {
                         SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
+                        getErrorView()
                         List {
                             ForEach(headers.indices, id: \.self) { index in
                                 self.getHeaders(index: index, headers: headers)
@@ -59,6 +61,33 @@ struct CharactersView: View {
 
 // MARK: - Private Functions
 extension CharactersView {
+    
+    private func getErrorView() -> some View {
+        guard let error = viewModel.error else {
+            return AnyView(EmptyView())
+        }
+        clearErrorWithDelay()
+        return AnyView(Button(action: {
+            withAnimation {
+                self.viewModel.error = nil
+            }
+        }, label: {
+            Text(error.localizedDescription)
+                .lineLimit(2)
+                .foregroundColor(.white)
+        }).transition(.asymmetric(insertion: .scale, removal: .fade))
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 45, alignment: .center)
+            .background(Color.red.opacity(0.5))
+            .cornerRadius(5)
+            .padding([.leading, .trailing]))
+                              
+    }
+    
+    private func clearErrorWithDelay() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.viewModel.error = nil
+        }
+    }
     
     private func getHeaders(index: Int, headers: [CharacterHeaderViewModel]) -> some View  {
         return
