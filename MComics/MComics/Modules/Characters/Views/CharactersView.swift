@@ -49,9 +49,9 @@ struct CharactersView: View {
                                 UITableView.appearance().separatorStyle = .none
                                 UITableViewCell.appearance().selectionStyle = .none
                         }.resignKeyboardOnDragGesture()
-                    })
+                    }.navigationBarTitle(LocalizableStrings.charactersHeader))
                     
-            }.navigationBarTitle(LocalizableStrings.charactersHeader).onAppear {
+            }.onAppear {
                 self.viewModel.fetch()
                 self.viewModel.getMyFavorites()
             }
@@ -64,28 +64,7 @@ struct CharactersView: View {
 extension CharactersView {
     
     private func getErrorView() -> some View {
-        guard let error = viewModel.error else {
-            return AnyView(EmptyView())
-        }
-        clearErrorWithDelay()
-        return AnyView(Button(action: {
-            withAnimation {
-                self.viewModel.error = nil
-            }
-        }, label: {
-            Text(error.localizedDescription)
-                .lineLimit(2)
-                .foregroundColor(.white)
-        }).transition(.asymmetric(insertion: .scale, removal: .fade))
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 45, alignment: .center)
-            .background(Color.red.opacity(0.5))
-            .cornerRadius(5)
-            .padding([.leading, .trailing]))
-                              
-    }
-    
-    private func clearErrorWithDelay() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        ErrorBannerView(error: $viewModel.error) {
             self.viewModel.error = nil
         }
     }

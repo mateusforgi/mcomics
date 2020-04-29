@@ -21,12 +21,15 @@ struct CharacterDetailView: View {
     
     // MARK: - Body
     var body: some View {
-        List {
-            CharacterHeaderView(viewModel: CharacterHeaderViewModel(character: viewModel.header), favorited: viewModel.isFavorited, favoriteButtonWasClicked: favoriteButtonWasClicked(id:), photoHeight: 400)
-            VStack {
-                Text(getDescription())
-            }
-        }.navigationBarTitle(getNavigationHeaderTitle())
+        VStack {
+            getErrorView()
+            List {
+                CharacterHeaderView(viewModel: CharacterHeaderViewModel(character: viewModel.header), favorited: viewModel.isFavorited, favoriteButtonWasClicked: favoriteButtonWasClicked(id:), photoHeight: 400)
+                VStack {
+                    Text(getDescription())
+                }
+            }.navigationBarTitle(getNavigationHeaderTitle())
+        }
     }
     
 }
@@ -44,6 +47,13 @@ extension CharacterDetailView {
     private func getNavigationHeaderTitle() -> String {
         return String(viewModel.header.name.split(separator: " ").first ?? "")
     }
+    
+    private func getErrorView() -> some View {
+        ErrorBannerView(error: $viewModel.error) {
+            self.viewModel.error = nil
+        }
+    }
+    
 }
 
 
