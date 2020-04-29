@@ -55,4 +55,5 @@ struct SearchTextField: View {
         .padding(.horizontal)
         .navigationBarHidden(showCancelButton)
     }
+    
 }

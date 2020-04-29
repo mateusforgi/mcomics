@@ -28,7 +28,8 @@ class CharacterHeaderViewModel: ObservableObject, Identifiable {
     
     // MARK: - Private Methods
     private func getPhotoURL(path: String, imageExtension: String) -> String {
-        return  MarvelAPIEnvironment.getPhotoURL(path: path, imageExtension: imageExtension, size: .portraitMedium)
+        return  MarvelAPIEnvironment.getPhotoURL(path: path, imageExtension: imageExtension, size: .portraitXLarge)
     }
+    
 }
 

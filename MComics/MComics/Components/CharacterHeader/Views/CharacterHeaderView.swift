@@ -28,7 +28,7 @@ struct CharacterHeaderView: View {
     var body: some View {
         VStack(alignment: .leading) {
             getPhoto()
-                .frame(height: 200)
+                .frame(height: 300)
                 .cornerRadius(10)
                 .shadow(radius: 2)
             HStack(alignment: .center) {
@@ -79,5 +79,6 @@ extension CharacterHeaderView {
                 .foregroundColor(Color.init(UIColor.systemTeal))
         }
     }
+    
 }
 

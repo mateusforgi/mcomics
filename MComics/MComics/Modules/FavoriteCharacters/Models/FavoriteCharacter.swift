@@ -19,4 +19,5 @@ struct FavoriteCharacter: CharacterHeaderProtocol {
     init(character: FavoriteCharacterDTO) {
         self.character = character
     }
+    
 }

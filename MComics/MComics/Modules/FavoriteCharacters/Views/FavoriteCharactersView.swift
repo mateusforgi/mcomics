@@ -40,6 +40,10 @@ struct FavoriteCharactersView: View {
         }
     }
     
+}
+
+extension FavoriteCharactersView {
+    
     private func favoriteButtonWasClicked(id: Int) {
         viewModel.favorite(id: id)
     }
@@ -47,4 +51,5 @@ struct FavoriteCharactersView: View {
     private func isFavorited(for characterId: Int) -> Bool {
         return viewModel.favoritedCharacters?.first(where: {$0.id == characterId}) != nil
     }
+    
 }

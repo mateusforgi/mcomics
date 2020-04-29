@@ -9,5 +9,7 @@
 import Foundation
 
 public enum MarvelEndpointParameters: String {
+    
     case characterId = "{characterId}"
+    
 }

@@ -74,6 +74,7 @@ struct CharacterRepository {
             }
         }
     }
+    
 }
 
 extension CharacterRepository: CharacterRepositoryProtocol {

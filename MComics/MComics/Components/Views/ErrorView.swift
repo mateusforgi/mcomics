@@ -30,5 +30,6 @@ struct ErrorView: View {
             }
         }
     }
+    
 }
 

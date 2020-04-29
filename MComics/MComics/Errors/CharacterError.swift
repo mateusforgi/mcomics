@@ -9,14 +9,18 @@
 import Foundation
 
 enum CharacterError: Error {
+    
     case notFound
+    
 }
 
 extension CharacterError: LocalizedError {
+    
     public var errorDescription: String? {
         switch self {
         case .notFound:
             return LocalizableStrings.characterNotFound
         }
     }
+    
 }

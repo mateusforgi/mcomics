@@ -214,6 +214,7 @@
 		62BE3F412455AF1300285F39 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				62BE3F3E2455AE7200285F39 /* MComicsModel.xcdatamodeld */,
 				6294DD552457A2B300CBE8D4 /* Errors */,
 				62BE3F432455AF3300285F39 /* Models */,
 				62BE3F422455AF2200285F39 /* Repositories */,
@@ -370,7 +371,6 @@
 		B8E03BAA244677E300C3180D = {
 			isa = PBXGroup;
 			children = (
-				62BE3F3E2455AE7200285F39 /* MComicsModel.xcdatamodeld */,
 				B8E03BB5244677E300C3180D /* MComics */,
 				B8E03BB4244677E300C3180D /* Products */,
 				1E53C6F8DF7C38BC209B1F3B /* Pods */,

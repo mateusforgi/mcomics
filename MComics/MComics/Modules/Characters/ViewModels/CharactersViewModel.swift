@@ -147,4 +147,5 @@ class CharactersViewModel: ObservableObject, Identifiable {
             }
         }
     }
+    
 }

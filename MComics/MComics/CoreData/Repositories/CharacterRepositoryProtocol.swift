@@ -16,4 +16,5 @@ protocol CharacterRepositoryProtocol {
     func unFavorite(id: Int64, completion: @escaping (Error?) -> Void)
     
     typealias WasFavorited = Bool
+    
 }

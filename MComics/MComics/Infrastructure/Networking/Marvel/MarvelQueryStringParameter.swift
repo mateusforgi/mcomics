@@ -9,5 +9,7 @@
 import Foundation
 
 public enum MarvelQueryStringParameter: String {
+    
     case offset
+    
 }

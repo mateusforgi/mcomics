@@ -9,10 +9,12 @@
 import Foundation
 
 enum MarvelImageSize: String {
+    
     case portraitSmall = "portrait_small",
     portraitMedium = "portrait_medium",
     portraitXLarge  = "portrait_xlarge",
     portraitFantastic  = "portrait_fantastic",
     portraitUncanny  = "portrait_uncanny",
     portraitIncredible  = "portrait_incredible"
+    
 }

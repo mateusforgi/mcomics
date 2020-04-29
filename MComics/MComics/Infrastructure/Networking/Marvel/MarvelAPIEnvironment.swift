@@ -24,6 +24,14 @@ struct MarvelAPIEnvironment {
         }
     }
     
+    private func addQueryStrings(url: String, queryStrings: [MarvelQueryStringParameter: String]) -> String {
+        var urlCopy = url
+        for queryString in queryStrings {
+            urlCopy += "&\(queryString.key.rawValue)=\(queryString.value)"
+        }
+        return urlCopy
+    }
+    
     private func getCredentialsQueryString(url: String) -> String? {
         guard let tsValue = infoPlistEnvironment.getInfoPlistVariable(plistKey: .ts) else {
             return url
@@ -57,14 +65,6 @@ struct MarvelAPIEnvironment {
             return urlWithKeys
         }
         return addQueryStrings(url: urlWithKeys ?? "", queryStrings: queryStrings)
-    }
-    
-    private func addQueryStrings(url: String, queryStrings: [MarvelQueryStringParameter: String]) -> String {
-        var urlCopy = url
-        for queryString in queryStrings {
-            urlCopy += "&\(queryString.key.rawValue)=\(queryString.value)"
-        }
-        return urlCopy
     }
     
     public static func getPhotoURL(path: String, imageExtension: String, size: MarvelImageSize) -> String {
