@@ -24,10 +24,15 @@ struct FavoriteButtonView: View {
     
     var body: some View {
         Button(action: {
-            self.favoriteButtonWasClicked(self.id)
+            withAnimation {
+                self.favoriteButtonWasClicked(self.id)
+            }
         }) {
-            self.getFavoriteIcon(for: id)
+            Image(systemName: getFavoriteIcon())
+            
         }.buttonStyle(BorderlessButtonStyle())
+            .scaleEffect(favorited ? 1.2 : 1)
+            .animation(.spring())
     }
     
 }
@@ -35,14 +40,8 @@ struct FavoriteButtonView: View {
 // MARK: - Private Functions
 extension FavoriteButtonView {
     
-    private func getFavoriteIcon(for characterId: Int) -> some View {
-        if favorited {
-            return Image(systemName: "suit.heart.fill")
-                .foregroundColor(Color.init(UIColor.systemTeal))
-        } else {
-            return Image(systemName: "suit.heart")
-                .foregroundColor(Color.init(UIColor.systemTeal))
-        }
+    private func getFavoriteIcon() -> String {
+        return favorited ? "suit.heart.fill" : "suit.heart"
     }
     
 }
