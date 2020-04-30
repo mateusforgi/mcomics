@@ -24,7 +24,17 @@ struct CharacterDetailView: View {
         VStack {
             getErrorView()
             List {
-                CharacterHeaderView(viewModel: CharacterHeaderViewModel(character: viewModel.header), favorited: viewModel.isFavorited, favoriteButtonWasClicked: favoriteButtonWasClicked(id:))
+                VStack {
+                    getPhoto()
+                        .frame(height: 300)
+                    HStack {
+                        Text(viewModel.header.name)
+                            .lineLimit(2)
+                            .font(Font.system(size: 17, weight: .semibold, design: .default))
+                        FavoriteButtonView(id: viewModel.header.id, favorited: viewModel.isFavorited, favoriteButtonWasClicked: self.favoriteButtonWasClicked)
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .trailing)
+                    }
+                }
                 VStack {
                     Text(getDescription())
                 }
@@ -34,7 +44,12 @@ struct CharacterDetailView: View {
     
 }
 
+// MARK: - Private Functions
 extension CharacterDetailView {
+    
+    private func getPhoto() -> some View {
+        CharacterPosterView(photoURL: viewModel.header.photoURL, image: viewModel.header.image)
+    }
     
     private func favoriteButtonWasClicked(id: Int) {
         viewModel.favorite()

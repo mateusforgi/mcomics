@@ -16,7 +16,6 @@ struct CharacterHeaderView: View {
     private var favorited: Bool
     typealias FavoriteButtonWasClicked = (_ id: Int) -> Void
     var favoriteButtonWasClicked: FavoriteButtonWasClicked
-    @State private var errorOnLoadingPhoto = false
     
     // MARK: - Constructor
     init(viewModel: CharacterHeaderViewModel, favorited: Bool, favoriteButtonWasClicked: @escaping FavoriteButtonWasClicked) {
@@ -37,11 +36,7 @@ struct CharacterHeaderView: View {
                     Text(viewModel.name)
                         .lineLimit(2)
                         .font(Font.system(size: 17, weight: .semibold, design: .default))
-                    Button(action: {
-                        self.favoriteButtonWasClicked(self.viewModel.id)
-                    }) {
-                        self.getFavoriteIcon(for: viewModel.id)
-                    }.buttonStyle(BorderlessButtonStyle())
+                    FavoriteButtonView(id: viewModel.id, favorited: self.favorited, favoriteButtonWasClicked: self.favoriteButtonWasClicked)
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .trailing)
                 }
             }
@@ -54,38 +49,8 @@ struct CharacterHeaderView: View {
 extension CharacterHeaderView {
     
     private func getPhoto() -> some View {
-        if errorOnLoadingPhoto {
-            return AnyView(getPhotoLocally())
-        }
-        return AnyView(WebImage(url: URL(string: viewModel.photoURL))
-            .onFailure { _ in
-                self.errorOnLoadingPhoto.toggle()
-        }
-        .resizable()
-        .placeholder {
-            Rectangle().foregroundColor(.clear)
-        }
-        .indicator(.activity)
-        .transition(.fade))
+        CharacterPosterView(photoURL: viewModel.photoURL, image: viewModel.image)
     }
-    
-    private func getPhotoLocally() -> some View {
-        if let image = viewModel.image, let uiImage = UIImage(data: image) {
-            return AnyView(Image(uiImage: uiImage)
-                .resizable())
-        }
-        return AnyView(Rectangle())
-    }
-    
-    private func getFavoriteIcon(for characterId: Int) -> some View {
-        if favorited {
-            return Image(systemName: "suit.heart.fill")
-                .foregroundColor(Color.init(UIColor.systemTeal))
-        } else {
-            return Image(systemName: "suit.heart")
-                .foregroundColor(Color.init(UIColor.systemTeal))
-        }
-    }
-    
+
 }
 
