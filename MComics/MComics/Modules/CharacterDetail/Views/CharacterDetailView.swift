@@ -24,7 +24,7 @@ struct CharacterDetailView: View {
         VStack {
             getErrorView()
             List {
-                CharacterHeaderView(viewModel: CharacterHeaderViewModel(character: viewModel.header), favorited: viewModel.isFavorited, favoriteButtonWasClicked: favoriteButtonWasClicked(id:), photoHeight: 400)
+                CharacterHeaderView(viewModel: CharacterHeaderViewModel(character: viewModel.header), favorited: viewModel.isFavorited, favoriteButtonWasClicked: favoriteButtonWasClicked(id:))
                 VStack {
                     Text(getDescription())
                 }

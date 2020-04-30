@@ -16,35 +16,36 @@ struct CharacterHeaderView: View {
     private var favorited: Bool
     typealias FavoriteButtonWasClicked = (_ id: Int) -> Void
     var favoriteButtonWasClicked: FavoriteButtonWasClicked
-    private var photoHeight: CGFloat
     @State private var errorOnLoadingPhoto = false
     
     // MARK: - Constructor
-    init(viewModel: CharacterHeaderViewModel, favorited: Bool, favoriteButtonWasClicked: @escaping FavoriteButtonWasClicked, photoHeight: CGFloat = 300) {
+    init(viewModel: CharacterHeaderViewModel, favorited: Bool, favoriteButtonWasClicked: @escaping FavoriteButtonWasClicked) {
         self.viewModel = viewModel
         self.favorited = favorited
         self.favoriteButtonWasClicked = favoriteButtonWasClicked
-        self.photoHeight = photoHeight
     }
     
     // MARK: - Body
     var body: some View {
         VStack(alignment: .leading) {
-            getPhoto()
-                .frame(height: photoHeight)
-                .cornerRadius(10)
-                .shadow(radius: 2)
-            HStack(alignment: .center) {
-                Button(action: {
-                    self.favoriteButtonWasClicked(self.viewModel.id)
-                }) {
-                    self.getFavoriteIcon(for: viewModel.id)
-                }.buttonStyle(BorderlessButtonStyle())
-                Text(viewModel.name)
-                    .lineLimit(2)
-                    .font(Font.system(size: 17, weight: .semibold, design: .default))
-            }.frame(height: 45)
-        }
+            HStack {
+                getPhoto()
+                    .frame(width: 100, height: 50)
+                    .cornerRadius(10)
+                    .shadow(radius: 2)
+                HStack {
+                    Text(viewModel.name)
+                        .lineLimit(2)
+                        .font(Font.system(size: 17, weight: .semibold, design: .default))
+                    Button(action: {
+                        self.favoriteButtonWasClicked(self.viewModel.id)
+                    }) {
+                        self.getFavoriteIcon(for: viewModel.id)
+                    }.buttonStyle(BorderlessButtonStyle())
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .trailing)
+                }
+            }
+        }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
     }
     
 }
@@ -59,13 +60,13 @@ extension CharacterHeaderView {
         return AnyView(WebImage(url: URL(string: viewModel.photoURL))
             .onFailure { _ in
                 self.errorOnLoadingPhoto.toggle()
-            }
-            .resizable()
-            .placeholder {
-                Rectangle().foregroundColor(.clear)
-            }
-            .indicator(.activity)
-            .transition(.fade))
+        }
+        .resizable()
+        .placeholder {
+            Rectangle().foregroundColor(.clear)
+        }
+        .indicator(.activity)
+        .transition(.fade))
     }
     
     private func getPhotoLocally() -> some View {
