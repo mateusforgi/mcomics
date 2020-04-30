@@ -12,43 +12,45 @@ struct ErrorBannerView: View {
     
     @Binding var error: Error?
     private var clearErrorCallback: () -> Void
-    
+    @State var height: CGFloat = 0
+
     init(error: Binding<Error?>, clearErrorCallback: @escaping () -> Void) {
         self._error = error
         self.clearErrorCallback = clearErrorCallback
     }
     
     var body: some View {
-        getErrorView()
+        error.map { error in
+            Button(action: {
+                self.clearError(withDelay: false)
+            }, label: {
+                Text(error.localizedDescription)
+                    .lineLimit(2)
+                    .foregroundColor(.white)
+            }).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 45, alignment: .center)
+                .frame(height: height)
+                .background(Color.red.opacity(0.5))
+                .cornerRadius(5)
+                .padding([.leading, .trailing])
+                .onAppear {
+                    withAnimation {
+                        self.height = 45
+                    }
+                    self.clearError(withDelay: true)
+            }
+        }
     }
+    
 }
 
 extension ErrorBannerView {
     
-    private func getErrorView() -> some View {
-        guard let error = error else {
-            return AnyView(EmptyView())
-        }
-        clearErrorWithDelay()
-        return AnyView(Button(action: {
+    private func clearError(withDelay: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: withDelay ? (.now() + 2) : .now()) {
             withAnimation {
-                self.error = nil
+                self.height = 0
+                self.clearErrorCallback()
             }
-        }, label: {
-            Text(error.localizedDescription)
-                .lineLimit(2)
-                .foregroundColor(.white)
-        }).transition(.asymmetric(insertion: .scale, removal: .fade))
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 45, alignment: .center)
-            .background(Color.red.opacity(0.5))
-            .cornerRadius(5)
-            .padding([.leading, .trailing]))
-        
-    }
-    
-    private func clearErrorWithDelay() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.clearErrorCallback()
         }
     }
     
