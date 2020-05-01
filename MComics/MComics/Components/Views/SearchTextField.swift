@@ -26,10 +26,10 @@ struct SearchTextField: View {
             HStack {
                 Image(systemName: "magnifyingglass")
                 
-                TextField("search", text: $searchText, onEditingChanged: { isEditing in
-                    self.showCancelButton = true
-                }, onCommit: {
-                    print("onCommit")
+                TextField(LocalizableStrings.searchPlaceholder, text: $searchText, onEditingChanged: { isEditing in
+                    withAnimation {
+                        self.showCancelButton = true
+                    }
                 }).foregroundColor(.primary)
                 
                 Button(action: {
@@ -42,18 +42,18 @@ struct SearchTextField: View {
             .foregroundColor(.secondary)
             .background(Color(.secondarySystemBackground))
             .cornerRadius(10.0)
-            
             if showCancelButton  {
                 Button(LocalizableStrings.cancelSearchButton) {
                     UIApplication.shared.endEditing(true)
                     self.searchText = ""
-                    self.showCancelButton = false
-                }
+                    withAnimation {
+                        self.showCancelButton = false
+                    }
+                }.transition(AnyTransition.opacity.combined(with: .move(edge: .trailing)))
                 .foregroundColor(Color(.systemBlue))
             }
         }
-        .padding(.horizontal)
-        .navigationBarHidden(showCancelButton)
+
     }
     
 }

@@ -38,18 +38,8 @@ struct CharactersView: View {
                         return AnyView(ErrorView(message: LocalizableStrings.noCharacters))
                     }
                     
-                    return AnyView(VStack {
-                        SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
-                        getErrorView()
-                        List {
-                            ForEach(headers.indices, id: \.self) { index in
-                                self.getHeaders(index: index, headers: headers)
-                            }}.onAppear {
-                                UITableView.appearance().tableFooterView = UIView()
-                                UITableView.appearance().separatorStyle = .none
-                                UITableViewCell.appearance().selectionStyle = .none
-                        }.resignKeyboardOnDragGesture()
-                    }.navigationBarTitle(LocalizableStrings.charactersHeader))
+                    return AnyView(getList(headers))
+                    
                     
             }.onAppear {
                 self.viewModel.fetch()
@@ -62,6 +52,21 @@ struct CharactersView: View {
 
 // MARK: - Private Functions
 extension CharactersView {
+    
+    func getList(_ headers: [CharacterHeaderViewModel]) -> some View {
+        return VStack {
+            getErrorView()
+            List {
+                Section(header: SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
+                ) {
+                    ForEach(headers.indices, id: \.self) { index in
+                        self.getHeaders(index: index, headers: headers)
+                    }
+                }
+            }.navigationBarTitle(LocalizableStrings.charactersHeader)
+                .navigationBarHidden(showCancelButton).transition(.scale).animation(.easeInOut(duration: 3))
+        }
+    }
     
     private func getErrorView() -> some View {
         ErrorBannerView(error: $viewModel.error) {
@@ -105,3 +110,5 @@ extension CharactersView {
     }
     
 }
+
+
