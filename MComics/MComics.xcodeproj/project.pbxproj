@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		303680C903D9CB75E5D2754C /* Pods_MComics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AABCA58E2D7B00E6CAF89778 /* Pods_MComics.framework */; };
-		622A0BFB245C74A600A47CEC /* MComicsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622A0BFA245C74A600A47CEC /* MComicsTests.swift */; };
+		622A0C06245C867500A47CEC /* CharacterRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622A0C05245C867500A47CEC /* CharacterRepositoryTests.swift */; };
 		62360A122456626A000C61E8 /* CharacterHeaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62360A112456626A000C61E8 /* CharacterHeaderProtocol.swift */; };
 		624E01E5245C654B006A8FDE /* CharacterViewFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624E01E4245C654B006A8FDE /* CharacterViewFactoryProtocol.swift */; };
 		624E01E7245C655C006A8FDE /* CharacterViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624E01E6245C655C006A8FDE /* CharacterViewFactory.swift */; };
@@ -81,8 +81,8 @@
 		4BD03635B7AED078C3FF2F92 /* Pods-MComicsTests.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MComicsTests.test.xcconfig"; path = "Target Support Files/Pods-MComicsTests/Pods-MComicsTests.test.xcconfig"; sourceTree = "<group>"; };
 		4F90EAFFF1B13ECA76C05C96 /* Pods-MComicsTests.prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MComicsTests.prod.xcconfig"; path = "Target Support Files/Pods-MComicsTests/Pods-MComicsTests.prod.xcconfig"; sourceTree = "<group>"; };
 		622A0BF8245C74A600A47CEC /* MComicsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MComicsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		622A0BFA245C74A600A47CEC /* MComicsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MComicsTests.swift; sourceTree = "<group>"; };
 		622A0BFC245C74A600A47CEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		622A0C05245C867500A47CEC /* CharacterRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterRepositoryTests.swift; sourceTree = "<group>"; };
 		62360A112456626A000C61E8 /* CharacterHeaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterHeaderProtocol.swift; sourceTree = "<group>"; };
 		624E01E4245C654B006A8FDE /* CharacterViewFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewFactoryProtocol.swift; sourceTree = "<group>"; };
 		624E01E6245C655C006A8FDE /* CharacterViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewFactory.swift; sourceTree = "<group>"; };
@@ -183,10 +183,26 @@
 		622A0BF9245C74A600A47CEC /* MComicsTests */ = {
 			isa = PBXGroup;
 			children = (
-				622A0BFA245C74A600A47CEC /* MComicsTests.swift */,
+				622A0C03245C864300A47CEC /* CoreData */,
 				622A0BFC245C74A600A47CEC /* Info.plist */,
 			);
 			path = MComicsTests;
+			sourceTree = "<group>";
+		};
+		622A0C03245C864300A47CEC /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				622A0C04245C865900A47CEC /* Repositories */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		622A0C04245C865900A47CEC /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				622A0C05245C867500A47CEC /* CharacterRepositoryTests.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		62360A0F24566247000C61E8 /* CharacterHeader */ = {
@@ -845,7 +861,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				622A0BFB245C74A600A47CEC /* MComicsTests.swift in Sources */,
+				622A0C06245C867500A47CEC /* CharacterRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1042,6 +1058,7 @@
 				DEVELOPMENT_TEAM = V76C5WX8SM;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1204,6 +1221,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"MComics/Preview Content\"";
 				DEVELOPMENT_TEAM = B928X59ZTB;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = MComics/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

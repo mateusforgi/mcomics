@@ -136,7 +136,12 @@ extension CharacterRepository: CharacterRepositoryProtocol {
             do {
                 request.predicate = self.getCharacterIdPredicate(id: id)
                 let result = try self.context.fetch(request)
-                result.first?.image = image
+                guard let character = result.first else {
+                    completion(CharacterRepositoryError.notFound)
+                    self.context.reset()
+                    return
+                }
+                character.image = image
                 do {
                     try self.context.save()
                     self.context.reset()
