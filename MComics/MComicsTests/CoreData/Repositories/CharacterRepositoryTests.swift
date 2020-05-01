@@ -48,11 +48,11 @@ class CharacterRepositoryTests: XCTestCase {
     
     // MARK: - Private Functions
     func verfifyAssertion(toInsert: CharacterHeaderProtocol, inserted: FavoriteCharacterDTO) {
-        XCTAssertEqual(toInsert.id, inserted.id)
-        XCTAssertEqual(toInsert.name, inserted.name)
-        XCTAssertEqual(toInsert.photoURL, inserted.photoURL)
+        XCTAssertEqual(toInsert.id, inserted.id, "Expected id to be \(toInsert.id) but it was \(inserted.id)")
+        XCTAssertEqual(toInsert.name, inserted.name, "Expected name to be \(toInsert.name) but it was \(inserted.name)")
+        XCTAssertEqual(toInsert.photoURL, inserted.photoURL, "Expected photoURL to be \(toInsert.photoURL) but it was \(inserted.photoURL)")
         XCTAssertEqual(toInsert.image, inserted.image)
-        XCTAssertEqual(toInsert.description, inserted.description)
+        XCTAssertEqual(toInsert.description, inserted.description, "Expected description to be \(toInsert.description) but it was \(inserted.description)")
     }
     
     private func insertMockAndWait(character: Character) {
@@ -60,18 +60,22 @@ class CharacterRepositoryTests: XCTestCase {
             do {
                 try self.context.save()
             } catch {
-                XCTAssertNil(error)
+                XCTAssertNil(error, getErrorDescription(message: "Error on inserting mocking data", error: error))
                 XCTFail()
             }
         }
+    }
+    
+    private func getErrorDescription(message: String, error: Error?) -> String {
+        return "\(message). Error description: \(error?.localizedDescription ?? "No error description")"
     }
     
     // MARK: - Favorite
     func testFavoriteOrUnfavoriteCharacterShouldFavorited() throws {
         let expectation = XCTestExpectation(description: "testFavoriteOrUnfavoriteCharacterShouldFavorited")
         characterRepository.favoriteOrUnfavoriteCharacter(character: character) { wasFavorited, error in
-            XCTAssertNil(error)
-            XCTAssertTrue(wasFavorited ?? false)
+            XCTAssertNil(error, self.getErrorDescription(message: "Error on favoriting character", error: error))
+            XCTAssertTrue(wasFavorited ?? false, "It should return wasfavorited true but it returned false")
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 2)
@@ -83,8 +87,8 @@ class CharacterRepositoryTests: XCTestCase {
         characterModel.id = Int64(character.id)
         insertMockAndWait(character: characterModel)
         characterRepository.favoriteOrUnfavoriteCharacter(character: character) { wasFavorited, error in
-            XCTAssertNil(error)
-            XCTAssertFalse(wasFavorited ?? true)
+            XCTAssertNil(error, self.getErrorDescription(message: "Error on favoriting character", error: error))
+            XCTAssertFalse(wasFavorited ?? true, "It should return wasfavorited false but it returned true")
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 2)
@@ -97,7 +101,7 @@ class CharacterRepositoryTests: XCTestCase {
         characterModel.id = Int64(character.id)
         insertMockAndWait(character: characterModel)
         self.characterRepository.unFavorite(id: 1) { error in
-            XCTAssertNil(error)
+            XCTAssertNil(error, self.getErrorDescription(message: "Error on unfavoriting character", error: error))
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 2)
@@ -106,7 +110,7 @@ class CharacterRepositoryTests: XCTestCase {
     func testUnfavoriterCharacterShouldReturnError() throws {
         let expectation = XCTestExpectation(description: "testUnfavoriterCharacterShouldReturnError")
         self.characterRepository.unFavorite(id: 1) { error in
-            XCTAssertNotNil(error)
+            XCTAssertNotNil(error, self.getErrorDescription(message: "Error on unfavoriting character", error: error))
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 2)
@@ -117,10 +121,11 @@ class CharacterRepositoryTests: XCTestCase {
         let expectation = XCTestExpectation(description: "testGetFavoritesCharacterShouldReturnItem")
         characterRepository.favoriteOrUnfavoriteCharacter(character: character) { wasFavorited, errorOnFavorite in
             self.characterRepository.getMyFavorites { favorites, error in
-                XCTAssertNil(error)
-                XCTAssertEqual(favorites?.count, 1)
+                XCTAssertNil(error, self.getErrorDescription(message: "Error on get favorites", error: error))
+                let favoritesNumber = favorites?.count ?? 0
+                XCTAssertEqual(favoritesNumber, 1, "It should return 1 but it return \(favoritesNumber)")
                 guard let favorited = favorites?.first else {
-                    XCTFail()
+                    XCTFail(self.getErrorDescription(message: "", error: CharacterRepositoryError.notFound))
                     return
                 }
                 self.verfifyAssertion(toInsert: self.character, inserted: favorited)
@@ -133,8 +138,8 @@ class CharacterRepositoryTests: XCTestCase {
     func testGetFavoritesCharacterShouldNotReturnItem() throws {
         let expectation = XCTestExpectation(description: "testGetFavoritesCharacterShouldNotReturnItem")
         self.characterRepository.getMyFavorites { favorites, error in
-            XCTAssertNil(error)
-            XCTAssertEqual(favorites?.count, 0)
+            XCTAssertNil(error, self.getErrorDescription(message: "Error on get favorites", error: error))
+            XCTAssertEqual(favorites?.count, 0, "It should return 1 but it return 0")
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 2)
@@ -153,7 +158,7 @@ class CharacterRepositoryTests: XCTestCase {
                 try self.context.save()
                 XCTFail()
             } catch {
-                XCTAssertNotNil(error)
+                XCTAssertNotNil(error, self.getErrorDescription(message: "Error testing contraints", error: error))
                 expectation.fulfill()
             }
         }
@@ -172,7 +177,7 @@ class CharacterRepositoryTests: XCTestCase {
                 try self.context.save()
                 expectation.fulfill()
             } catch {
-                XCTAssertNil(error)
+                XCTAssertNil(error, self.getErrorDescription(message: "Error testing contraints", error: error))
                 XCTFail()
             }
         }
@@ -183,7 +188,7 @@ class CharacterRepositoryTests: XCTestCase {
     func testSavePhotoShouldReturnError() {
         let expectation = XCTestExpectation(description: "testSavePhotoShouldReturnError")
         characterRepository.saveImage(image: Data(), id: Int64(character.id)) { error in
-            XCTAssertNotNil(error)
+            XCTAssertNotNil(error, self.getErrorDescription(message: "Error saving image", error: error))
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 2)
@@ -195,7 +200,7 @@ class CharacterRepositoryTests: XCTestCase {
         characterModel.id = Int64(character.id)
         insertMockAndWait(character: characterModel)
         characterRepository.saveImage(image: Data(), id: Int64(character.id)) { error in
-            XCTAssertNil(error)
+            XCTAssertNil(error, self.getErrorDescription(message: "Error saving image", error: error))
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 2)
@@ -209,10 +214,10 @@ class CharacterRepositoryTests: XCTestCase {
         let data = Data(count: 1)
         characterRepository.saveImage(image: data, id: Int64(character.id)) { error in
             self.characterRepository.getMyFavorites { favorites, error in
-                XCTAssertNil(error)
+                XCTAssertNil(error, self.getErrorDescription(message: "Error saving image", error: error))
                 expectation.fulfill()
                 guard let image = favorites?.first?.image else {
-                    XCTFail()
+                    XCTFail(self.getErrorDescription(message: "Error saving image", error: CharacterRepositoryError.notFound))
                     return
                 }
                 XCTAssertEqual(image, data)
