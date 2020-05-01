@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>characterSeries</key>
-	<string>/v1/public/characters/{characterId}/series</string>
-	<key>characterComics</key>
-	<string>/v1/public/characters/{characterId}/comics</string>
-	<key>characterById</key>
-	<string>/v1/public/characters/{characterId}</string>
 	<key>characters</key>
 	<string>/v1/public/characters</string>
 </dict>
