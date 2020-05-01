@@ -14,13 +14,19 @@ struct CharactersView: View {
     
     //MARK: - Observed
     @ObservedObject private var viewModel: CharactersViewModel
-    
+   
+    //MARK: - Environment
+    @Environment(\.colorScheme) var colorScheme
+
     //MARK: - State
     @State private var showCancelButton: Bool = false
     
     //MARK: - Constructor
     init(viewModel: CharactersViewModel) {
         self.viewModel = viewModel
+        UITableView.appearance().tableFooterView = UIView()
+        UITableView.appearance().separatorStyle = .none
+        UITableViewCell.appearance().selectionStyle = .none
     }
     
     //MARK: - Body
@@ -57,14 +63,19 @@ extension CharactersView {
         return VStack {
             getErrorView()
             List {
-                Section(header: SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
+                Section(header:
+                    VStack {
+                        SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
+                            .padding([.leading, .trailing])
+                    }.background(colorScheme == .dark ? Color.black : Color.white)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 ) {
                     ForEach(headers.indices, id: \.self) { index in
                         self.getHeaders(index: index, headers: headers)
                     }
-                }
+                }.resignKeyboardOnDragGesture()
             }.navigationBarTitle(LocalizableStrings.charactersHeader)
-                .navigationBarHidden(showCancelButton).transition(.scale).animation(.easeInOut(duration: 3))
+                .navigationBarHidden(showCancelButton)
         }
     }
     
