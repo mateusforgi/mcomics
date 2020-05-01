@@ -1,0 +1,16 @@
+//
+//  TEST.xcconfig
+//  MComics
+//
+//  Created by Mateus Forgiarini da Silva  on 01/05/20.
+//  Copyright © 2020 Mateus Forgiarini da Silva. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+#include "Pods/Target Support Files/Pods-MComics/Pods-MComics.test.xcconfig"
+
+API_KEY =
+API_URL =
+HASH_VALUE =
+TS_VALUE =
