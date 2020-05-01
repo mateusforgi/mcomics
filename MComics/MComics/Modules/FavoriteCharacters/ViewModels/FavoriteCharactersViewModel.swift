@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class FavoriteCharactersViewModel: ObservableObject, Identifiable {
     
@@ -16,14 +17,19 @@ class FavoriteCharactersViewModel: ObservableObject, Identifiable {
     @Published var error: Error?
     @Published var loading = false
     
-    // MARK: - Variables
-    let characterRepository: CharacterRepositoryProtocol
+    // MARK: - Private Variables
+    private let characterRepository: CharacterRepositoryProtocol
+    
+    // MARK: - Public Variables
+    weak var viewFactory: CharacterViewFactoryProtocol?
     
     // MARK: - Constructor
-    init(characterRepository: CharacterRepositoryProtocol) {
+    init(characterRepository: CharacterRepositoryProtocol, viewFactory: CharacterViewFactoryProtocol) {
         self.characterRepository = characterRepository
+        self.viewFactory = viewFactory
     }
     
+    // MARK: - Public Functions
     public func getMyFavorites() {
         self.error = nil
         self.loading = true
@@ -53,3 +59,4 @@ class FavoriteCharactersViewModel: ObservableObject, Identifiable {
     }
     
 }
+

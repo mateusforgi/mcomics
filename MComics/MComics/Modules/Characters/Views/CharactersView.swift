@@ -104,7 +104,7 @@ extension CharactersView {
         return
             VStack {
                 ZStack {
-                    NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(header: headerViewModel.character, characterRepository: viewModel.characterRepository, isFavorited: isFavorited(for: headerViewModel.character.id)))) {
+                    NavigationLink(destination: viewModel.viewFactory?.makeCharacterDetailView(header: headerViewModel.character, isFavorited: isFavorited(for: headerViewModel.character.id))) {
                         EmptyView()
                     }.buttonStyle(BorderlessButtonStyle())
                     CharacterHeaderView(viewModel: headerViewModel, favorited: isFavorited(for: headerViewModel.id), favoriteButtonWasClicked: favoriteButtonWasClicked(id:)).buttonStyle(BorderlessButtonStyle())

@@ -26,15 +26,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         context.undoManager = nil
         let characterRepository = CharacterRepository(context: context)
         
-        let charactersViewModel = CharactersViewModel(characterService: CharacterService(), characterRepository: characterRepository)
-        let favoriteCharactersViewModel = FavoriteCharactersViewModel(characterRepository: characterRepository)
-        let contentView = HomeView(charactersViewModel: charactersViewModel, favoriteCharactersViewModel: favoriteCharactersViewModel)
+        let contentView = HomeView(characterViewFactory: CharacterViewFactory(characterRepository: characterRepository, characterService: CharacterService()))
 
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: contentView)
+            
             self.window = window
             window.makeKeyAndVisible()
         }

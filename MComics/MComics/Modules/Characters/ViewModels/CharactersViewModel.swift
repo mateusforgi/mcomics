@@ -20,7 +20,7 @@ class CharactersViewModel: ObservableObject, Identifiable {
     @Published var favoritedCharacters = Set<Int>()
     @Published var error: Error?
     
-    // MARK: - Variables
+    // MARK: - Private Variables
     private let characterService: CharacterServiceProtocol
     private var disposables = Set<AnyCancellable>()
     private var page = 0
@@ -29,13 +29,16 @@ class CharactersViewModel: ObservableObject, Identifiable {
     private var noMoreData: Bool = false
     
     private var items = [CharacterHeaderViewModel]()
-    let characterRepository: CharacterRepositoryProtocol
+    private let characterRepository: CharacterRepositoryProtocol
     
+    // MARK: - Public Variables
+    weak var viewFactory: CharacterViewFactoryProtocol?
     
     // MARK: - Constructor
-    init(characterService: CharacterServiceProtocol, characterRepository: CharacterRepositoryProtocol) {
+    init(characterService: CharacterServiceProtocol, characterRepository: CharacterRepositoryProtocol, viewFactory: CharacterViewFactoryProtocol) {
         self.characterService = characterService
         self.characterRepository = characterRepository
+        self.viewFactory = viewFactory
         $text.dropFirst(1)
             .sink(receiveValue: self.search(_:))
             .store(in: &disposables)

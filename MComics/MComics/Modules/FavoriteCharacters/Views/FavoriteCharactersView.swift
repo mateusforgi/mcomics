@@ -33,7 +33,7 @@ struct FavoriteCharactersView: View {
                 }
                 return AnyView(List(favorites) { character in
                     ZStack {
-                        NavigationLink(destination: CharacterDetailView(viewModel: CharacterDetailViewModel(header: character.character, characterRepository: self.viewModel.characterRepository, isFavorited: self.isFavorited(for: character.id)))) {
+                        NavigationLink(destination: self.viewModel.viewFactory?.makeCharacterDetailView(header: character.character, isFavorited: self.isFavorited(for: character.id))) {
                             EmptyView()
                         }.buttonStyle(BorderlessButtonStyle())
                         CharacterHeaderView(viewModel: character, favorited: self.isFavorited(for: character.id), favoriteButtonWasClicked: self.favoriteButtonWasClicked)

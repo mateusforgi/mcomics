@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		62360A122456626A000C61E8 /* CharacterHeaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62360A112456626A000C61E8 /* CharacterHeaderProtocol.swift */; };
+		624E01E5245C654B006A8FDE /* CharacterViewFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624E01E4245C654B006A8FDE /* CharacterViewFactoryProtocol.swift */; };
+		624E01E7245C655C006A8FDE /* CharacterViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624E01E6245C655C006A8FDE /* CharacterViewFactory.swift */; };
 		625ECB11245A4D1600A7B597 /* FavoriteButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625ECB10245A4D1600A7B597 /* FavoriteButtonView.swift */; };
 		625ECB13245A50DB00A7B597 /* CharacterPosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625ECB12245A50DB00A7B597 /* CharacterPosterView.swift */; };
 		6294DD572457A2C200CBE8D4 /* CharacterRepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6294DD562457A2C200CBE8D4 /* CharacterRepositoryError.swift */; };
@@ -65,6 +67,8 @@
 /* Begin PBXFileReference section */
 		0F19BE3248EBD4EE79D58119 /* Pods-MComics.prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MComics.prod.xcconfig"; path = "Target Support Files/Pods-MComics/Pods-MComics.prod.xcconfig"; sourceTree = "<group>"; };
 		62360A112456626A000C61E8 /* CharacterHeaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterHeaderProtocol.swift; sourceTree = "<group>"; };
+		624E01E4245C654B006A8FDE /* CharacterViewFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewFactoryProtocol.swift; sourceTree = "<group>"; };
+		624E01E6245C655C006A8FDE /* CharacterViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewFactory.swift; sourceTree = "<group>"; };
 		625ECB07245A445D00A7B597 /* DEV.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DEV.xcconfig; sourceTree = "<group>"; };
 		625ECB09245A45AA00A7B597 /* PROD.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PROD.xcconfig; sourceTree = "<group>"; };
 		625ECB10245A4D1600A7B597 /* FavoriteButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButtonView.swift; sourceTree = "<group>"; };
@@ -177,6 +181,23 @@
 				62360A112456626A000C61E8 /* CharacterHeaderProtocol.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		624E01E3245C652F006A8FDE /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				624E01E8245C66CC006A8FDE /* Views */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
+		624E01E8245C66CC006A8FDE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				624E01E4245C654B006A8FDE /* CharacterViewFactoryProtocol.swift */,
+				624E01E6245C655C006A8FDE /* CharacterViewFactory.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		625ECB08245A446900A7B597 /* Environments */ = {
@@ -373,6 +394,7 @@
 		B8E03BB5244677E300C3180D /* MComics */ = {
 			isa = PBXGroup;
 			children = (
+				624E01E3245C652F006A8FDE /* Factories */,
 				625ECB08245A446900A7B597 /* Environments */,
 				62FC65572457C78800A12912 /* Errors */,
 				62BE3F412455AF1300285F39 /* CoreData */,
@@ -752,7 +774,9 @@
 				B8E03BE4244686C200C3180D /* MarvelEndpointParameters.swift in Sources */,
 				B8E03C072446A04D00C3180D /* CharacterInfoDTO.swift in Sources */,
 				625ECB11245A4D1600A7B597 /* FavoriteButtonView.swift in Sources */,
+				624E01E7245C655C006A8FDE /* CharacterViewFactory.swift in Sources */,
 				62BE3F472455B03E00285F39 /* CharacterRepository.swift in Sources */,
+				624E01E5245C654B006A8FDE /* CharacterViewFactoryProtocol.swift in Sources */,
 				B8E03BE1244686A700C3180D /* MarvelQueryStringParameter.swift in Sources */,
 				B8E03BB9244677E300C3180D /* SceneDelegate.swift in Sources */,
 				B839A0692449527600EDFD90 /* UIApplicationExtension.swift in Sources */,

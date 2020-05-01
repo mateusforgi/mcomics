@@ -8,26 +8,24 @@
 import SwiftUI
 
 struct HomeView: View {
-    
+        
     // MARK: - Constants
-    private let charactersViewModel: CharactersViewModel
-    private let favoriteCharactersViewModel: FavoriteCharactersViewModel
-   
+    private let characterViewFactory: CharacterViewFactoryProtocol
+    
     // MARK: - Constructor
-    init(charactersViewModel: CharactersViewModel, favoriteCharactersViewModel: FavoriteCharactersViewModel) {
-        self.charactersViewModel = charactersViewModel
-        self.favoriteCharactersViewModel = favoriteCharactersViewModel
+    init(characterViewFactory: CharacterViewFactoryProtocol) {
+        self.characterViewFactory = characterViewFactory
     }
     
     // MARK: - Body
     var body: some View {
         TabView {
-            CharactersView(viewModel: charactersViewModel)
+            characterViewFactory.makeCharactersView()
                 .tabItem {
                     Image(systemName: "list.dash")
                     Text(LocalizableStrings.charactersHeader)
             }.tag(0)
-            FavoriteCharactersView(viewModel: favoriteCharactersViewModel)
+            characterViewFactory.makeFavoriteCharactersView()
                 .tabItem {
                     Image(systemName: "heart.circle.fill")
                     Text(LocalizableStrings.favoritesHeader)
