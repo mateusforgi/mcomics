@@ -9,6 +9,8 @@ target 'MComics' do
 
   target 'MComicsTests' do
     inherit! :search_paths
-  end  
-
+    pod 'KIF'
+    pod 'Nimble'
+    pod 'Quick'
+  end
 end

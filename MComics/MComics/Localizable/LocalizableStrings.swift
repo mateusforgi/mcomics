@@ -19,5 +19,6 @@ struct LocalizableStrings {
     static let retryLabel = NSLocalizedString("RetryLabel", comment: "The retry button label")
     static let characterHasNoDescriptionLabel = NSLocalizedString("CharacterHasNoDescriptionLabel", comment: "The label when there is no description for the character")
     static let searchPlaceholder = NSLocalizedString("SearchPlaceholder", comment: "The placeholder for the serach component")
-    
+    static let accessibilityHomeView = NSLocalizedString("AccessibilityHomeView", comment: "The accessibility label for the home view")
+
 }

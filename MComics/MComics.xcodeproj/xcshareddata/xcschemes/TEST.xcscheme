@@ -38,6 +38,16 @@
                ReferencedContainer = "container:MComics.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "622A0C0A245CA96100A47CEC"
+               BuildableName = "MComicsUITests.xctest"
+               BlueprintName = "MComicsUITests"
+               ReferencedContainer = "container:MComics.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

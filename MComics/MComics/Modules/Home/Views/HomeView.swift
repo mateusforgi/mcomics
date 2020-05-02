@@ -24,7 +24,7 @@ struct HomeView: View {
                 .tabItem {
                     Image(systemName: "list.dash")
                     Text(LocalizableStrings.charactersHeader)
-            }.tag(0)
+            }.accessibility(identifier: "list").tag(0)
             characterViewFactory.makeFavoriteCharactersView()
                 .tabItem {
                     Image(systemName: "heart.circle.fill")
@@ -32,6 +32,7 @@ struct HomeView: View {
             }.tag(1)
         }
         .accentColor(Color.init(UIColor.systemTeal))
+        .accessibility(label: Text(LocalizableStrings.accessibilityHomeView))
     }
     
 }
