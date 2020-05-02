@@ -15,3 +15,5 @@
 "CharacterHasNoDescriptionLabel" = "Character has no description.";
 "SearchPlaceholder" = "Search";
 "AccessibilityHomeView" = "Home";
+"AccessibilityBannerErrorView" = "Banner Error";
+"AccessibilityCharactersList" = "Characters List";

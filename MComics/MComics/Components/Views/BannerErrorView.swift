@@ -1,5 +1,5 @@
 //
-//  ErrorBannerView.swift
+//  BannerErrorView.swift
 //  MComics
 //
 //  Created by Mateus Forgiarini da Silva  on 28/04/20.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ErrorBannerView: View {
+struct BannerErrorView: View {
     
     @Binding var error: Error?
     private var clearErrorCallback: () -> Void
@@ -38,12 +38,12 @@ struct ErrorBannerView: View {
                     }
                     self.clearError(withDelay: true)
             }
-        }
+            }?.accessibility(label: Text(LocalizableStrings.accessibilityBannerErrorView))
     }
     
 }
 
-extension ErrorBannerView {
+extension BannerErrorView {
     
     private func clearError(withDelay: Bool) {
         DispatchQueue.main.asyncAfter(deadline: withDelay ? (.now() + 2) : .now()) {

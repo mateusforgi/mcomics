@@ -20,5 +20,7 @@ struct LocalizableStrings {
     static let characterHasNoDescriptionLabel = NSLocalizedString("CharacterHasNoDescriptionLabel", comment: "The label when there is no description for the character")
     static let searchPlaceholder = NSLocalizedString("SearchPlaceholder", comment: "The placeholder for the serach component")
     static let accessibilityHomeView = NSLocalizedString("AccessibilityHomeView", comment: "The accessibility label for the home view")
+    static let accessibilityBannerErrorView = NSLocalizedString("AccessibilityBannerErrorView", comment: "The accessibility label for the banner error view")
+    static let accessibilityCharactersList = NSLocalizedString("AccessibilityCharactersList", comment: "The accessibility label for the characters list")
 
 }

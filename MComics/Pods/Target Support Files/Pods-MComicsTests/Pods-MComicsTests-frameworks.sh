@@ -200,16 +200,19 @@ if [[ "$CONFIGURATION" == "DEV" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KIF/KIF.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Quick/Quick.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Swifter/Swifter.framework"
 fi
 if [[ "$CONFIGURATION" == "TEST" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KIF/KIF.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Quick/Quick.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Swifter/Swifter.framework"
 fi
 if [[ "$CONFIGURATION" == "PROD" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/KIF/KIF.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Quick/Quick.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Swifter/Swifter.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

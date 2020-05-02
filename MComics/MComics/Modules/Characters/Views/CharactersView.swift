@@ -14,10 +14,10 @@ struct CharactersView: View {
     
     //MARK: - Observed
     @ObservedObject private var viewModel: CharactersViewModel
-   
+    
     //MARK: - Environment
     @Environment(\.colorScheme) var colorScheme
-
+    
     //MARK: - State
     @State private var showCancelButton: Bool = false
     
@@ -68,19 +68,20 @@ extension CharactersView {
                         SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
                             .padding([.leading, .trailing])
                     }.background(colorScheme == .dark ? Color.black : Color.white)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 ) {
                     ForEach(headers.indices, id: \.self) { index in
                         self.getHeaders(index: index, headers: headers)
                     }
                 }.resignKeyboardOnDragGesture()
-            }.navigationBarTitle(LocalizableStrings.charactersHeader)
+            }.accessibility(label: Text(LocalizableStrings.accessibilityCharactersList))
+                .navigationBarTitle(LocalizableStrings.charactersHeader)
                 .navigationBarHidden(showCancelButton)
         }
     }
     
     private func getErrorView() -> some View {
-        ErrorBannerView(error: $viewModel.error) {
+        BannerErrorView(error: $viewModel.error) {
             self.viewModel.error = nil
         }
     }

@@ -10,7 +10,7 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 #include "Pods/Target Support Files/Pods-MComics/Pods-MComics.test.xcconfig"
 
-API_KEY =
-API_URL =
-HASH_VALUE =
-TS_VALUE =
+API_KEY = 1
+API_URL = http:/$()/localhost:8080
+HASH_VALUE = 1
+TS_VALUE = 1

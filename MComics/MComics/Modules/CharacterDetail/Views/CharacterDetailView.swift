@@ -64,7 +64,7 @@ extension CharacterDetailView {
     }
     
     private func getErrorView() -> some View {
-        ErrorBannerView(error: $viewModel.error) {
+        BannerErrorView(error: $viewModel.error) {
             self.viewModel.error = nil
         }
     }

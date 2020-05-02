@@ -12,5 +12,6 @@ target 'MComics' do
     pod 'KIF'
     pod 'Nimble'
     pod 'Quick'
+    pod 'Swifter'
   end
 end
