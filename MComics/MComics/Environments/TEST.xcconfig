@@ -14,3 +14,5 @@ API_KEY = 1
 API_URL = http:/$()/localhost:8080
 HASH_VALUE = 1
 TS_VALUE = 1
+
+APP_DISPLAY_NAME = MComics

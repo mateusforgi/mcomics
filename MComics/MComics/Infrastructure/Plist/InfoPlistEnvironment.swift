@@ -10,7 +10,7 @@ import Foundation
 
 struct InfoPlistEnvironment {
     
-    private var infoDict: [String: Any] {
+    private static var infoDict: [String: Any] {
         if let dict = Bundle.main.infoDictionary {
             return dict
         } else {
@@ -18,7 +18,7 @@ struct InfoPlistEnvironment {
         }
     }
     
-    public func getInfoPlistVariable(plistKey: PlistKey) -> String? {
+    public static func getInfoPlistVariable(plistKey: PlistKey) -> String? {
         return infoDict[plistKey.rawValue] as? String
     }
     

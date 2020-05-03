@@ -27,7 +27,7 @@ struct SplashScreenView: View {
                 .opacity(textAlpha)
                 .scaleEffect(textScale)
             
-            Text("M Comics")
+            Text(getAppName())
                 .font(.largeTitle)
                 .opacity(textAlpha)
                 .scaleEffect(textScale)
@@ -103,6 +103,13 @@ extension SplashScreenView {
             self.textScale = 1
             self.handleAnimations()
         }
+    }
+    
+    private func getAppName() -> String {
+        guard let appName = InfoPlistEnvironment.getInfoPlistVariable(plistKey: .cfBundleDisplayName) else {
+            return "MComics"
+        }
+        return appName
     }
     
 }

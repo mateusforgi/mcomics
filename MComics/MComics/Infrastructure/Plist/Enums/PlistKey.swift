@@ -10,6 +10,6 @@ import Foundation
 
 public enum PlistKey: String {
     
-    case apiURL = "API_URL", apiKey = "API_KEY", ts = "TS_VALUE", hash = "HASH_VALUE"
+    case apiURL = "API_URL", apiKey = "API_KEY", ts = "TS_VALUE", hash = "HASH_VALUE", cfBundleDisplayName = "CFBundleDisplayName"
     
 }

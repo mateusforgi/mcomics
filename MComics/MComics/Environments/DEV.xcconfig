@@ -10,7 +10,9 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 #include "Pods/Target Support Files/Pods-MComics/Pods-MComics.dev.xcconfig"
 
-API_KEY =
-API_URL =
-HASH_VALUE =
-TS_VALUE =
+API_KEY = 72818d0e17e65498ea3b6350c62a9827
+API_URL = https:/$()/gateway.marvel.com
+HASH_VALUE = 2513576687d01557d55ef2b01c1702d8
+TS_VALUE = 1
+
+APP_DISPLAY_NAME = MComics

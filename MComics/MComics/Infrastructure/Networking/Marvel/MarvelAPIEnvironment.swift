@@ -9,10 +9,7 @@
 import Foundation
 
 struct MarvelAPIEnvironment {
-    
-    // MARK: - Variables
-    private let infoPlistEnvironment = InfoPlistEnvironment()
-    
+        
     // MARK: - Private Methods
     private var endPointDict: NSDictionary? {
         var dict: NSDictionary?
@@ -33,13 +30,13 @@ struct MarvelAPIEnvironment {
     }
     
     private func getCredentialsQueryString(url: String) -> String? {
-        guard let tsValue = infoPlistEnvironment.getInfoPlistVariable(plistKey: .ts) else {
+        guard let tsValue = InfoPlistEnvironment.getInfoPlistVariable(plistKey: .ts) else {
             return url
         }
-        guard let hashValue = infoPlistEnvironment.getInfoPlistVariable(plistKey: .hash) else {
+        guard let hashValue = InfoPlistEnvironment.getInfoPlistVariable(plistKey: .hash) else {
             return url
         }
-        guard let apiKey = infoPlistEnvironment.getInfoPlistVariable(plistKey: .apiKey) else {
+        guard let apiKey = InfoPlistEnvironment.getInfoPlistVariable(plistKey: .apiKey) else {
             return url
         }
         return "\(url)?ts=\(tsValue)&apikey=\(apiKey)&hash=\(hashValue)"
@@ -53,7 +50,7 @@ struct MarvelAPIEnvironment {
     
     // MARK: - Public Methods
     public func getUrlFrom(endPoint: MarvelEndpointPlistKey, parameters: [MarvelEndpointParameters: String]?, queryStrings: [MarvelQueryStringParameter: String]?) -> String? {
-        guard let baseURL = infoPlistEnvironment.getInfoPlistVariable(plistKey: .apiURL), let endPoint = endPointDict?[endPoint.rawValue] as? String else {
+        guard let baseURL = InfoPlistEnvironment.getInfoPlistVariable(plistKey: .apiURL), let endPoint = endPointDict?[endPoint.rawValue] as? String else {
             return nil
         }
         var url = baseURL + endPoint
