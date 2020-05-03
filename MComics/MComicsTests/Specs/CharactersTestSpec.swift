@@ -61,16 +61,20 @@ class CharactersTestSpec: QuickSpec {
         
         describe("navigating to home") {
             context("when I have no characters to see and the server gives me an error") {
-                it("shows an error message and a retry button") {
+                it("shows a retry button") {
                     let retryWasFound = self.searchForElement("Retry")
-                    let searchWasFound = self.searchForElement("Search")
                     expect(retryWasFound).to(equal(true))
+                }
+                it("shows no search bar") {
+                    let searchWasFound = self.searchForElement("Search")
                     expect(searchWasFound).to(equal(false))
                 }
-                it("shows the favorites and characters tabs") {
+                it("shows the favorites tab") {
                     let favoritesWasFound = self.searchForElement("Favorites")
-                    let charactersWasFound = self.searchForElement("Characters")
                     expect(favoritesWasFound).to(equal(true))
+                }
+                it("shows the characters tabs") {
+                    let charactersWasFound = self.searchForElement("Characters")
                     expect(charactersWasFound).to(equal(true))
                 }
             }
@@ -79,10 +83,13 @@ class CharactersTestSpec: QuickSpec {
                 beforeEach {
                     self.addCharacterStub()
                 }
-                it("shows the favorites and characters tabs") {
+                it("shows the favorites tabs") {
                     self.tester().tapView(withAccessibilityLabel: "Retry")
                     let searchWasFound = self.searchForElement("Search")
                     expect(searchWasFound).to(equal(true))
+                }
+                
+                it("shows characters tabs") {
                     let retryWasFound = self.searchForElement("Retry")
                     expect(retryWasFound).to(equal(false))
                 }
@@ -124,10 +131,33 @@ class CharactersTestSpec: QuickSpec {
         }
         
         context("when I go back to the favorites list") {
-            it("it nows shows a favorite character") {
+            it("it now shows a favorite character") {
                 self.tester().tapView(withAccessibilityLabel: "Favorites")
                 let characterHeaderView = self.tester().waitForView(withAccessibilityLabel: "Unfavorite 3-D Man")
                 expect(characterHeaderView != nil).to(equal(true))
+            }
+        }
+        
+        context("when I click the to unfavorite the character") {
+            it("shows an empty view") {
+                self.tester().tapView(withAccessibilityLabel: "Unfavorite 3-D Man")
+                let noCharactersMessage = self.searchForElement("No favorite characters")
+                expect(noCharactersMessage).to(equal(true))
+            }
+        }
+        
+        context("when I go back to the characters list and click to see the character detail") {
+            it("it now shows the character detail") {
+                self.tester().tapView(withAccessibilityLabel: "Characters")
+                self.tester().tapView(withAccessibilityLabel: "3-D Man")
+                let characterDetailWasFound = self.searchForElement("Character Detail")
+                
+                expect(characterDetailWasFound).to(equal(true))
+            }
+            
+            it("it now shows the favorite button") {
+                let favoriteButtonWasFound = self.searchForElement("Favorite 3-D Man")
+                expect(favoriteButtonWasFound).to(equal(true))
             }
         }
     }

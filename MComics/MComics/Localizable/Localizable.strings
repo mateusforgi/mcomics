@@ -19,3 +19,4 @@
 "AccessibilityCharactersList" = "Characters List";
 "AccessibilityFavoriteButton" = "Favorite %@";
 "AccessibilityUnfavoriteButton" = "Unfavorite %@";
+"AccessibilityCharacterDetail" = "Character Detail";

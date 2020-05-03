@@ -39,7 +39,7 @@ struct CharacterDetailView: View {
                     Text(getDescription())
                 }
             }.navigationBarTitle(getNavigationHeaderTitle())
-        }
+        }.accessibility(label: Text(LocalizableStrings.accessibilityCharacterDetail))
     }
     
 }
