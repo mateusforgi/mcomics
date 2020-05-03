@@ -8,7 +8,7 @@ For handling the navigations, instead of following the classic Coordinator patte
 
 ## Running 
 
-*  Run pod install 
+*  Run pod install .
 *  Select DEV Scheme. It already comes with the App keys configured. 
 
 ## Pods
