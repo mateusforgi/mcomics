@@ -43,7 +43,7 @@ character_detail_dark
 
 ### Offline: 
 ![](Screens/offline_dark.jpg)
-![](Screens/offline_lightj.pg)
+![](Screens/offline_light.pg)
 
 ### Search: 
 ![](Screens/search_light.jpg)
