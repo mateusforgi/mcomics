@@ -35,9 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     static var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "MComicsModel")
-        container.loadPersistentStores { description, error in
+        container.loadPersistentStores { _, error in
             if let error = error {
-                #warning("handle error")
+                fatalError("Unable to load core data. Error description: \(error.localizedDescription)")
             }
         }
         return container
