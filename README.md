@@ -22,7 +22,7 @@ For handling the navigations, instead of following the classic Coordinator patte
 ## Unit Tests
 For running unit tests you must first select the TESTS Scheme. 
 
-## Screens
+## Screens - Light/Dark
 
 ### Characters list: 
 ![](Screens/characters_list_light.jpg)
@@ -42,8 +42,8 @@ character_detail_dark
 ![](Screens/no_favorite_characters_dark.jpg)
 
 ### Offline: 
-![](Screens/offline_dark.jpg)
 ![](Screens/offline_light.jpg)
+![](Screens/offline_dark.jpg)
 
 ### Search: 
 ![](Screens/search_light.jpg)
