@@ -42,18 +42,18 @@ class CharacterDetailViewModel: ObservableObject, Identifiable {
             DispatchQueue.main.async {
                 self.isFavorited = wasFavorited
                 if wasFavorited {
-                    self.saveImage(photoURL: self.header.photoURL, id: self.header.id)
+                    self.saveImage(header: self.header)
                 }
             }
         }
     }
     
-    private func saveImage(photoURL: String, id: Int) {
+    private func saveImage(header: CharacterHeaderProtocol) {
         DispatchQueue.global(qos: .background).async { [weak self] in
-            if let url = URL(string: photoURL) {
+            if let url = URL(string: MarvelAPIEnvironment.getPhotoURL(path: header.photoPath, imageExtension: header.photoExtension, size: .portraitMedium)) {
                 do {
                     let image = try Data(contentsOf: url)
-                    self?.characterRepository.saveImage(image: image, id: Int64(id)) { error in
+                    self?.characterRepository.saveImage(image: image, id: Int64(header.id)) { error in
                         DispatchQueue.main.async {
                             self?.error = error
                         }
@@ -65,6 +65,10 @@ class CharacterDetailViewModel: ObservableObject, Identifiable {
                 }
             }
         }
+    }
+    
+    public func getBigPhotoURL() -> String {
+        return MarvelAPIEnvironment.getPhotoURL(path: header.photoPath, imageExtension: header.photoExtension, size: .portraitXLarge)
     }
     
 }

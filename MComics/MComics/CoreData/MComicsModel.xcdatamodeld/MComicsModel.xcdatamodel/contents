@@ -5,7 +5,8 @@
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="photoURL" optional="YES" attributeType="String"/>
+        <attribute name="photoExtension" optional="YES" attributeType="String"/>
+        <attribute name="photoPath" optional="YES" attributeType="String"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -13,6 +14,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Character" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Character" positionX="-63" positionY="-18" width="128" height="133"/>
     </elements>
 </model>

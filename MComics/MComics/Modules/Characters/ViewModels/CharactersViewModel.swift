@@ -53,12 +53,12 @@ class CharactersViewModel: ObservableObject, Identifiable {
         return  MarvelAPIEnvironment.getPhotoURL(path: path, imageExtension: imageExtension, size: .portraitMedium)
     }
     
-    private func saveImage(photoURL: String, id: Int) {
+    private func saveImage(header: CharacterHeaderProtocol) {
         DispatchQueue.global(qos: .background).async { [weak self] in
-            if let url = URL(string: photoURL) {
+            if let url = URL(string: MarvelAPIEnvironment.getPhotoURL(path: header.photoPath, imageExtension: header.photoExtension, size: .portraitMedium)) {
                 do {
                     let image = try Data(contentsOf: url)
-                    self?.characterRepository.saveImage(image: image, id: Int64(id)) { error in
+                    self?.characterRepository.saveImage(image: image, id: Int64(header.id)) { error in
                         DispatchQueue.main.async {
                             self?.error = error
                         }
@@ -91,7 +91,7 @@ class CharactersViewModel: ObservableObject, Identifiable {
                 if response.data.count < response.data.limit {
                     self?.noMoreData = true
                 }
-                let headers = response.data.results.map({CharacterHeader(item: $0, photoURL: self?.getPhotoURL(path: $0.thumbnail.path, imageExtension: $0.thumbnail.imageExtension) ?? "")})
+                let headers = response.data.results.map({CharacterHeader(item: $0)})
                 return (headers.map(CharacterHeaderViewModel.init))
         }.sink(
             receiveCompletion: { value in
@@ -127,14 +127,17 @@ class CharactersViewModel: ObservableObject, Identifiable {
                 }
                 return
             }
-            DispatchQueue.main.async {
-                if wasFavorited {
+            if wasFavorited {
+                DispatchQueue.main.async {
                     self?.favoritedCharacters.update(with: id)
-                    self?.saveImage(photoURL: character.photoURL, id: id)
-                } else {
+                }
+                self?.saveImage(header: character)
+            } else {
+                DispatchQueue.main.async {
                     self?.favoritedCharacters.remove(id)
                 }
             }
+            
         }
     }
     

@@ -14,12 +14,12 @@ struct CharacterHeader: CharacterHeaderProtocol {
     var id: Int { item.id }
     var name: String { item.name }
     var description: String { item.description }
-    var photoURL: String
+    var photoExtension: String { item.thumbnail.imageExtension }
+    var photoPath: String { item.thumbnail.path }
     var image: Data?
 
-    init(item: CharacterInfoDTO, photoURL: String, image: Data? = nil) {
+    init(item: CharacterInfoDTO, image: Data? = nil) {
         self.item = item
-        self.photoURL = photoURL
         self.image = image
     }
     

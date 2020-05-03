@@ -16,7 +16,8 @@ class CharacterRepositoryTests: XCTestCase {
         
         var id: Int
         var name: String
-        var photoURL: String
+        var photoPath: String
+        var photoExtension: String
         var image: Data?
         var description: String
         
@@ -26,7 +27,7 @@ class CharacterRepositoryTests: XCTestCase {
     private var container: NSPersistentContainer!
     private var characterRepository: CharacterRepository!
     private var context: NSManagedObjectContext!
-    private let character = CharacterHeaderTest(id: 1, name: "name", photoURL: "photoURL", image: nil, description: "decription")
+    private let character = CharacterHeaderTest(id: 1, name: "name", photoPath: "photoPath", photoExtension: "photoExtension", image: nil, description: "decription")
     
     // MARK: - Lyfecycle
     override func setUpWithError() throws {
@@ -43,7 +44,8 @@ class CharacterRepositoryTests: XCTestCase {
     func verfifyAssertion(toInsert: CharacterHeaderProtocol, inserted: FavoriteCharacterDTO) {
         XCTAssertEqual(toInsert.id, inserted.id, "Expected id to be \(toInsert.id) but it was \(inserted.id)")
         XCTAssertEqual(toInsert.name, inserted.name, "Expected name to be \(toInsert.name) but it was \(inserted.name)")
-        XCTAssertEqual(toInsert.photoURL, inserted.photoURL, "Expected photoURL to be \(toInsert.photoURL) but it was \(inserted.photoURL)")
+        XCTAssertEqual(toInsert.photoExtension, inserted.photoExtension, "Expected photoExtension to be \(toInsert.photoExtension) but it was \(inserted.photoExtension)")
+        XCTAssertEqual(toInsert.photoPath, inserted.photoPath, "Expected photoPath to be \(toInsert.photoPath) but it was \(inserted.photoPath)")
         XCTAssertEqual(toInsert.image, inserted.image)
         XCTAssertEqual(toInsert.description, inserted.description, "Expected description to be \(toInsert.description) but it was \(inserted.description)")
     }

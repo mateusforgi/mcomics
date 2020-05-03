@@ -13,7 +13,8 @@ struct FavoriteCharacter: CharacterHeaderProtocol {
     private let character: FavoriteCharacterDTO
     var id: Int { character.id }
     var name: String { character.name }
-    var photoURL: String { character.photoURL }
+    var photoPath: String { character.photoPath }
+    var photoExtension: String { character.photoExtension }
     var image: Data? { character.image }
     var description: String { character.description }
     

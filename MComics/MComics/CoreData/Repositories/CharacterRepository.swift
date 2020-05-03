@@ -28,14 +28,15 @@ struct CharacterRepository {
         return NSFetchRequest<Character>(entityName: entityName)
     }
     
-    private func createCharacter(id: Int64, name: String, description: String, photoURL: String, completion: @escaping (Error?) -> Void) {
+    private func createCharacter(id: Int64, name: String, description: String, photoPath: String, photoExtension: String, completion: @escaping (Error?) -> Void) {
         context.perform {
             let character = Character(context: self.context)
             character.id = id
             character.name = name
             character.characterDescription = description
-            character.photoURL = photoURL
-            
+            character.photoPath = photoPath
+            character.photoExtension = photoExtension
+
             do {
                 try self.context.save()
                 self.context.reset()
@@ -86,7 +87,7 @@ extension CharacterRepository: CharacterRepositoryProtocol {
             let request = self.getRequest()
             do {
                 let result = try self.context.fetch(request)
-                let myFavorites = result.map({FavoriteCharacterDTO(id: Int($0.id), name: $0.name, image: $0.image, photoURL: $0.photoURL, description: $0.characterDescription)})
+                let myFavorites = result.map({FavoriteCharacterDTO(id: Int($0.id), name: $0.name, image: $0.image, photoExtension: $0.photoExtension, photoPath: $0.photoPath, description: $0.characterDescription)})
                 self.context.reset()
                 completion(myFavorites, nil)
             } catch {
@@ -119,7 +120,7 @@ extension CharacterRepository: CharacterRepositoryProtocol {
                         })
                     } else {
                         wasFavorited = true
-                        self.createCharacter(id: id, name: character.name, description: character.description, photoURL: character.photoURL, completion: { createError in
+                        self.createCharacter(id: id, name: character.name, description: character.description, photoPath: character.photoPath, photoExtension: character.photoExtension, completion: { createError in
                             completion(wasFavorited, createError)
                         })
                     }

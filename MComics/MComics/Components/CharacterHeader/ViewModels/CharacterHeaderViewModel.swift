@@ -21,14 +21,14 @@ class CharacterHeaderViewModel: ObservableObject, Identifiable {
     init(character: CharacterHeaderProtocol) {
         id = character.id
         name = character.name
-        photoURL = character.photoURL
         image = character.image
         self.character = character
+        photoURL = getPhotoURL(path: character.photoPath, imageExtension: character.photoExtension)
     }
     
     // MARK: - Private Methods
     private func getPhotoURL(path: String, imageExtension: String) -> String {
-        return  MarvelAPIEnvironment.getPhotoURL(path: path, imageExtension: imageExtension, size: .portraitXLarge)
+        return  MarvelAPIEnvironment.getPhotoURL(path: path, imageExtension: imageExtension, size: .portraitMedium)
     }
     
 }

@@ -48,7 +48,7 @@ struct CharacterDetailView: View {
 extension CharacterDetailView {
     
     private func getPhoto() -> some View {
-        CharacterPosterView(photoURL: viewModel.header.photoURL, image: viewModel.header.image)
+        CharacterPosterView(photoURL: viewModel.getBigPhotoURL(), image: viewModel.header.image)
     }
     
     private func favoriteButtonWasClicked(id: Int) {

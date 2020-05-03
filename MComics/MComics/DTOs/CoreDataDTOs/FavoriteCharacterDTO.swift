@@ -13,6 +13,7 @@ struct FavoriteCharacterDTO {
     let id: Int
     let name: String
     let image: Data?
-    let photoURL: String
+    let photoExtension: String
+    let photoPath: String
     let description: String
 }

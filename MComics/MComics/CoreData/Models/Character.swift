@@ -15,6 +15,7 @@ class Character: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var image: Data?
     @NSManaged var characterDescription: String
-    @NSManaged var photoURL: String
+    @NSManaged var photoPath: String
+    @NSManaged var photoExtension: String
 
 }
