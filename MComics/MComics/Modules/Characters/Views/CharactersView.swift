@@ -38,7 +38,7 @@ struct CharactersView: View {
                         guard let error = viewModel.error else {
                             return AnyView(ActivityIndicator(isAnimating: viewModel.loading, style: .medium))
                         }
-                        return AnyView(ErrorView(error: error, tapAction: self.viewModel.fetch, tapMessage: LocalizableStrings.retryLabel))
+                        return AnyView(ErrorView(error: error, tapAction: {self.viewModel.fetch(false)} , tapMessage: LocalizableStrings.retryLabel))
                     }
                     if headers.isEmpty && !showCancelButton {
                         return AnyView(ErrorView(error: CharacterError.noCharacters))
@@ -48,7 +48,7 @@ struct CharactersView: View {
                     
                     
             }.onAppear {
-                self.viewModel.fetch()
+                self.viewModel.fetch(true)
                 self.viewModel.getMyFavorites()
             }
         }
@@ -91,7 +91,7 @@ extension CharactersView {
                 if index + 1 == headers.count {
                     ActivityIndicator(isAnimating: self.viewModel.loading && !self.viewModel.filtering, style: .medium)
                         .onAppear {
-                            self.viewModel.fetch()
+                            self.viewModel.fetch(false)
                     }
                 }
         }

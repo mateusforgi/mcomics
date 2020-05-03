@@ -77,9 +77,10 @@ class CharactersViewModel: ObservableObject, Identifiable {
     }
     
     //MARK: - Public Methods
-    public func fetch() {
+    public func fetch(_ onAppear: Bool) {
         self.error = nil
-        if loading || filtering || noMoreData {
+        let initialDataWasAlreadyLoaded = onAppear && page > 0
+        if loading || filtering || noMoreData || initialDataWasAlreadyLoaded {
             return
         }
         var offset = page * limit
