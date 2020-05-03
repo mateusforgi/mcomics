@@ -14,7 +14,7 @@ protocol CharacterHeaderProtocol {
     var name: String { get }
     var photoPath: String { get }
     var photoExtension: String { get }
-    var image: Data? { get }
+    var image: Data? { get set }
     var description: String { get }
 
 }

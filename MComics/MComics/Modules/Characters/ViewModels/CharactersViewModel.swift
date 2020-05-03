@@ -17,7 +17,7 @@ class CharactersViewModel: ObservableObject, Identifiable {
     @Published var loading = false
     @Published var text: String = ""
     @Published var filtering: Bool = false
-    @Published var favoritedCharacters = Set<Int>()
+    @Published var favoritedCharacters = [Int: Data?]()
     @Published var error: Error?
     
     // MARK: - Private Variables
@@ -63,6 +63,12 @@ class CharactersViewModel: ObservableObject, Identifiable {
                 do {
                     let image = try Data(contentsOf: url)
                     self?.characterRepository.saveImage(image: image, id: Int64(header.id)) { error in
+                        guard let error = error else {
+                            DispatchQueue.main.async {
+                                self?.favoritedCharacters.updateValue(image, forKey: header.id)
+                            }
+                            return
+                        }
                         DispatchQueue.main.async {
                             self?.error = error
                         }
@@ -134,12 +140,12 @@ class CharactersViewModel: ObservableObject, Identifiable {
             }
             if wasFavorited {
                 DispatchQueue.main.async {
-                    self?.favoritedCharacters.update(with: id)
+                    self?.favoritedCharacters.updateValue(nil, forKey: id)
                 }
                 self?.saveImage(header: character)
             } else {
                 DispatchQueue.main.async {
-                    self?.favoritedCharacters.remove(id)
+                    self?.favoritedCharacters.removeValue(forKey: id)
                 }
             }
             
@@ -153,9 +159,19 @@ class CharactersViewModel: ObservableObject, Identifiable {
                     self?.error = error
                     return
                 }
-                self?.favoritedCharacters = Set(favorites.map({$0.id}))
+                self?.favoritedCharacters = favorites.reduce([Int: Data?](), { (dict, character) -> [Int: Data?] in
+                    var dict = dict
+                    dict[character.id] = character.image
+                    return dict
+                })
             }
         }
+    }
+    
+    public func getHeaderForDetail(_ header: CharacterHeaderProtocol) -> CharacterHeaderProtocol {
+        var headerCopy = header
+        headerCopy.image = favoritedCharacters[header.id] ?? nil
+        return headerCopy
     }
     
 }

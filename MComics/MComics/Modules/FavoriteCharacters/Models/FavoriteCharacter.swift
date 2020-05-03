@@ -15,11 +15,12 @@ struct FavoriteCharacter: CharacterHeaderProtocol {
     var name: String { character.name }
     var photoPath: String { character.photoPath }
     var photoExtension: String { character.photoExtension }
-    var image: Data? { character.image }
+    var image: Data?
     var description: String { character.description }
     
     init(character: FavoriteCharacterDTO) {
         self.character = character
+        self.image = character.image
     }
     
 }
