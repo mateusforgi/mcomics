@@ -39,6 +39,10 @@ class CharactersViewModel: ObservableObject, Identifiable {
         self.characterService = characterService
         self.characterRepository = characterRepository
         self.viewFactory = viewFactory
+        bindSearch()
+    }
+    
+    private func bindSearch(){
         $text.dropFirst(1)
             .sink(receiveValue: self.search(_:))
             .store(in: &disposables)
