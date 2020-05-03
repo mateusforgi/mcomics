@@ -11,7 +11,6 @@
 		622A0C1E245D0A8300A47CEC /* KIF + Quick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 622A0C1A245D06F700A47CEC /* KIF + Quick.swift */; };
 		62360A122456626A000C61E8 /* CharacterHeaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62360A112456626A000C61E8 /* CharacterHeaderProtocol.swift */; };
 		623DB987245E1CE20021B354 /* CharactersTestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623DB986245E1CE20021B354 /* CharactersTestSpec.swift */; };
-		624925B5245F3009007AEB41 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624925B4245F3009007AEB41 /* SplashScreenView.swift */; };
 		624E01E5245C654B006A8FDE /* CharacterViewFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624E01E4245C654B006A8FDE /* CharacterViewFactoryProtocol.swift */; };
 		624E01E7245C655C006A8FDE /* CharacterViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624E01E6245C655C006A8FDE /* CharacterViewFactory.swift */; };
 		625ECB11245A4D1600A7B597 /* FavoriteButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625ECB10245A4D1600A7B597 /* FavoriteButtonView.swift */; };
@@ -88,7 +87,6 @@
 		622A0C1A245D06F700A47CEC /* KIF + Quick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KIF + Quick.swift"; sourceTree = "<group>"; };
 		62360A112456626A000C61E8 /* CharacterHeaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterHeaderProtocol.swift; sourceTree = "<group>"; };
 		623DB986245E1CE20021B354 /* CharactersTestSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharactersTestSpec.swift; sourceTree = "<group>"; };
-		624925B4245F3009007AEB41 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		624E01E4245C654B006A8FDE /* CharacterViewFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewFactoryProtocol.swift; sourceTree = "<group>"; };
 		624E01E6245C655C006A8FDE /* CharacterViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewFactory.swift; sourceTree = "<group>"; };
 		624E01F8245C6CDA006A8FDE /* TEST.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = TEST.xcconfig; sourceTree = "<group>"; };
@@ -265,14 +263,6 @@
 				62360A112456626A000C61E8 /* CharacterHeaderProtocol.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		624925B3245F2FF9007AEB41 /* SplashScreen */ = {
-			isa = PBXGroup;
-			children = (
-				624925B4245F3009007AEB41 /* SplashScreenView.swift */,
-			);
-			path = SplashScreen;
 			sourceTree = "<group>";
 		};
 		624E01E3245C652F006A8FDE /* Factories */ = {
@@ -594,7 +584,6 @@
 		B8E03BE724468D7200C3180D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				624925B3245F2FF9007AEB41 /* SplashScreen */,
 				62BE3F482455CF7600285F39 /* FavoriteCharacters */,
 				B839A05D24492C0000EDFD90 /* CharacterDetail */,
 				B8E03C082446A84900C3180D /* Home */,
@@ -934,7 +923,6 @@
 				62BE3F402455AE7200285F39 /* MComicsModel.xcdatamodeld in Sources */,
 				B8E03BE4244686C200C3180D /* MarvelEndpointParameters.swift in Sources */,
 				B8E03C072446A04D00C3180D /* CharacterInfoDTO.swift in Sources */,
-				624925B5245F3009007AEB41 /* SplashScreenView.swift in Sources */,
 				625ECB11245A4D1600A7B597 /* FavoriteButtonView.swift in Sources */,
 				624E01E7245C655C006A8FDE /* CharacterViewFactory.swift in Sources */,
 				62BE3F472455B03E00285F39 /* CharacterRepository.swift in Sources */,

@@ -21,35 +21,20 @@ struct HomeView: View {
     
     // MARK: - Body
     var body: some View {
-        ZStack {
-            if !showSplash {
-                TabView {
-                    characterViewFactory.makeCharactersView()
-                        .tabItem {
-                            Image(systemName: "list.dash")
-                            Text(LocalizableStrings.charactersHeader)
-                    }.accessibility(identifier: "list").tag(0)
-                    characterViewFactory.makeFavoriteCharactersView()
-                        .tabItem {
-                            Image(systemName: "heart.circle.fill")
-                            Text(LocalizableStrings.favoritesHeader)
-                    }.tag(1)
-                }
-                .accentColor(Color.init(UIColor.systemTeal))
-                .accessibility(label: Text(LocalizableStrings.accessibilityHomeView))
-            } else {
-                SplashScreenView()
-                    .opacity(showSplash ? 1 : 0)
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            SplashScreenView.shouldAnimate = false
-                            withAnimation() {
-                                self.showSplash = false
-                            }
-                        }
-                }
-            }
+        TabView {
+            characterViewFactory.makeCharactersView()
+                .tabItem {
+                    Image(systemName: "list.dash")
+                    Text(LocalizableStrings.charactersHeader)
+            }.accessibility(identifier: "list").tag(0)
+            characterViewFactory.makeFavoriteCharactersView()
+                .tabItem {
+                    Image(systemName: "heart.circle.fill")
+                    Text(LocalizableStrings.favoritesHeader)
+            }.tag(1)
         }
+        .accentColor(Color.init(UIColor.systemTeal))
+        .accessibility(label: Text(LocalizableStrings.accessibilityHomeView))
     }
     
 }
