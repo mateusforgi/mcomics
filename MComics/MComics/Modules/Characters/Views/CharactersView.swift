@@ -64,10 +64,9 @@ extension CharactersView {
             getErrorView()
             List {
                 Section(header:
-                    VStack {
-                        SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
-                            .padding([.leading, .trailing])
-                    }.background(colorScheme == .dark ? Color.black : Color.white)
+                    SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
+                        .padding([.leading, .trailing])
+                        .background(colorScheme == .dark ? Color.black : Color.white)
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 ) {
                     ForEach(headers.indices, id: \.self) { index in
