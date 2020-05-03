@@ -40,7 +40,7 @@ struct CharactersView: View {
                         }
                         return AnyView(ErrorView(message: error.localizedDescription, tapAction: self.viewModel.fetch, tapMessage: LocalizableStrings.retryLabel))
                     }
-                    if headers.isEmpty {
+                    if headers.isEmpty && !showCancelButton {
                         return AnyView(ErrorView(message: LocalizableStrings.noCharacters))
                     }
                     
@@ -61,17 +61,14 @@ extension CharactersView {
     
     func getList(_ headers: [CharacterHeaderViewModel]) -> some View {
         return VStack {
+            SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
+                .padding([.leading, .trailing])
+                .background(colorScheme == .dark ? Color.black : Color.white)
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             getErrorView()
             List {
-                Section(header:
-                    SearchTextField(searchText: $viewModel.text, showCancelButton: $showCancelButton)
-                        .padding([.leading, .trailing])
-                        .background(colorScheme == .dark ? Color.black : Color.white)
-                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                ) {
-                    ForEach(headers.indices, id: \.self) { index in
-                        self.getHeaders(index: index, headers: headers)
-                    }
+                ForEach(headers.indices, id: \.self) { index in
+                    self.getHeaders(index: index, headers: headers)
                 }
             }.accessibility(label: Text(LocalizableStrings.accessibilityCharactersList))
                 .navigationBarTitle(LocalizableStrings.charactersHeader)
