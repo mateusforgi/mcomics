@@ -51,5 +51,5 @@ character_detail_dark
 
 ### Error: 
 ![](Screens/error_light.jpg)
-![](Screens/error_darkjpg)
+![](Screens/error_dark.jpg)
 
