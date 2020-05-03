@@ -36,7 +36,7 @@ struct CharacterHeaderView: View {
                     Text(viewModel.name)
                         .lineLimit(2)
                         .font(Font.system(size: 17, weight: .semibold, design: .default))
-                    FavoriteButtonView(id: viewModel.id, favorited: self.favorited, favoriteButtonWasClicked: self.favoriteButtonWasClicked)
+                    FavoriteButtonView(id: viewModel.id, favorited: self.favorited, favoriteButtonWasClicked: self.favoriteButtonWasClicked, accessibilityName: viewModel.name)
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .trailing)
                 }
             }

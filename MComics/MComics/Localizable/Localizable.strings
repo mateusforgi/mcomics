@@ -17,3 +17,5 @@
 "AccessibilityHomeView" = "Home";
 "AccessibilityBannerErrorView" = "Banner Error";
 "AccessibilityCharactersList" = "Characters List";
+"AccessibilityFavoriteButton" = "Favorite %@";
+"AccessibilityUnfavoriteButton" = "Unfavorite %@";

@@ -22,5 +22,7 @@ struct LocalizableStrings {
     static let accessibilityHomeView = NSLocalizedString("AccessibilityHomeView", comment: "The accessibility label for the home view")
     static let accessibilityBannerErrorView = NSLocalizedString("AccessibilityBannerErrorView", comment: "The accessibility label for the banner error view")
     static let accessibilityCharactersList = NSLocalizedString("AccessibilityCharactersList", comment: "The accessibility label for the characters list")
-
+    static let accessibilityFavoriteButton = NSLocalizedString("AccessibilityFavoriteButton", comment: "The accessibility label for the favorite button")
+    static let accessibilityUnfavoriteButton = NSLocalizedString("AccessibilityUnfavoriteButton", comment: "The accessibility label for the unfavorite button")
+    
 }

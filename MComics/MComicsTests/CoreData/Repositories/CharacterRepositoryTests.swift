@@ -30,15 +30,8 @@ class CharacterRepositoryTests: XCTestCase {
     
     // MARK: - Lyfecycle
     override func setUpWithError() throws {
-        // Set in memory store
-        container = NSPersistentContainer(name: "MComicsModel")
-        container.persistentStoreDescriptions[0].url = URL(fileURLWithPath: "/dev/null")
-        container.loadPersistentStores { (_, error) in
-            XCTAssertNil(error)
-        }
-        context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        context.persistentStoreCoordinator = container.persistentStoreCoordinator
-        
+        context = AppDelegate.persistentContainer.viewContext
+        CoreDataHelper.deleteCoreDataValues(entityName: String(describing: Character.self), context: context)
         characterRepository = CharacterRepository(context: context)
     }
     

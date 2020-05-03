@@ -11,8 +11,9 @@ import KIF
 import Nimble
 import Quick
 import Swifter
+@testable import MComics
 
-class HomeViewTestSpec: QuickSpec {
+class CharactersTestSpec: QuickSpec {
     
     var server: HttpServer?
     
@@ -51,10 +52,14 @@ class HomeViewTestSpec: QuickSpec {
         return response
     }
     
+    private func deleteCoreDataValues() {
+        let context = AppDelegate.persistentContainer.viewContext
+        CoreDataHelper.deleteCoreDataValues(entityName: String(describing: Character.self), context: context)
+    }
+    
     override func spec() {
         
         describe("navigating to home") {
-            
             context("when I have no characters to see and the server gives me an error") {
                 it("shows an error message and a retry button") {
                     let retryWasFound = self.searchForElement("Retry")
@@ -95,6 +100,34 @@ class HomeViewTestSpec: QuickSpec {
                 }
                 let bannerErrorView = self.tester().waitForView(withAccessibilityLabel: "Banner Error")
                 expect(bannerErrorView != nil).to(equal(true))
+            }
+        }
+        
+        context("when I click on favorites tab") {
+            beforeEach {
+                self.deleteCoreDataValues()
+            }
+            it("shows an empty view") {
+                self.tester().tapView(withAccessibilityLabel: "Favorites")
+                let noChactersMessage = self.searchForElement("No favorite characters")
+                expect(noChactersMessage).to(equal(true))
+            }
+        }
+        
+        context("when I go back to the characters list and I favorite one character") {
+            it("it fills the favorite button heart") {
+                self.tester().tapView(withAccessibilityLabel: "Characters")
+                self.tester().tapView(withAccessibilityLabel: "Favorite 3-D Man")
+                let unfavoriteButtonWasFound = self.searchForElement("Unfavorite 3-D Man")
+                expect(unfavoriteButtonWasFound).to(equal(true))
+            }
+        }
+        
+        context("when I go back to the favorites list") {
+            it("it nows shows a favorite character") {
+                self.tester().tapView(withAccessibilityLabel: "Favorites")
+                let characterHeaderView = self.tester().waitForView(withAccessibilityLabel: "Unfavorite 3-D Man")
+                expect(characterHeaderView != nil).to(equal(true))
             }
         }
     }

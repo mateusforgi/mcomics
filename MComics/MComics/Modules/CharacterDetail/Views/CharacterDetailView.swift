@@ -31,7 +31,7 @@ struct CharacterDetailView: View {
                         Text(viewModel.header.name)
                             .lineLimit(2)
                             .font(Font.system(size: 17, weight: .semibold, design: .default))
-                        FavoriteButtonView(id: viewModel.header.id, favorited: viewModel.isFavorited, favoriteButtonWasClicked: self.favoriteButtonWasClicked)
+                        FavoriteButtonView(id: viewModel.header.id, favorited: viewModel.isFavorited, favoriteButtonWasClicked: self.favoriteButtonWasClicked, accessibilityName: viewModel.header.name)
                             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .trailing)
                     }
                 }
