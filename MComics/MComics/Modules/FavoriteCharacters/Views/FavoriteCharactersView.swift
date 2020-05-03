@@ -26,10 +26,10 @@ struct FavoriteCharactersView: View {
                     guard let error = viewModel.error else {
                         return AnyView(ActivityIndicator(isAnimating: viewModel.loading, style: .medium))
                     }
-                    return AnyView(ErrorView(message: error.localizedDescription, tapAction: self.viewModel.getMyFavorites, tapMessage: LocalizableStrings.retryLabel))
+                    return AnyView(ErrorView(error: error, tapAction: self.viewModel.getMyFavorites, tapMessage: LocalizableStrings.retryLabel))
                 }
                 if favorites.isEmpty {
-                    return AnyView(ErrorView(message: LocalizableStrings.noFavoriteCharacters))
+                    return AnyView(ErrorView(error: CharacterError.noFavorites))
                 }
                 return AnyView(List(favorites) { character in
                     ZStack {

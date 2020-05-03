@@ -10,19 +10,25 @@ import SwiftUI
 
 struct ErrorView: View {
     
-    private var message: String
+    // MARK: - Variables
+    private var error: Error
     private var tapAction: (() -> Void)?
     private var tapMessage: String?
     
-    init(message: String, tapAction: (() -> Void)? = nil, tapMessage: String? = nil) {
-        self.message = message
+    // MARK: - Constructor
+    init(error: Error, tapAction: (() -> Void)? = nil, tapMessage: String? = nil) {
+        self.error = error
         self.tapAction = tapAction
         self.tapMessage = tapMessage
     }
     
+    // MARK: - Body
     var body: some View {
         VStack {
-            Text(message)
+            if isOffline() {
+                Image(systemName: "wifi.slash")
+            }
+            Text(error.localizedDescription)
             tapAction.map { callback in
                 Button(action: callback) {
                     Text(tapMessage ?? "")
@@ -31,5 +37,14 @@ struct ErrorView: View {
         }
     }
     
+    
 }
 
+// MARK: - Private Functions
+extension ErrorView {
+    
+    private func isOffline() -> Bool {
+        return error._code == -1009
+    }
+    
+}

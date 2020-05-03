@@ -38,10 +38,10 @@ struct CharactersView: View {
                         guard let error = viewModel.error else {
                             return AnyView(ActivityIndicator(isAnimating: viewModel.loading, style: .medium))
                         }
-                        return AnyView(ErrorView(message: error.localizedDescription, tapAction: self.viewModel.fetch, tapMessage: LocalizableStrings.retryLabel))
+                        return AnyView(ErrorView(error: error, tapAction: self.viewModel.fetch, tapMessage: LocalizableStrings.retryLabel))
                     }
                     if headers.isEmpty && !showCancelButton {
-                        return AnyView(ErrorView(message: LocalizableStrings.noCharacters))
+                        return AnyView(ErrorView(error: CharacterError.noCharacters))
                     }
                     
                     return AnyView(getList(headers))

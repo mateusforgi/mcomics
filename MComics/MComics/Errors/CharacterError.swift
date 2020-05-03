@@ -10,7 +10,7 @@ import Foundation
 
 enum CharacterError: Error {
     
-    case notFound
+    case notFound, noCharacters, noFavorites
     
 }
 
@@ -20,6 +20,10 @@ extension CharacterError: LocalizedError {
         switch self {
         case .notFound:
             return LocalizableStrings.characterNotFound
+        case .noCharacters:
+            return LocalizableStrings.noCharacters
+        case .noFavorites:
+            return LocalizableStrings.noFavoriteCharacters
         }
     }
     
