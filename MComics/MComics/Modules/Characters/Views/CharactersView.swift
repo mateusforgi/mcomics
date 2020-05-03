@@ -72,7 +72,7 @@ extension CharactersView {
                     ForEach(headers.indices, id: \.self) { index in
                         self.getHeaders(index: index, headers: headers)
                     }
-                }.resignKeyboardOnDragGesture()
+                }
             }.accessibility(label: Text(LocalizableStrings.accessibilityCharactersList))
                 .navigationBarTitle(LocalizableStrings.charactersHeader)
                 .navigationBarHidden(showCancelButton)

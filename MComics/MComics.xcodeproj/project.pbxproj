@@ -37,8 +37,6 @@
 		B839A06024492C1E00EDFD90 /* CharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A05F24492C1E00EDFD90 /* CharacterDetailView.swift */; };
 		B839A06424492F1100EDFD90 /* CharacterDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A06324492F1100EDFD90 /* CharacterDetailViewModel.swift */; };
 		B839A0692449527600EDFD90 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A0682449527600EDFD90 /* UIApplicationExtension.swift */; };
-		B839A06C244952B400EDFD90 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A06B244952B400EDFD90 /* ViewExtension.swift */; };
-		B839A06F2449530600EDFD90 /* ResignKeyboardOnDragGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A06E2449530600EDFD90 /* ResignKeyboardOnDragGesture.swift */; };
 		B839A072244953B400EDFD90 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B839A071244953B400EDFD90 /* SearchTextField.swift */; };
 		B8E03BB7244677E300C3180D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E03BB6244677E300C3180D /* AppDelegate.swift */; };
 		B8E03BB9244677E300C3180D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E03BB8244677E300C3180D /* SceneDelegate.swift */; };
@@ -121,8 +119,6 @@
 		B839A05F24492C1E00EDFD90 /* CharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailView.swift; sourceTree = "<group>"; };
 		B839A06324492F1100EDFD90 /* CharacterDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailViewModel.swift; sourceTree = "<group>"; };
 		B839A0682449527600EDFD90 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
-		B839A06B244952B400EDFD90 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
-		B839A06E2449530600EDFD90 /* ResignKeyboardOnDragGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResignKeyboardOnDragGesture.swift; sourceTree = "<group>"; };
 		B839A071244953B400EDFD90 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		B8E03BB3244677E300C3180D /* MComics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MComics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8E03BB6244677E300C3180D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -441,22 +437,6 @@
 			path = UIKit;
 			sourceTree = "<group>";
 		};
-		B839A06A244952A300EDFD90 /* SwiftUI */ = {
-			isa = PBXGroup;
-			children = (
-				B839A06B244952B400EDFD90 /* ViewExtension.swift */,
-			);
-			path = SwiftUI;
-			sourceTree = "<group>";
-		};
-		B839A06D244952E500EDFD90 /* ViewModifiers */ = {
-			isa = PBXGroup;
-			children = (
-				B839A06E2449530600EDFD90 /* ResignKeyboardOnDragGesture.swift */,
-			);
-			path = ViewModifiers;
-			sourceTree = "<group>";
-		};
 		B839A0702449532D00EDFD90 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,7 +524,6 @@
 				62360A0F24566247000C61E8 /* CharacterHeader */,
 				62BE3F3424546A5B00285F39 /* UIViewRepresentable */,
 				B839A0702449532D00EDFD90 /* Views */,
-				B839A06D244952E500EDFD90 /* ViewModifiers */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -571,7 +550,6 @@
 		B8E03BD62446855400C3180D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				B839A06A244952A300EDFD90 /* SwiftUI */,
 				B839A0672449526200EDFD90 /* UIKit */,
 				B8E03BD92446857900C3180D /* Foundation */,
 			);
@@ -928,7 +906,6 @@
 				62BE3F522455CFE000285F39 /* FavoriteCharactersViewModel.swift in Sources */,
 				62BE3F542455D12F00285F39 /* CharacterRepositoryProtocol.swift in Sources */,
 				B8E03BD124467F2C00C3180D /* NetworkManager.swift in Sources */,
-				B839A06F2449530600EDFD90 /* ResignKeyboardOnDragGesture.swift in Sources */,
 				B839A05C244928CA00EDFD90 /* ActivityIndicator.swift in Sources */,
 				6294DD572457A2C200CBE8D4 /* CharacterRepositoryError.swift in Sources */,
 				62BE3F4E2455CFAE00285F39 /* FavoriteCharacterDTO.swift in Sources */,
@@ -962,7 +939,6 @@
 				62360A122456626A000C61E8 /* CharacterHeaderProtocol.swift in Sources */,
 				B8E03C102446A9CF00C3180D /* CharacterHeaderView.swift in Sources */,
 				B8E03C052446A01500C3180D /* DataDTO.swift in Sources */,
-				B839A06C244952B400EDFD90 /* ViewExtension.swift in Sources */,
 				B8E03BF224468EA500C3180D /* CharacterHeader.swift in Sources */,
 				B839A0552447CF7D00EDFD90 /* MarvelImageSize.swift in Sources */,
 				625ECB13245A50DB00A7B597 /* CharacterPosterView.swift in Sources */,
