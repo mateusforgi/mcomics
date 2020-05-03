@@ -15,7 +15,10 @@ struct CharacterPosterView: View {
     private var photoURL: String
     private var image: Data?
     @State private var errorOnLoadingPhoto = false
-
+    @State private var animateArrow = false
+    private var animationDuration: Double = 0.5
+    @Environment(\.colorScheme) var colorScheme
+    
     // MARK: - Constructor
     init(photoURL: String, image: Data?) {
         self.photoURL = photoURL
@@ -37,7 +40,9 @@ extension CharacterPosterView {
         }
         return AnyView(WebImage(url: URL(string: photoURL))
             .onFailure { _ in
-                self.errorOnLoadingPhoto.toggle()
+                DispatchQueue.main.async {
+                    self.errorOnLoadingPhoto = true
+                }
         }
         .resizable()
         .placeholder {
@@ -46,14 +51,36 @@ extension CharacterPosterView {
         .indicator(.activity)
         .transition(.fade))
     }
-
+    
     private func getPhotoLocally() -> some View {
         if let image = image, let uiImage = UIImage(data: image) {
             return AnyView(Image(uiImage: uiImage)
                 .resizable())
         }
-        return AnyView(Rectangle())
+        return AnyView(getRetryView())
     }
-
+    
+    private func getRetryView() -> some View {
+        return VStack(alignment: .center) {
+            Button(action: {
+                DispatchQueue.main.async {
+                    self.animateArrow = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + self.animationDuration) {
+                    self.animateArrow = false
+                    self.errorOnLoadingPhoto = false
+                }
+            }) {
+                Image(systemName: "arrow.clockwise")
+                    .rotationEffect(.degrees(animateArrow ? 360 : 0))
+                    .scaleEffect(animateArrow ? 0 : 1)
+                    .animation(Animation.easeIn(duration: animationDuration))
+                    .foregroundColor(colorScheme == .dark ? Color.black : Color.white)
+            }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+                .background(colorScheme == .dark ? Color.white : Color.black)
+                .scaleEffect(animateArrow ? 0 : 1)
+                .animation(Animation.easeIn(duration: animationDuration))
+        }
+    }
     
 }
