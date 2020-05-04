@@ -30,13 +30,15 @@ class CharacterRepositoryTests: XCTestCase {
     private let character = CharacterHeaderTest(id: 1, name: "name", photoPath: "photoPath", photoExtension: "photoExtension", image: nil, description: "decription")
     
     // MARK: - Lyfecycle
-    override func setUpWithError() throws {
+    override func setUp() {
+        super.setUp()
         context = AppDelegate.persistentContainer.viewContext
         CoreDataHelper.deleteCoreDataValues(entityName: String(describing: Character.self), context: context)
         characterRepository = CharacterRepository(context: context)
     }
     
-    override func tearDownWithError() throws {
+    override func tearDown() {
+        super.tearDown()
         container = nil
     }
     
