@@ -7,6 +7,8 @@ For handling the navigations, instead of following the classic Coordinator patte
 
 
 ## iOS Target 13.2 
+## API 
+The app consumes the Marvel API. Check the documentation: https://developer.marvel.com/docs. To be able to run the project do not forget to set the API keys on the xcconfig files. 
 
 ## Running 
 
