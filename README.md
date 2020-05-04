@@ -6,9 +6,12 @@ I have used the MVVM Pattern with Combine and SwiftUI.
 For handling the navigations, instead of following the classic Coordinator pattern, I created the CharacterViewFactory that handles the creation and the dependency injection of the views. It follows a protocol. So the idea is of using the Factory pattern for handling the navigation of the views, by using this pattern I was able to use the NavigatioLink from SwfitUI and decoupling the navigation from the view, as it will ask the ViewModel and the ViewModel will return the next view by using the injected view Factory that is just a protocol so I can easily change the flow by just changing the CharacterViewFactory or by just creating another factory the follows the CharacterViewFactoryProtocol.
 
 
+## iOS Target 13.2 
+
 ## Running 
 
-*  Run pod install .
+*  Run pod repo update.
+*  Run pod install.
 *  Select DEV Scheme. It already comes with the App keys configured. 
 
 ## Pods
