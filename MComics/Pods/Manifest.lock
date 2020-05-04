@@ -12,11 +12,11 @@ PODS:
   - Swifter (1.4.7)
 
 DEPENDENCIES:
-  - KIF
-  - Nimble
-  - Quick
+  - KIF (~> 3.7.9)
+  - Nimble (~> 8.0.7)
+  - Quick (~> 2.2.0)
   - SDWebImageSwiftUI (~> 0.9.0)
-  - Swifter
+  - Swifter (~> 1.4.7)
 
 SPEC REPOS:
   trunk:
@@ -35,6 +35,6 @@ SPEC CHECKSUMS:
   SDWebImageSwiftUI: 7a2259d32b44ed8209b51a167b1b5c2c4e27d479
   Swifter: 2327ef5d872c638aebab79646ce494af508b0c8f
 
-PODFILE CHECKSUM: 90bd07b12acd1e90692ecdbe50e90b8dc5a5254c
+PODFILE CHECKSUM: 023de97d8290718e27769ca34cce56866bd29a95
 
 COCOAPODS: 1.9.0
