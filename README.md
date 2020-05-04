@@ -13,6 +13,7 @@ For handling the navigations, instead of following the classic Coordinator patte
 *  Run pod repo update.
 *  Run pod install.
 *  Select DEV Scheme. It already comes with the App keys configured. 
+*  If you get errors after executing the steps above, run pod deintegrate and then run pod install again.
 
 ## Pods
 
