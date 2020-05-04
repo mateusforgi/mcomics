@@ -25,7 +25,7 @@ For handling the navigations, instead of following the classic Coordinator patte
 *  Swifter - Used to mock server calls. It runs a server on XCode on 8080 port. 
 
 ## Unit Tests
-For running unit tests you must first select the TESTS Scheme. 
+For running unit tests you **MUST** first select the **TESTS Scheme**. 
 
 ## Screens - Light/Dark
 
